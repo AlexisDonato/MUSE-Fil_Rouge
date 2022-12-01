@@ -1,6 +1,6 @@
 # Au lancement du projet :
-- ```bash
-composer update
-```
+
+- terminal : composer update
+
 - importer MUSE_insert.csv depuis "public/SQL"
 
