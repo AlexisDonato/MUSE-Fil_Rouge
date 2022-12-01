@@ -1,0 +1,44 @@
+    {% block head %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type='text/javascript'>
+      google.charts.load('current', {'packages':['annotationchart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('date', 'Date');
+        data.addColumn('number', 'C.A.');
+        data.addColumn('string', 'C.A. title');
+        data.addColumn('string', 'C.A. text');
+        data.addColumn('number', 'Nbr Inscrits');
+        data.addColumn('string', 'Nbr Inscrits title');
+        data.addColumn('string', 'Nbr Inscrits text');
+        data.addRows([
+
+        {% set tot = 0 %}
+        {% for cart in carts %}
+          {% if cart.validated %}
+            {% set tot = tot + cart.total %}
+          {% endif %}
+        {% endfor %}
+        
+          [new Date(2022, 1, 1), 0, undefined, undefined,
+                                  0, undefined, undefined],
+          {% for odb in ordersByDate %}
+          [new Date({{odb.Date|date('Y')}}, ({{odb.Date|date('m')}} - 1), {{odb.Date|date('d')}}), {{odb.Total}}, 'C.A.', '{{tot}} €',
+                                  {{users|length}}, 'Nbr Inscrits', '{{users|length}}'],
+                                  {% endfor %}
+          [new Date(2022, 12, 30), 0, undefined, undefined,
+                                  0, undefined, undefined]
+        ]);
+
+        var chart = new google.visualization.AnnotationChart(document.getElementById('chart_div'));
+
+        var options = {
+          displayAnnotations: true
+        };
+
+        chart.draw(data, options);
+      }
+    </script>
+{% endblock %}

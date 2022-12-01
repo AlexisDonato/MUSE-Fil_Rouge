@@ -1,0 +1,11 @@
+#main-menu .menu .menu-item-contents {
+    position: fixed;
+    display: flex;
+    min-height: 0;
+    height: 100%;
+}
+
+aside.main-sidebar section.sidebar {
+    overflow-y: scroll;
+    width: 100%;
+}

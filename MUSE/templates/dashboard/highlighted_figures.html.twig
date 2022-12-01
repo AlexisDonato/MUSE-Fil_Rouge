@@ -1,0 +1,58 @@
+<!-- Highlighted figures Start -->
+            <div class="container-fluid pt-4 px-4 mb-1">
+                <div class="row bg-dark rounded d-flex justify-content-center">
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-2 bg-dark border border-secondary mt-2 mb-2">
+                            <i class="fa fa-chart-line fa-3x text-info ms-3"></i>
+                            <div class="ms-2 text-light me-3">
+                                <p class="mb-2">Ventes d'aujourd'hui :</p>
+                                <h6 class="mb-0 text-light">
+                                {% set todaySales = 0 %}
+                                {% for cart in carts %}
+                                    {% if cart.orderDate|date('d-m-Y') == todate|date('d-m-Y') %}
+                                        {% if cart.validated == true %}
+                                            {% set todaySales = todaySales + cart.total %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                {{ todaySales }} €</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-2 bg-dark border border-secondary mt-2 mb-2">
+                            <i class="fa fa-chart-bar fa-3x text-info ms-3"></i>
+                            <div class="ms-2 text-light me-3">
+                                <p class="mb-2">Total des ventes :</p>
+                                <h6 class="mb-0 text-light">{{ sumTotal }} €</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-2 bg-dark border border-secondary mt-2 mb-2">
+                            <i class="fa fa-chart-area fa-3x text-info ms-3"></i>
+                            <div class="ms-2 text-light me-3">
+                                <p class="mb-2">C.A. Professionels :</p>
+                                <h6 class="mb-0 text-light">{{ sumPro }} €</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-2 bg-dark border border-secondary mt-2 mb-2">
+                            <i class="fa fa-chart-pie fa-3x text-info ms-3"></i>
+                            <div class="ms-2 text-light me-3">
+                                <p class="mb-2">C.A. Particuliers :</p>
+                                <h6 class="mb-0 text-light">{{ sumClient }} €</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="col-sm-6 col-xl-9 mb-2 bg-dark rounded border border-secondary mt-2">
+                        <canvas id="myChart"></canvas>
+                    </div>
+
+                </div>
+            </div>
+
+            <hr>
+            <hr>

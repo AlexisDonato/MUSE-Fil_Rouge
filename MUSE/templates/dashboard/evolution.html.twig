@@ -1,0 +1,71 @@
+<h2 class="text-center text-info bg-dark rounded">Evolution de la société</h2>
+
+<div class="row d-flex justify-content-around align-items-center rounded bg-dark">
+{% include '/dashboard/annotation_chart1.html.twig' %}
+<div class="mb-3 rounded d-flex align-items-center justify-content-between p-4 bg-dark border border-secondary" id='chart_div' style='width: 900px; height: 600px;'></div>
+</div>
+
+<div class="row rounded bg-dark">
+<div class="col d-flex justify-content-around align-items-center ">
+{% include '/dashboard/calendar_chart.html.twig' %}
+<div class="mb-3 rounded bg-dark border border-secondary" id="calendar_basic" style="width: 1000px; height: auto;"></div>
+</div>
+</div>
+
+
+<div class="row mt-5 rounded border border-secondary">
+<div class="col-12">
+<h3>C.A. par année</h3>
+    <table class="table table-dark darker table-striped">
+        <thead>
+            <tr class="text-info">
+                {% for ody in ordersByYear %}
+                <th>{{ody.Year}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            {% for ody in ordersByYear %}
+                <td class="text-warning">{{ody.Total}} €</td>
+            {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+
+{# Chiffre d'affaires mois par mois pour une année sélectionnée
+Chiffre d'affaires généré pour un fournisseur
+TOP 10 des produits les plus commandés pour une année sélectionnée (référence et nom du produit, quantité commandée, fournisseur)
+TOP 10 des produits les plus rémunérateurs pour une année sélectionnée (référence et nom du produit, marge, fournisseur)
+Top 10 des clients en nombre de commandes ou chiffre d'affaires
+Répartition du chiffre d'affaires par type de client
+Nombre de commandes en cours de livraison. #}
+
+
+{# *** Fil Rouge table *** #}
+
+<div class="row mt-5 rounded border border-secondary">
+<div class="col-12">
+    <table class="table table-dark darker table-striped">
+        <thead>
+            <tr class="text-info">
+                <th>Nombre de commandes en cours de livraison</th>
+                <th>C.A. Pro</th>
+                <th>C.A. Particuliers </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text-warning">{{ sumVal - sumShip }}</td>
+                <td class="text-warning">{{sumPro}} €</td>
+                <td class="text-warning">{{sumClient}} €</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+</div>

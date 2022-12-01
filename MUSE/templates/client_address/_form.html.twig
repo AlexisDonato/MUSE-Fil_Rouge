@@ -1,0 +1,54 @@
+{{ form_start(form) }}
+<div class="container">
+	<div class="row">
+		<div class="form-group col-md-6">
+			{{ form_row(form.name, {
+            label: "Titre de l'adresse"
+        }) }}
+			<small>(ex: Domicile, Adresse de livraison n°1, Adresse de facturation n°3...)</small>
+		</div>
+		<div class="form-group col-md-6">
+			{{ form_row(form.country, {
+            label: "Pays"
+        }) }}
+		</div>
+		<div class="form-group col-md-6">
+			{{ form_row(form.zipcode, {
+            label: "Code postal"
+        }) }}
+		</div>
+		<div class="form-group col-md-6">
+			{{ form_row(form.city, {
+            label: "Ville"
+        }) }}
+		</div>
+		<div class="form-group col-md-6">
+			{{ form_row(form.pathType, {
+            label: "Voie"
+        }) }}<small>(ex: Rue du Gal de Gaulle, Avenue, Impasse...)</small>
+		</div>
+		<div class="form-group col-md-6">
+			{{ form_row(form.pathNumber, {
+            label: "N° de voie"
+        }) }}
+		</div>
+</div>
+<div class="row">
+			<div class="col-md-6">
+				{{ form_row(form.billingAddress, {
+            label: "Définir comme adresse de FACTURATION"
+        }) }}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				{{ form_row(form.deliveryAddress, {
+            label: "Définir comme adresse de LIVRAISON"
+        }) }}
+			</div>
+		</div>
+
+		<button class="btn btn-warning mb-3 ml-3 mt-3">{{ button_label|default('save') }}</button>
+	</div>
+</div>
+{{ form_end(form) }}

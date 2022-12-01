@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User
+{% endblock %}
+
+{% block body %}
+	<div class="container justify-content-center">
+		<h1 class="text-danger ml-5 mb-3 mt-3">Modifier le profil de :
+			{{ user.email }}</strong>
+	</h1>
+
+	{{ include('user/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+
+<div class="row">
+<div class="col-3 mt-2">
+		<button class="btn btn-warning border-light mb-3 ml-5"><a href="
+		{{ path('app_address_index') }}
+		" class="text-decoration-none text-dark">Modifier les adresses</a></button>
+</div>
+</div>
+		<button class="btn btn-danger border-light mb-1" id="submit">
+			<a class="text-decoration-none text-light" href="{{ path('app_user_index') }}">Retour à la liste</a>
+		</button>
+
+		{{ include('user/_delete_form.html.twig') }}
+
+</div>{% endblock %}

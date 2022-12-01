@@ -1,0 +1,429 @@
+{% set sumTotal = 0 %}
+{% set sumVal = 0 %}
+{% set pro = 0 %}
+{% set sumShip = 0 %}
+
+{% set sumQuant = 0 %}
+{% set sumProd = 0 %}
+{% set sumPrice = 0 %}
+{% set sumDisc = 0 %}
+{% set sumOut = 0 %}
+
+{% for cart in carts %}
+	{% set sumVal = sumVal + cart.validated %}
+	{% set sumShip = sumShip + cart.shipped %}
+	{% if cart.validated == true %}
+		{% set sumTotal = sumTotal + cart.total %}
+	{% endif %}
+	{% if cart.user.pro == true %}
+		{% set pro = pro + 1 %}
+	{% endif %}
+{% endfor %}
+
+{% for product in products %}
+	{% set sumQuant = sumQuant + product.quantity %}
+	{% set sumPrice = sumPrice + product.price %}
+	{% if product.discountRate != 0 %}
+		{% set sumDisc = sumDisc + 1 %}
+	{% endif %}
+	{% if product.quantity == 0 %}
+		{% set sumOut = sumOut + 1 %}
+	{% endif %}
+{% endfor %}
+
+{% for detail in orderDetails %}
+	{% set sumProd = sumProd + detail.quantity %}
+{% endfor %}
+
+<div class="container-fluid mt-2 mb-2">
+	<div class="row d-flex justify-content-around align-items-center rounded bg-dark">
+		<div class="col-sm-6 col-xl-3 mb-2">
+			<div class="rounded d-flex justify-content-center bg-dark border border-secondary">
+				<div class="text-light">
+					<div class="col text-center">
+						<i class="fas fa-users fa-2x text-info mt-2 mb-2"></i>
+					</div>
+					<h3 class="text-info text-center">Inscrits :
+						{{ users|length }}
+					</h3>
+					<ul>
+						<li>Clients
+							<i>professionnels</i>
+							:
+							<strong class="text-warning">{{ pro }}</strong>
+						</li>
+						<li>Clients
+							<i>particuliers</i>
+							:
+							<strong class="text-warning">
+								{{ users|length - pro }}
+							</strong>
+						</li>
+						<li>Paniers sans commande :
+							<strong class="text-warning">{{ carts|length - sumVal }}</strong>
+						</li>
+						<li>Moyenne de commandes par utilisateur :
+							<strong class="text-warning">{{ (sumVal / users|length)|number_format(2, '.', '') }}</strong>
+						</li>
+						<li>Moyenne des dépenses par utilisateur :
+							<strong class="text-warning">{{ (sumTotal / users|length)|number_format(2, '.', '') }}
+								€</strong>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	{% include '/dashboard/users_area_chart.html.twig' %}
+	<div class="mb-3 col-6 bg-secondary rounded d-flex align-items-center justify-content-around p-4 bg-dark border border-secondary mt-2 mb-2" 
+	id="users_area_chart_div" style="width: 800px; height: 350px;">
+	</div>
+	</div>
+
+<div class="row d-flex justify-content-around align-items-center rounded bg-dark">
+<div class="col-sm-6 col-xl-5 mb-2 bg-dark rounded border border-secondary mt-2">
+<div><b>Top 10 des clients par Ventes</b></div>
+    <table class="table table-dark darker table-striped">
+        <thead>
+            <tr class="text-info">
+				<th>Rang</th>
+                <th>Client</th>
+                <th>Ventes</th>
+            </tr>
+        </thead>
+        <tbody>
+			{% set rank = 0 %}
+			{% for sbu in salesByUser|slice(0, 10) %}
+			{% set rank = rank + 1 %}
+            <tr>
+			<td>{{rank}}
+                <td class="text-break">{{ sbu.email }}</td>
+                <td class="text-warning"><strong>{{ sbu.Total }} €</strong></td>
+
+            </tr>
+			{% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="col-sm-6 col-xl-5 mb-2 bg-dark rounded border border-secondary mt-2">
+<div><b>Top 10 des clients par nbr commandes</b></div>
+    <table class="table table-dark darker table-striped">
+        <thead>
+            <tr class="text-info">
+				<th>Rang</th>
+                <th>Client</th>
+                <th>Nbr commandes</th>
+            </tr>
+        </thead>
+        <tbody>
+
+ 			{% set rank = 0 %}
+			{% for obu in ordersByUser|slice(0, 10) %}
+			{% set rank = rank + 1 %}
+            <tr>
+			<td>{{rank}}
+                <td class="text-break">{{ obu.email }}</td>
+                <td class="text-warning"><strong>{{ obu.Orders }}</strong></td>
+            </tr>
+			{% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="col-sm-6 col-xl-5 mb-2 bg-dark rounded border border-secondary mt-2">
+<div><b>Top 10 des produits les plus commandés</b></div>
+    <table class="table table-dark darker table-striped">
+        <thead>
+            <tr class="text-info">
+				<th>Rang</th>
+                <th>Produit</th>
+                <th>Quantité commandées</th>
+            </tr>
+        </thead>
+        <tbody>
+
+ 			{% set rank = 0 %}
+			{% for op in orderedProducts|slice(0, 10) %}
+			{% set rank = rank + 1 %}
+            <tr>
+			<td>{{rank}}
+                <td class="text-break">{{ op.name }}</td>
+                <td class="text-warning"><strong>{{ op.Ordered }}</strong></td>
+            </tr>
+			{% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="col-sm-6 col-xl-5 mb-2 bg-dark rounded border border-secondary mt-2">
+<div><b>Top 10 des produits les plus rémunérateurs</b></div>
+    <table class="table table-dark darker table-striped">
+        <thead>
+            <tr class="text-info">
+				<th>Rang</th>
+                <th>Produit</th>
+                <th>Revenus</th>
+            </tr>
+        </thead>
+        <tbody>
+
+ 			{% set rank = 0 %}
+			{% for sbp in salesByProduct|slice(0, 10) %}
+			{% set rank = rank + 1 %}
+            <tr>
+			<td>{{rank}}
+                <td class="text-break">{{ sbp.name }}</td>
+                <td class="text-warning"><strong>{{ sbp.Total }} €</strong></td>
+            </tr>
+			{% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+	<hr>
+
+	<div class="row d-flex justify-content-around align-items-center rounded bg-dark">
+		<div class="col-sm-6 col-xl-3">
+			<div class="rounded d-flex justify-content-center bg-dark border border-secondary">
+				<div class="text-light">
+					<div class="col text-center mr-2">
+						<i class="fa fa-warehouse fa-2x text-info mt-2 mb-2"></i>
+					</div>
+					<h3 class="text-info text-center">Fournisseurs :
+						{{ suppliers|length }}
+					</h3>
+					<ul>
+						<li>
+							Moyenne de produits par fournisseur:
+							<strong class="text-warning">
+								{% if suppliers|length != 0 %}
+									{{ (products|length / suppliers|length)|number_format(3, '.', '') }}
+								{% endif %}
+							</strong>
+						</li>
+						<li>
+							Moyenne des revenus par fournisseur:
+							<strong class="text-warning">
+								{% if suppliers|length != 0 %}
+									{{ (sumTotal / suppliers|length)|number_format(2, '.', '') }}
+									€
+								{% endif %}
+							</strong>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		{% include '/dashboard/supplier_piebar_chart.html.twig' %}
+		<div class="col-sm-6 col-xl-9 mb-2">
+			<table class="columns">
+				<tr>
+					<td>
+						<div id="piechart_div" style="border: 1px solid #ccc" class=""></div>
+					</td>
+					<td>
+						<div id="barchart_div" style="border: 1px solid #ccc"></div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	{# <div class="col-sm-6 col-xl-9 mb-2 bg-dark rounded border border-secondary d-flex justify-content-center">
+			<table class="table table-dark table-stripped text-center">
+			<thead>
+				<tr class="text-info">
+					<th>Fournisseur</th>
+					<th>Revenus</th>
+				</tr>
+				</thead>
+			<tbody>
+			<tr>
+				{% for sbs in salesBySupplier %}
+					<td>{{sbs.name}}</td> 
+					<td>{{sbs.Total}} €</td>
+				{% endfor %}
+				</tr>
+				</tbody>
+				</table>
+			</div> #}
+
+
+<hr>
+
+<div class="row d-flex justify-content-around align-items-center rounded bg-dark">
+	<div class="col-sm-6 col-xl-3">
+		<div class="rounded d-flex justify-content-center bg-dark border border-secondary mt-2 mb-2">
+			<div class="text-light">
+				<div class="col text-center">
+					<i class="fa fa-guitar fa-2x text-info mt-2 mb-2"></i>
+				</div>
+				<h3 class="text-info text-center">Produits :
+					{{ products|length }}
+				</h3>
+				<ul>
+					<li>Moyenne des quantités en stock par produit :
+						<strong class="text-warning">{{ (sumQuant / products|length)|number_format(2, '.', '') }}</strong>
+					</li>
+					<li>Prix moyen des produits :
+						<strong class="text-warning">{{ (sumPrice / products|length)|number_format(2, '.', '') }}
+							€</strong>
+					</li>
+					<li>Produits en promotion :
+						<strong class="text-warning">{{ sumDisc }}</strong>
+					</li>
+					<li>
+						Produits en rupture de stock :
+						<strong class="text-danger badge badge-pill badge-danger">{{ sumOut }}</strong>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	{% include '/dashboard/products_piebar_chart.html.twig' %}
+		<div class="col-sm-6 col-xl-9 mb-2">
+			<table class="columns">
+				<tr>
+					<td>
+						<div id="products_piechart_div" style="border: 1px solid #ccc" class=""></div>
+					</td>
+					<td>
+						<div id="products_barchart_div" style="border: 1px solid #ccc"></div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	{# <div>
+		{% for sbp in salesByProduct %}
+			{{sbp.name}}, {{sbp.Total}};<br>
+		{% endfor %}
+	</div> #}
+</div>
+
+<hr>
+
+<div class="row d-flex justify-content-around align-items-center rounded bg-dark">
+	<div class="col-sm-6 col-xl-3">
+		<div class="rounded d-flex justify-content-center bg-dark border border-secondary mt-2 mb-2">
+			<div class="text-light">
+				<div class="col text-center">
+					<i class="fa fa-folder-tree fa-2x text-info mt-2 mb-2"></i>
+				</div>
+				<h3 class="text-info text-center">Détails des paniers / commandes:
+					{{ orderDetails|length }}
+				</h3>
+				<ul>
+					<li>
+						Moyenne de produits par panier:
+						<strong class="text-warning">{{ (sumProd / carts|length)|number_format(3, '.', '') }}</strong>
+					</li>
+					<li>
+						Moyenne de produits par commande:
+						<strong class="text-warning">
+							{% if sumVal != 0 %}
+								{{ (sumProd / sumVal)|number_format(3, '.', '') }}
+							{% endif %}
+						</strong>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	{% include '/dashboard/users_piebar_chart.html.twig' %}
+		<div class="col-sm-6 col-xl-9 mb-2">
+			<table class="columns">
+				<tr>
+					<td>
+						<div id="users_piechart_div" style="border: 1px solid #ccc" class=""></div>
+					</td>
+					<td>
+						<div id="users_barchart_div" style="border: 1px solid #ccc"></div>
+					</td>
+				</tr>
+			</table>
+		</div>
+</div>
+
+<hr>
+
+<div class="row d-flex justify-content-around align-items-center rounded bg-dark">
+	<div class="col-sm-6 col-xl-3">
+		<div class="rounded d-flex justify-content-center bg-dark border border-secondary mt-2 mb-2">
+			<div class="text-light">
+				<div class="col text-center">
+					<i class="fa fa-cart-shopping fa-2x text-info mt-2 mb-2"></i>
+				</div>
+				<h3 class="text-info text-center">Paniers / commandes :
+					{{ carts|length }}
+				</h3>
+				<ul>
+					<li>Paniers :
+						<strong class="text-warning">{{ carts|length }}</strong>
+					</li>
+					<li>Commandes :
+						<strong class="text-warning">{{ sumVal }}</strong>
+					</li>
+
+					<li>Commandes en cours de livraison :
+						<strong class="text-warning">{{ sumVal - sumShip }}</strong>
+					</li>
+
+					<li>Moyenne des commandes par utilisateur :
+						<strong class="text-warning">{{ (sumVal / users|length)|number_format(3, '.', '') }}</strong>
+					</li>
+					<li>Moyenne des dépenses par commande :
+						<strong class="text-warning">
+							{% if sumVal != 0 %}
+								{{ (sumTotal / sumVal)|number_format(2, '.', '') }}
+								€
+							{% endif %}
+						</strong>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	{% include '/dashboard/orders_area_chart.html.twig' %}
+	<div class="mb-3 col-6 bg-secondary rounded d-flex align-items-center justify-content-around p-4 bg-dark border border-secondary mt-2 mb-2" id="orders_area_chart_div" style="width: 800px; height: 350px;"></div>
+</div>
+
+<hr>
+
+<div class="row d-flex justify-content-around align-items-center rounded bg-dark">
+	<div class="col-sm-6 col-xl-3">
+		<div class="rounded d-flex justify-content-center bg-dark border border-secondary mt-2 mb-2">
+			<div class="text-light">
+				<div class="col text-center">
+					<i class="fa fa-list-ul fa-2x text-info mt-2 mb-2"></i>
+				</div>
+				<h3 class="text-info text-center">Catégories :
+					{{ categories|length }}
+				</h3>
+				<ul>
+					<li>
+						Moyenne de produits par catégorie:
+						<strong class="text-warning">{{ (products|length / categories|length)|number_format(2, '.', '') }}</strong>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+			<div class="col-sm-6 col-xl-3">
+			<div class="rounded d-flex justify-content-center bg-dark border border-secondary mt-2 mb-2">
+				<div class="text-light">
+					<div class="col text-center">
+						<i class="fa fa-location-dot fa-2x text-info mt-2 mb-2"></i>
+					</div>
+					<h3 class="text-info text-center">Adresses :
+						{{ addresses|length }}</h3>
+					<ul>
+						<li>
+							Moyenne d'adresses par utilisateur:
+							<strong class="text-warning">{{ addresses|length / users|length }}</strong>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+</div>
+
+
+
+<hr>
+<hr></div>

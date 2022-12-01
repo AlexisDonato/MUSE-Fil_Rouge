@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Supplier{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center mb-3 mt-3">Create new Supplier</h1>
+
+    {{ include('supplier/_form.html.twig') }}
+
+    <button class="btn btn-warning border-light mb-1"><a class="text-decoration-none text-dark" href="{{ path('app_supplier_index') }}">Retour à la liste</a></button>
+</div>    
+{% endblock %}

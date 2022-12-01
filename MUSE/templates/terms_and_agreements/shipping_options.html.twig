@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Shipping options
+{% endblock %}
+
+{% block body %}
+	<style>
+		body {
+			background: url('/img/BG9.jpeg') no-repeat center center fixed;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+		}
+	</style>
+
+	<div class="container">
+		<div class="shadow-lg text-center">
+			<h1 class="text-center mt-3 text-primary">Options de livraison</h1>
+			{# <img src="/img/music_ship2.jpg" style="width: 10rem; background-size: cover;" class="img-thumbnail border border-primary"> #}
+		</div>
+		<p class="text-center text-light mb-5">
+			<i>Cette page présente les coûts et les délais de livraison associés à l'envoi d'un colis en France métropolitaine et à Monaco.</i>
+		</p>
+		<p>Les options de livraison sont proposées au moment de passer la commande. Elles varient selon le type d'article, l'adresse de livraison et les dimensions de l'article.</p>
+		<p>
+			<b>Remarque :</b>
+		</p>
+		<p>Les frais d'expédition suivants concernent les articles expédiés par Muse. 
+									Les frais et les délais de livraison des articles expédiés peuvent varier. 
+									Les frais de livraison sont indiqués sur le récapitulatif de commande.</p>
+		<p>Pour que votre commande soit livrée à temps, votre carte de paiement doit avoir été débitée avant le délai indiqué sur la page du produit.</p>
+
+		<h3 class="text-primary mt-5">Livraison standard</h3>
+		<p>Avec la livraison standard, vous recevez votre colis en trois à cinq jours ouvrés entre 8 h et 21 h.</p>
+		<p>La livraison standard est disponible pour tout article expédié par Muse. 
+									    Les colis sont livrés dans votre boîte aux lettres ou remis en mains propres. Des conditions s'appliquent.</p>
+
+
+		<div class="d-flex justify-content-center">
+			<table class="table-dark mb-3 darker" style="width: 30rem;" border="1">
+				<thead>
+					<tr class="text-center">
+						<th>Type de commande</th>
+						<th>Tarif par expédition</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="text-break">
+						<td>Commandes d’un montant inférieur à 25 € contenant des articles multimédias autres que des livres (musique, DVD, logiciels)</td>
+						<td class="text-right">2.99 €</td>
+					</tr>
+					<tr class="text-break">
+						<td>Commandes d’un montant inférieur à 25 € contenant d'autres articles</td>
+						<td class="text-right">4.99 €</td>
+					</tr>
+					<tr class="text-break">
+						<td>Commandes d’un montant supérieur à 25 € et inférieur à 200€</td>
+						<td class="text-right">8.99 €</td>
+					</tr>
+					<tr class="text-break">
+						<td>Commandes d’un montant supérieur à 200€</td>
+						<td class="text-right">GRATUIT</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h3 class="text-primary mt-5">Livraison prioritaire</h3>
+		<p>Avec la livraison prioritaire, vous recevez votre colis dans un délai de trois jours ouvrés. 
+			        La livraison est effectuée entre 8 h et 22 h, du lundi au samedi, et entre 9 h et 22 h le dimanche dans les zones éligibles. 
+			        Si elles sont éligibles, les livraisons s’effectuent le même jour pour les commandes passées avant l'heure limite indiquée sur la page du produit.</p>
+		<p>La livraison prioritaire est disponible pour la plupart des articles expédiés par Muse. Des conditions s'appliquent.</p>
+
+
+		<div class="d-flex justify-content-center">
+			<table class="table-dark mb-5 darker" style="width: 30rem;" border="1">
+				<thead>
+					<tr class="text-center">
+						<th>Type de commande</th>
+						<th>Tarif par expédition</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="text-break">
+						<td>Tous les articles éligibles à domicile</td>
+						<td class="text-right">8,99 €</td>
+					</tr>
+					<tr class="text-break">
+						<td>Tous les articles éligibles en point retrait</td>
+						<td class="text-right">4,99 €</td>
+					</tr>
+					<tr class="text-break">
+						<td>Livraison garantie le jour de la sortie</td>
+						<td class="text-right">5.99 €</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+{% endblock %}
