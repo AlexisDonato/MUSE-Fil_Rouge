@@ -228,7 +228,7 @@ class OrderController extends AbstractController
                     'addresses' => $addresses,
                     'cart'      => $cart,
                 ])
-                ->attachFromPath('/home/alex/AFPA/CDA/Fil Rouge/MUSE/public/invoices/INVOICE-' . $cart->getClientOrderId() . '.pdf');
+                ->attachFromPath('/home/alex/Bureau/Fil Rouge/MUSE/public/invoices/INVOICE-' . $cart->getClientOrderId() . '.pdf');
 
             $mailer->send($email);
 
