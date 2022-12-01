@@ -14,7 +14,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Listage des données de la table MUSE.cart : ~10 rows (environ)
+-- Listage des données de la table MUSE.cart : ~15 rows (environ)
 INSERT INTO `cart` (`id`, `user_id`, `billing_address_id`, `delivery_address_id`, `client_order_id`, `validated`, `order_date`, `shipped`, `shipment_date`, `carrier`, `carrier_shipment_id`, `total`, `additional_discount_rate`, `invoice`) VALUES
 	(1, 1, NULL, NULL, 'MUSE::63807EDC0CB50', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL),
 	(2, 4, 1, 1, 'MUSE::638113B285855', 1, '2022-11-25 19:15:15', 0, NULL, NULL, NULL, 44627.00, 0.000, 'INVOICE-MUSE::638113B285855.pdf'),
@@ -25,7 +25,12 @@ INSERT INTO `cart` (`id`, `user_id`, `billing_address_id`, `delivery_address_id`
 	(7, 4, 1, 1, 'MUSE::638205FC73298', 1, '2022-11-27 10:53:36', 0, NULL, NULL, NULL, 1234.28, 0.000, 'INVOICE-MUSE::638205FC73298.pdf'),
 	(8, 5, 2, 2, 'MUSE::6384649B52E7F', 1, '2022-11-30 09:34:17', 0, NULL, NULL, NULL, 7645.26, 0.000, 'INVOICE-MUSE::6384649B52E7F.pdf'),
 	(9, 5, NULL, NULL, 'MUSE::6387239A79421', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL),
-	(10, 6, NULL, NULL, 'MUSE::638733F5B5C1A', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL);
+	(10, 6, NULL, NULL, 'MUSE::638733F5B5C1A', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL),
+	(12, 2, NULL, NULL, 'MUSE::63874060E3358', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL),
+	(13, 3, NULL, NULL, 'MUSE::6387409FC1BC3', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL),
+	(14, 4, 1, 1, 'MUSE::638740F0360C3', 1, '2022-12-01 09:01:45', 0, NULL, NULL, NULL, 1148.46, 0.000, 'INVOICE-MUSE::638740F0360C3.pdf'),
+	(15, 4, 1, 1, 'MUSE::63886E7F0A4AE', 1, '2022-12-01 09:06:21', 0, NULL, NULL, NULL, 482.90, 0.000, 'INVOICE-MUSE::63886E7F0A4AE.pdf'),
+	(16, 4, NULL, NULL, 'MUSE::63886E904B5D0', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

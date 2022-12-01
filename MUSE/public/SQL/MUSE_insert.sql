@@ -14,13 +14,14 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Listage des données de la table MUSE.address : ~3 rows (environ)
+-- Listage des données de la table MUSE.address : ~4 rows (environ)
 INSERT INTO `address` (`id`, `user_id`, `name`, `country`, `zipcode`, `city`, `path_type`, `path_number`, `billing_address`, `delivery_address`) VALUES
 	(1, 4, 'Bureau', 'France', '60210', 'Grandvilliers', 'Rue du Poulet', '12', 1, 1),
 	(2, 5, 'Domicile', 'France', '60000', 'Beauvais', 'Avenue de la Plèbe', '21', 1, 1),
-	(3, 6, 'Bureau', 'France', '80000', 'Amiens', 'impasse', 'admin', NULL, NULL);
+	(3, 6, 'Bureau', 'France', '80000', 'Amiens', 'impasse', 'admin', NULL, NULL),
+	(6, 9, 'Domicile', 'admin', '67000', 'Amiens', 'rue de la Strasse', 'qsdfqsdf', NULL, NULL);
 
--- Listage des données de la table MUSE.cart : ~8 rows (environ)
+-- Listage des données de la table MUSE.cart : ~15 rows (environ)
 INSERT INTO `cart` (`id`, `user_id`, `billing_address_id`, `delivery_address_id`, `client_order_id`, `validated`, `order_date`, `shipped`, `shipment_date`, `carrier`, `carrier_shipment_id`, `total`, `additional_discount_rate`, `invoice`) VALUES
 	(1, 1, NULL, NULL, 'MUSE::63807EDC0CB50', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL),
 	(2, 4, 1, 1, 'MUSE::638113B285855', 1, '2022-11-25 19:15:15', 0, NULL, NULL, NULL, 44627.00, 0.000, 'INVOICE-MUSE::638113B285855.pdf'),
@@ -31,7 +32,12 @@ INSERT INTO `cart` (`id`, `user_id`, `billing_address_id`, `delivery_address_id`
 	(7, 4, 1, 1, 'MUSE::638205FC73298', 1, '2022-11-27 10:53:36', 0, NULL, NULL, NULL, 1234.28, 0.000, 'INVOICE-MUSE::638205FC73298.pdf'),
 	(8, 5, 2, 2, 'MUSE::6384649B52E7F', 1, '2022-11-30 09:34:17', 0, NULL, NULL, NULL, 7645.26, 0.000, 'INVOICE-MUSE::6384649B52E7F.pdf'),
 	(9, 5, NULL, NULL, 'MUSE::6387239A79421', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL),
-	(10, 6, NULL, NULL, 'MUSE::638733F5B5C1A', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL);
+	(10, 6, NULL, NULL, 'MUSE::638733F5B5C1A', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL),
+	(12, 2, NULL, NULL, 'MUSE::63874060E3358', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL),
+	(13, 3, NULL, NULL, 'MUSE::6387409FC1BC3', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL),
+	(14, 4, 1, 1, 'MUSE::638740F0360C3', 1, '2022-12-01 09:01:45', 0, NULL, NULL, NULL, 1148.46, 0.000, 'INVOICE-MUSE::638740F0360C3.pdf'),
+	(15, 4, 1, 1, 'MUSE::63886E7F0A4AE', 1, '2022-12-01 09:06:21', 0, NULL, NULL, NULL, 482.90, 0.000, 'INVOICE-MUSE::63886E7F0A4AE.pdf'),
+	(16, 4, NULL, NULL, 'MUSE::63886E904B5D0', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL);
 
 -- Listage des données de la table MUSE.category : ~19 rows (environ)
 INSERT INTO `category` (`id`, `parent_category_id`, `name`, `image`) VALUES
@@ -57,7 +63,11 @@ INSERT INTO `category` (`id`, `parent_category_id`, `name`, `image`) VALUES
 
 -- Listage des données de la table MUSE.contact : ~0 rows (environ)
 
--- Listage des données de la table MUSE.order_details : ~23 rows (environ)
+-- Listage des données de la table MUSE.doctrine_migration_versions : ~1 rows (environ)
+INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
+	('DoctrineMigrations\\Version20221130112926', '2022-11-30 12:29:32', 36);
+
+-- Listage des données de la table MUSE.order_details : ~25 rows (environ)
 INSERT INTO `order_details` (`id`, `product_id`, `cart_id`, `quantity`, `sub_total`) VALUES
 	(1, 27, 2, 10, 748),
 	(2, 14, 2, 1, 43879),
@@ -81,16 +91,18 @@ INSERT INTO `order_details` (`id`, `product_id`, `cart_id`, `quantity`, `sub_tot
 	(20, 1, 8, 3, 1249.2),
 	(21, 2, 8, 1, 1252.86),
 	(22, 3, 8, 1, 718.8),
-	(23, 5, 8, 3, 4424.4);
+	(23, 5, 8, 3, 4424.4),
+	(24, 2, 14, 1, 1148.455),
+	(25, 6, 15, 1, 482.9);
 
 -- Listage des données de la table MUSE.product : ~101 rows (environ)
 INSERT INTO `product` (`id`, `supplier_id`, `category_id`, `name`, `price`, `description`, `content`, `discount`, `discount_rate`, `quantity`, `image`, `image1`, `image2`) VALUES
 	(1, 1, 6, 'Ignition Cavern SE', 347, '4 cordes - Table en épicéa - Fond et éclisses en érable flammé - Manche 1 pièce en érable - Touche en jatoba - Filets de table et de fond blancs - Diapason: 760 mm (30") - Largeur au sillet: 42 mm - 22 frettes - 2 micros double bobinage Höfner', 'Conditionnement (UVC) - 1 Pièce(s) - Couleur Sunburst - Corps Erable - Manche Erable - Touche Jatoba - Frettes 22 - Diapason Short scale - Micros HH - Electronique Passif - Étui inclus Non - Housse incluse Non', 0, 0.000, 17, 'Ignition Cavern SE.jpg', 'Ignition Cavern SE-1.jpg', 'Ignition Cavern SE-2.jpg'),
-	(2, 2, 6, 'BTB846-CBL', 1099, '6 cordes Série BTB Corps en frêne avec ailes en okoumé Table en peuplier veiné Manche traversant en érable/noyer Touche en palissandre Diapason: 889 mm (35") Rayon de la touche: 950 mm (37,4") Largeur au sillet: 54 mm (2,13") 24 frettes Medium en acier in', 'Conditionnement (UVC)\r\n1 Pièce(s)\r\nForme\r\nBTB\r\nCouleur\r\nBleu\r\nCorps\r\nFrêne, okoumé\r\nManche\r\nErable, noyer\r\nTouche\r\nPalissandre\r\nFrettes\r\n24\r\nDiapason\r\nExtra long scale\r\nMicros\r\nHH\r\nÉlectronique\r\nActive\r\nÉtui inclus\r\nNon\r\nHousse incluse\r\nNon', 0, 0.050, 34, 'BTB846-CBL.jpg', 'BTB846-CBL-1.jpg', 'BTB846-CBL-2.jpg'),
+	(2, 2, 6, 'BTB846-CBL', 1099, '6 cordes Série BTB Corps en frêne avec ailes en okoumé Table en peuplier veiné Manche traversant en érable/noyer Touche en palissandre Diapason: 889 mm (35") Rayon de la touche: 950 mm (37,4") Largeur au sillet: 54 mm (2,13") 24 frettes Medium en acier in', 'Conditionnement (UVC)\r\n1 Pièce(s)\r\nForme\r\nBTB\r\nCouleur\r\nBleu\r\nCorps\r\nFrêne, okoumé\r\nManche\r\nErable, noyer\r\nTouche\r\nPalissandre\r\nFrettes\r\n24\r\nDiapason\r\nExtra long scale\r\nMicros\r\nHH\r\nÉlectronique\r\nActive\r\nÉtui inclus\r\nNon\r\nHousse incluse\r\nNon', 0, 0.050, 33, 'BTB846-CBL.jpg', 'BTB846-CBL-1.jpg', 'BTB846-CBL-2.jpg'),
 	(3, 3, 6, 'V3 TS 2nd Gen', 599, '5 cordes Fabriquée par Sire Corps en aulne Manche 1 pièce en érable Profil du manche en C Touche en ébène Rayon de la touche: 241 mm Diapason: 34" (Long Scale) 20 frettes Medium Small Espacement entre 2 cordes: 18 mm Largeur au sillet: 46 mm Sillet en os', 'Conditionnement (UVC)\r\n1 Pièce(s)\r\nCouleur\r\nSunburst\r\nCorps\r\nAulne\r\nManche\r\nErable\r\nTouche\r\nEbène\r\nFrettes\r\n20\r\nDiapason\r\nLong scale\r\nMicros\r\nJJ\r\nÉlectronique\r\nActive, passive\r\nÉtui inclu\r\nNon\r\nHousse incluse\r\nNon', 0, 0.000, 27, 'V3 TS 2nd Gen.jpg', 'V3 TS 2nd Gen-1.jpg', 'V3 TS 2nd Gen-2.jpg'),
 	(4, 4, 6, 'John Petrucci Majesty 7 SM', 7333, '7 cordes Modèle signature John Petrucci Corps en acajou Table en érable marbré Manche traversant en acajou/érable flammé Touche en érable flammé 24 frettes Medium Jumbo en acier inoxydable Diapason: 648 mm (25,5") Rayon de la touche: 17"', 'Conditionnement (UVC)\r\n1 Pièce(s)\r\nCouleur\r\nSpiced Melange\r\nCorps\r\nAcajou\r\nTable d\'harmonie\r\nErable\r\nManche\r\nAcajou\r\nTouche\r\nErable\r\nFrettes\r\n24\r\nDiapason\r\n648 mm\r\nMicros\r\nHH, Piezo\r\nVibrato\r\nMusic Man\r\nHousse incluse\r\nNon\r\nÉtui inclus\r\nOui', 0, 0.000, 12, 'John Petrucci Majesty 7 SM.jpg', 'John Petrucci Majesty 7 SM-1.jpg', 'John Petrucci Majesty 7 SM-2.jpg'),
 	(5, 5, 6, 'AL Bootsy Collins Spacebass', 1229, '4 cordes Signature Bootsy Collins Corps en acajou Manche vissé en érable Touche en wenge Rayon de la touche: 508 mm 24 frettes Long Scale Micros actifs MEC J/TJ Electronique active MEC 2 bandes 1 réglage de volume (Push/Pull pour EQ Bypass)', 'Conditionnement (UVC)\r\n1 Pièce(s)\r\nSignature\r\nBootsy Collins\r\nCouleur\r\nPourpre\r\nCorps\r\nAcajou\r\nTable\r\nAucune\r\nManche\r\nErable\r\nTouche\r\nWenge\r\nFrettes\r\n24\r\nDiapason\r\nLong Scale\r\nPickups\r\nJJJ\r\nElectronique\r\nActif\r\nEtui inclu\r\nNon\r\nHousse inclue\r\nOui', 0, 0.000, 4, 'AL Bootsy Collins Spacebass.jpg', 'AL Bootsy Collins Spacebass-1.jpg', 'AL Bootsy Collins Spacebass-2.jpg'),
-	(6, 6, 9, '793X Galaxy Giovanni Bongo Set', 439, 'Série Galaxy Giovanni Diamètres: 7 1/4" + 8 5/8" Hauteur: 17 cm Fûts en frêne nord-américain Premium Accastillage doré Cercles Comfort Curved II 4 tirants Peaux naturelles sélectionnées à la main Accastillage doré Couleur: Naturel', 'Conditionnement (UVC)\r\n1 Pièce(s)\r\nMatériau\r\nFrêne\r\nCouleur\r\nNaturel\r\nTaille du petit bongo\r\n7,25"\r\nTaille du gros bongo\r\n8,625"', 0, 0.000, 20, '793X Galaxy Giovanni Bongo Set.jpg', '793X Galaxy Giovanni Bongo Set-1.jpg', '793X Galaxy Giovanni Bongo Set-2.jpg'),
+	(6, 6, 9, '793X Galaxy Giovanni Bongo Set', 439, 'Série Galaxy Giovanni Diamètres: 7 1/4" + 8 5/8" Hauteur: 17 cm Fûts en frêne nord-américain Premium Accastillage doré Cercles Comfort Curved II 4 tirants Peaux naturelles sélectionnées à la main Accastillage doré Couleur: Naturel', 'Conditionnement (UVC)\r\n1 Pièce(s)\r\nMatériau\r\nFrêne\r\nCouleur\r\nNaturel\r\nTaille du petit bongo\r\n7,25"\r\nTaille du gros bongo\r\n8,625"', 0, 0.000, 19, '793X Galaxy Giovanni Bongo Set.jpg', '793X Galaxy Giovanni Bongo Set-1.jpg', '793X Galaxy Giovanni Bongo Set-2.jpg'),
 	(7, 7, 8, 'Focus Junior Drum Set Black', 179, 'Série Focus Convient aux enfants de 4 à 7 ans Grosse caisse 16"x10" Tom 08"x05" Tom 10"x06" Stand tom 13"x11" Caisse claire en bois 12"x05" Finition: Rhodoïd Couleur: Noir Paire de baguettes incl. Coussin atténuateur d\'harmoniques pour grosse caisse incl.', 'Conditionnement (UVC)\r\n1 Pièce(s)\r\nTaille de la grosse caisse\r\n16"\r\nNombre de toms\r\n2\r\nNombre de stand toms\r\n1\r\nMatériau des fûts\r\nPeuplier\r\nFinition des fûts\r\nRhodoïd\r\nCouleur des fûts\r\nNoir\r\nPailleté\r\nNon\r\nDégradé\r\nNon\r\nBurst\r\nNon\r\nFinition de l\'accastillage\r\nChrome\r\nAvec caisse claire\r\nOui\r\nCymbales incl.\r\nOui\r\nHardware incl.\r\nOui\r\nSiège incl.\r\nOui', 0, 0.000, 6, 'Focus Junior Drum Set Black.jpg', 'Focus Junior Drum Set Black-1.jpg', 'Focus Junior Drum Set Black-2.jpg'),
 	(8, 7, 9, 'MC890NT Conga Set', 298, 'Set de congas 10"+11" En bois Finition: Vernis Couleur: Naturel/ambre 2 supports simples incl. Housses Millenium', 'Conditionnement (UVC)\r\n1 Pièce(s)\r\nSupport incl.\r\nOui\r\nMatériau\r\nEucalyptus\r\nCouleur\r\nNaturel\r\nTailles\r\n10", 11"\r\nVariante\r\nMillenium', 0, 0.000, 16, 'MC890NT Conga Set.jpg', 'MC890NT Conga Set-1.jpg', 'MC890NT Conga Set-2.jpg'),
 	(9, 7, 8, 'MPS-850 E-Drum Set', 666, '550 sons 30 kits prédéfinis 20 kits utilisateur 100 morceaux 2 morceaux utilisateur Enregistrement rapide Métronome EQ par kit Pitch Réverbération Compresseur 6 faders pour ajuster le volume individuel des pads, du métronome et des chansons 2 sorties Main', 'Conditionnement (UVC)\r\n1 Pièce(s)\r\nRack inclus\r\nOui\r\nSiège inclus\r\nNon\r\nPédale grosse caisse incluse\r\nOui\r\nCasque inclus\r\nNon\r\nPeaux maillées\r\nOui\r\nPads double zone\r\nOui\r\nNombre de sorties directes\r\n0', 0, 0.000, 22, 'MPS-850 E-Drum Set.jpg', 'MPS-850 E-Drum Set-1.jpg', 'MPS-850 E-Drum Set-2.jpg'),
@@ -191,7 +203,7 @@ INSERT INTO `product` (`id`, `supplier_id`, `category_id`, `name`, `price`, `des
 
 -- Listage des données de la table MUSE.reset_password_request : ~0 rows (environ)
 
--- Listage des données de la table MUSE.supplier : ~0 rows (environ)
+-- Listage des données de la table MUSE.supplier : ~65 rows (environ)
 INSERT INTO `supplier` (`id`, `name`) VALUES
 	(1, 'Höfner'),
 	(2, 'Ibanez'),
@@ -259,14 +271,15 @@ INSERT INTO `supplier` (`id`, `name`) VALUES
 	(64, 'Godin'),
 	(65, 'Seagull');
 
--- Listage des données de la table MUSE.user : ~6 rows (environ)
-INSERT INTO `user` (`id`, `email`, `roles`, `password`, `user_name`, `user_lastname`, `birthdate`, `phone_number`, `is_verified`, `register_date`, `vat`, `pro`, `pro_company_name`, `pro_duns`, `pro_job_position`) VALUES
-	(1, 'admin@muse.com', '["ROLE_ADMIN","ROLE_SALES","ROLE_SHIP","ROLE_PRO","ROLE_CLIENT","ROLE_USER"]', '$2y$13$ccySVe3LypY0lq.nZKB1ROQbpKUXCH2fmueDtSsTI.GebmJUmWfkG', 'admin', 'admin', '2022-12-12 00:00:00', '0999999999', 1, '2022-12-12 00:00:00', 0.10, 1, NULL, NULL, NULL),
-	(2, 'sales@muse.com', '["ROLE_SALES","ROLE_SHIP","ROLE_PRO","ROLE_CLIENT","ROLE_USER"]', '$2y$13$2bfOwlTjNtXb4JfVzAxGSOfv9opihXD2KHuHb.NhwhBIQLFNiUeZu', 'sales', 'sales', '2022-12-12 00:00:00', '0999999999', 1, '2022-12-12 00:00:00', 0.10, 1, NULL, NULL, NULL),
-	(3, 'ship@muse.com', '["ROLE_SHIP","ROLE_PRO","ROLE_CLIENT","ROLE_USER"]', '$2y$13$sZPp7tUcYJVwtLJRInOGFe1kdmOgqK.0Yv.rFRvKpGej1uNbgif/a', 'ship', 'ship', '2022-12-12 00:00:00', '0999999999', 1, '2022-12-12 00:00:00', 0.10, 1, NULL, NULL, NULL),
-	(4, 'pro@muse.com', '["ROLE_PRO","ROLE_CLIENT","ROLE_USER"]', '$2y$13$FCBHEF5HE8AR5M2MyBMis.H8OCFRvK3OBY6nXMaEB8q7wMpKDilwi', 'pro', 'pro', '2022-12-12 00:00:00', '0999999999', 1, '2022-12-12 00:00:00', 0.10, 1, NULL, NULL, NULL),
-	(5, 'client@muse.com', '["ROLE_CLIENT","ROLE_USER"]', '$2y$13$cGv5KqaPxeM6BWZHE9224./Wbc/fUaJ7ilYiKZcnZ2aC0DrDg14ee', 'client', 'client', '2022-12-12 00:00:00', '0999999999', 1, '2022-12-12 00:00:00', 0.20, 0, NULL, NULL, NULL),
-	(6, '123@123.com', '["ROLE_CLIENT","ROLE_USER"]', '$2y$13$aXlVF7hE8rT.1tjmUF3eXe2PdoI8j3/YoOkWaI5MrzvF.I.1Hvs/O', 'po', 'po', '2022-11-17 00:00:00', '0999999999', 1, '2022-11-30 10:20:51', 0.20, 0, NULL, NULL, NULL);
+-- Listage des données de la table MUSE.user : ~7 rows (environ)
+INSERT INTO `user` (`id`, `email`, `roles`, `password`, `user_name`, `user_lastname`, `birthdate`, `phone_number`, `is_verified`, `register_date`, `vat`, `pro`, `pro_company_name`, `pro_duns`, `pro_job_position`, `agree_terms`) VALUES
+	(1, 'admin@muse.com', '["ROLE_ADMIN","ROLE_SALES","ROLE_SHIP","ROLE_PRO","ROLE_CLIENT","ROLE_USER"]', '$2y$13$ccySVe3LypY0lq.nZKB1ROQbpKUXCH2fmueDtSsTI.GebmJUmWfkG', 'admin', 'admin', '2022-12-12 00:00:00', '0999999999', 1, '2022-12-12 00:00:00', 0.10, 1, NULL, NULL, NULL, 1),
+	(2, 'sales@muse.com', '["ROLE_SALES","ROLE_SHIP","ROLE_PRO","ROLE_CLIENT","ROLE_USER"]', '$2y$13$tvAgwTJWbvYBUOpiyYzXyOsBg4X1jZocwCq5AichRjsHmACQxro3S', 'sales', 'sales', '2022-12-12 00:00:00', '0999999999', 1, '2022-12-12 00:00:00', 0.10, 1, NULL, NULL, NULL, 1),
+	(3, 'ship@muse.com', '["ROLE_SHIP","ROLE_PRO","ROLE_CLIENT","ROLE_USER"]', '$2y$13$wZto0kfDzPviiOga/q5a2uKPXxFZ9G0hOmPKZFlMpvNPcGfd059Iu', 'ship', 'ship', '2022-12-12 00:00:00', '0999999999', 1, '2022-12-12 00:00:00', 0.10, 1, NULL, NULL, NULL, 1),
+	(4, 'pro@muse.com', '["ROLE_PRO","ROLE_CLIENT","ROLE_USER"]', '$2y$13$qFENhSxKWFGae4l/tAApe.bttMTnQatCgEhdpXhFxFW1nUhONYJxe', 'pro', 'pro', '2022-12-12 00:00:00', '0999999999', 1, '2022-12-12 00:00:00', 0.10, 1, NULL, NULL, NULL, 1),
+	(5, 'client@muse.com', '["ROLE_CLIENT","ROLE_USER"]', '$2y$13$cGv5KqaPxeM6BWZHE9224./Wbc/fUaJ7ilYiKZcnZ2aC0DrDg14ee', 'client', 'client', '2022-12-12 00:00:00', '0999999999', 1, '2022-12-12 00:00:00', 0.20, 0, NULL, NULL, NULL, 1),
+	(6, '123@123.com', '["ROLE_CLIENT","ROLE_USER"]', '$2y$13$aXlVF7hE8rT.1tjmUF3eXe2PdoI8j3/YoOkWaI5MrzvF.I.1Hvs/O', 'po', 'po', '2022-11-17 00:00:00', '0999999999', 1, '2022-11-30 10:20:51', 0.20, 0, NULL, NULL, NULL, 1),
+	(9, 'client@client.com', '["ROLE_CLIENT","ROLE_USER"]', '$2y$13$jnHByAAmk7kbw9344XaeVeZuiKNsrDhgmcSSCed1ue/5Oz3EwhV0q', 'Jean-Michel', 'De la Rue', '2022-11-13 00:00:00', '0999999999', 0, '2022-11-30 11:34:43', 0.20, 0, NULL, NULL, NULL, 1);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
