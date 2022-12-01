@@ -2,5 +2,5 @@
 
 - terminal : composer update
 
-- importer MUSE_insert.csv depuis "public/SQL"
+- importer MUSE_insert.sql depuis "public/SQL"
 
