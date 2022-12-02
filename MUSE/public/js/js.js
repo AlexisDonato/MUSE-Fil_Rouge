@@ -176,12 +176,17 @@ if (document.getElementById("submit")) {
 
 
 function toZipcode() {
+
     const apiUrl = 'https://geo.api.gouv.fr/communes?codePostal='
     let code = registrationZipcode.value;
     console.log(code); 
+
     fetch(apiUrl+code).then(response=>{
+
         response.json().then(json => {
+
             cityList.innerHTML = "";
+            
             for (let i=0; i<json.length; i++) {
                 cityList.innerHTML += `<option value="${json[i].nom}">`;
             }
