@@ -69,28 +69,29 @@
 			<b>Votre Adresse :</b>
 		</h2>
 		<div class="row">
-			<div class="form-group col-md-6">
+			<div class="form-group col-md-3">
 				{{ form_row(registrationForm.address_name, {
             label: "Titre de l'adresse"
         }) }}
 				<small class="text-primary">(ex: Domicile, Adresse de livraison n°1, Adresse de facturation n°3...)</small>
 			</div>
-			<div class="form-group col-md-6">
+			<div class="form-group col-md-3">
 				{{ form_row(registrationForm.address_country, {
             label: "Pays"
         }) }}
 			</div>
-			<div class="form-group col-md-6">
+			<div class="form-group col-md-3">
 				{{ form_row(registrationForm.address_zipcode, {
             label: "Code postal"
-        }) }}
+        }) }}<span id="wrongZipcode"></span>
 			</div>
-			<div class="form-group col-md-6">
+
+			<div class="form-group col-md-3">
 				{{ form_row(registrationForm.address_city, {
             label: "Ville"
-        }) }}
+        }) }}<datalist id="cityList"></datalist><span id="wrongCity"></span>
 			</div>
-			<div class="form-group col-md-6">
+			<div class="form-group col-md-3">
 				{{ form_row(registrationForm.address_path_number, {
             label: "Numéro de voie"
         }) }}

@@ -143,11 +143,19 @@ class RegistrationFormType extends AbstractType
                 ])
 
             ->add('address_zipcode', TextType::class, [
-
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[0-9]{5}$/',
+                        'message' => 'Code postal invalide : entrée à 5 chiffres (ex: "75000")'
+                        ]),
+                    ]
                 ])
 
             ->add('address_city', TextType::class, [
-
+                'attr' => [
+                    'list' => 'cityList',
+                    'pattern' => '\d{5}'
+                    ],  
                 ])
 
             ->add('address_path_type', TextType::class, [

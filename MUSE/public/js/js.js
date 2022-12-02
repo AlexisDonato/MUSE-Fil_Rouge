@@ -34,6 +34,10 @@ function checkForm(event) {
     let wrongDuns = document.getElementById("wrongDuns");
     let dunsRE = new RegExp(/^[0-9]{9}$/);
 
+    let registrationZipcode = document.getElementById("registration_form_address_zipcode");
+    let wrongZipcode = document.getElementById('wrongZipcode');
+    let zipcodeRE = new RegExp(/^[0-9]{5}$/);
+
     wrongFirstName.textContent = "";
     wrongName.textContent = "";
     wrongEmail.textContent = "";
@@ -42,6 +46,7 @@ function checkForm(event) {
     wrongProCompanyName.textContent = "";
     wrongDuns.textContent = "";
     wrongProJobPosition.textContent = "";
+    wrongZipcode = "";
 
     if (!nameRE.test(name.value)) {
         event.preventDefault();
@@ -116,6 +121,21 @@ function checkForm(event) {
         phone.focus();
     }
 
+    if (!zipcodeRE.test(registrationZipcode.value)) {
+        event.preventDefault();
+        wrongZipcode.style.color = "orange";
+        wrongZipcode.innerHTML = "<i class='fa-solid fa-circle-exclamation'></i> Code postal invalide (ex: 75000)";
+        email.focus();
+        registrationZipcode.focus();
+    }
+    if (registrationZipcode.validity.valueMissing) {
+        event.preventDefault();
+        wrongZipcode.style.color = "red";
+        wrongZipcode.innerHTML = "<i class='fa-solid fa-circle-exclamation'></i> Code postal requis (ex: 75000)";
+        email.focus();
+        registrationZipcode.focus();
+    }
+
     if ((pro_cb.checked==true) && proCompanyName.validity.valueMissing) {
         event.preventDefault();
         wrongProCompanyName.style.color = "red";
@@ -153,6 +173,26 @@ function checkForm(event) {
 if (document.getElementById("submit")) {
     document.getElementById("submit").addEventListener("click", checkForm);
 }
+
+
+function toZipcode() {
+    const apiUrl = 'https://geo.api.gouv.fr/communes?codePostal='
+    let code = registrationZipcode.value;
+    console.log(code); 
+    fetch(apiUrl+code).then(response=>{
+        response.json().then(json => {
+            cityList.innerHTML = "";
+            for (let i=0; i<json.length; i++) {
+                cityList.innerHTML += `<option value="${json[i].nom}">`;
+            }
+        })
+    })
+}
+const registrationZipcode = document.getElementById("registration_form_address_zipcode")
+registrationZipcode.addEventListener("keyup", toZipcode);
+
+const cityList = document.getElementById('cityList');
+
 
 
 function proSubForm() {
