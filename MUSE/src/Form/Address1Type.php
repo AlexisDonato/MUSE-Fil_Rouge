@@ -29,16 +29,15 @@ class Address1Type extends AbstractType
                 ])
 
             ->add('city', TextType::class, [
-                'attr' => [
-                    'list' => 'cityList',
-                    ],  
                 ])
                 
             ->add('pathType')
             ->add('pathNumber')
+
             ->add('billingAddress', CheckboxType::class, [
                 'required' => false,
             ])
+            
             ->add('deliveryAddress', CheckboxType::class, [
                 'required' => false,
             ])

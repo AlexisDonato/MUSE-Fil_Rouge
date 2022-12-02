@@ -17,6 +17,7 @@ class AddressType extends AbstractType
         $builder
             ->add('name')
             ->add('country')
+
             ->add('zipcode', TextType::class, [
                 'attr' => ['maxlength' => 5],
                 'constraints' => [
@@ -28,18 +29,19 @@ class AddressType extends AbstractType
                 ])
 
             ->add('city', TextType::class, [
-                'attr' => [
-                    'list' => 'cityList',
-                    ],  
                 ])
+
             ->add('pathType')
             ->add('pathNumber')
+
             ->add('billingAddress', CheckboxType::class, [
                 'required' => false,
             ])
+            
             ->add('deliveryAddress', CheckboxType::class, [
                 'required' => false,
             ])
+
             ->add('user')
         ;
     }

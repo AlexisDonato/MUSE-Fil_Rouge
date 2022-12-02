@@ -184,7 +184,9 @@ function toZipcode(zipcode, dataList) {
         response.json().then(json => {
 
             dataList.innerHTML = "";
-            
+            if (i=0){
+
+            }
             for (let i=0; i<json.length; i++) {
                 dataList.innerHTML += `<option value="${json[i].nom}">`;
             }
@@ -192,7 +194,7 @@ function toZipcode(zipcode, dataList) {
     })
 }
 
-const cityList = document.getElementById('cityList');
+// const cityList = document.getElementById('cityList');
 const registrationZipcode = document.getElementById("registration_form_address_zipcode");
 const orderZipcode = document.getElementById("order_address_zipcode");
 const addressZipcode = document.getElementById("address_zipcode");
