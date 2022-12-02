@@ -20,30 +20,30 @@
 			</div>
 			<div class="form-group col-md-6">
 				{{ form_row(registrationForm.plainPassword, {
-            label: 'Mot de passe'
-        }) }}<span id="wrongPassword"></span>
+					label: 'Mot de passe'
+				}) }}<span id="wrongPassword"></span>
 			</div>
 
 			<div class="form-group col-md-6">
 				{{ form_row(registrationForm.userName, {
-            label: 'Prénom'
-        }) }}<span id="wrongFirstName"></span>
+					label: 'Prénom'
+				}) }}<span id="wrongFirstName"></span>
 			</div>
 			<div class="form-group col-md-6">
 				{{ form_row(registrationForm.userLastName, {
-            label: 'Nom de famille'
-        }) }}<span id="wrongName"></span>
+					label: 'Nom de famille'
+				}) }}<span id="wrongName"></span>
 			</div>
 
 			<div class="form-group col-md-6">
 				{{ form_row(registrationForm.birthdate, {
-            label: 'Date de naissance'
-        }) }}
+					label: 'Date de naissance'
+				}) }}
 			</div>
 			<div class="form-group col-md-6">
 				{{ form_row(registrationForm.phoneNumber, {
-            label: 'Numéro de téléphone'
-        }) }}<span id="wrongPhone"></span>
+					label: 'Numéro de téléphone'
+				}) }}<span id="wrongPhone"></span>
 			</div>
 		</div>
 
@@ -71,35 +71,38 @@
 		<div class="row">
 			<div class="form-group col-md-3">
 				{{ form_row(registrationForm.address_name, {
-            label: "Titre de l'adresse"
-        }) }}
+					label: "Titre de l'adresse"
+				}) }}
 				<small class="text-primary">(ex: Domicile, Adresse de livraison n°1, Adresse de facturation n°3...)</small>
 			</div>
 			<div class="form-group col-md-3">
 				{{ form_row(registrationForm.address_country, {
-            label: "Pays"
-        }) }}
+					label: "Pays"
+				}) }}
 			</div>
 			<div class="form-group col-md-3">
 				{{ form_row(registrationForm.address_zipcode, {
-            label: "Code postal"
-        }) }}<span id="wrongZipcode"></span>
+					label: "Code postal"
+				}) }}<span id="wrongZipcode"></span>
 			</div>
 
 			<div class="form-group col-md-3">
 				{{ form_row(registrationForm.address_city, {
-            label: "Ville"
-        }) }}<datalist id="cityList"></datalist><span id="wrongCity"></span>
+					label: "Ville"
+				}) }}<datalist id="cityList"></datalist>
+			<span id="wrongCity"></span>
 			</div>
+		</div>
+		<div class="row d-flex justify-content-center">
 			<div class="form-group col-md-3">
 				{{ form_row(registrationForm.address_path_number, {
-            label: "Numéro de voie"
-        }) }}
+					label: "Numéro de voie"
+				}) }}
 			</div>
 			<div class="form-group col-md-6">
 				{{ form_row(registrationForm.address_path_type, {
-            label: "Voie"
-        }) }}
+					label: "Voie"
+				}) }}
 				<small class="text-primary">(ex: Rue de la Gare, Avenue des Champs Elysées, Impasse...)</small>
 			</div>
 		</div>
