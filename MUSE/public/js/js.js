@@ -191,12 +191,20 @@ function toZipcode(zipcode, dataList) {
         })
     })
 }
+
 const cityList = document.getElementById('cityList');
-const registrationZipcode = document.getElementById("registration_form_address_zipcode")
-registrationZipcode.addEventListener("keyup", () => {
+const registrationZipcode = document.getElementById("registration_form_address_zipcode");
+const orderZipcode = document.getElementById("order_address_zipcode");
+
+if (registrationZipcode) {registrationZipcode.addEventListener("keyup", () => {
     toZipcode(registrationZipcode.value, cityList);
 });
-
+}
+if (orderZipcode) {
+orderZipcode.addEventListener("keyup", () => {
+    toZipcode(orderZipcode.value, cityList);
+});
+}
 
 
 

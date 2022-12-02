@@ -15,12 +15,12 @@
 		<div class="form-group col-md-3">
 			{{ form_row(newAddressForm.zipcode, {
             label: "Code postal"
-        }) }}
+        }) }}<span id="wrongZipcode"></span>
 		</div>
 		<div class="form-group col-md-3">
 			{{ form_row(newAddressForm.city, {
             label: "Ville"
-        }) }}
+        }) }}<datalist id="cityList"></datalist>
 		</div>
 	</div>
 	<div class="row d-flex justify-content-center">
