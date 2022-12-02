@@ -134,12 +134,9 @@ class RegistrationFormType extends AbstractType
                 ])
 
             ->add('address_name', TextType::class, [
-                // 'help' => 'ex: Domicile, Adresse de livraison n°1, Adresse de facturation n°3...'
-
             ])
 
             ->add('address_country', TextType::class, [
-
                 ])
 
             ->add('address_zipcode', TextType::class, [
@@ -159,11 +156,9 @@ class RegistrationFormType extends AbstractType
                 ])
 
             ->add('address_path_type', TextType::class, [
-                // 'help' => 'ex: Rue, Avenue, Impasse...'
                 ])
 
             ->add('address_path_number', TextType::class, [
-
                 ])
     
             ->add('agreeTerms', CheckboxType::class, [
