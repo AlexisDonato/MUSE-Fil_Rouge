@@ -140,6 +140,7 @@ class RegistrationFormType extends AbstractType
                 ])
 
             ->add('address_zipcode', TextType::class, [
+                'attr' => ['maxlength' => 5],
                 'constraints' => [
                     new Regex([
                         'pattern' => '/^[0-9]{5}$/',

@@ -195,15 +195,27 @@ function toZipcode(zipcode, dataList) {
 const cityList = document.getElementById('cityList');
 const registrationZipcode = document.getElementById("registration_form_address_zipcode");
 const orderZipcode = document.getElementById("order_address_zipcode");
+const addressZipcode = document.getElementById("address_zipcode");
+const address1Zipcode = document.getElementById("address1_zipcode");
 
 if (registrationZipcode) {registrationZipcode.addEventListener("keyup", () => {
     toZipcode(registrationZipcode.value, cityList);
 });
 }
 if (orderZipcode) {
-orderZipcode.addEventListener("keyup", () => {
-    toZipcode(orderZipcode.value, cityList);
-});
+    orderZipcode.addEventListener("keyup", () => {
+        toZipcode(orderZipcode.value, cityList);
+    });
+}
+if (addressZipcode) {
+    addressZipcode.addEventListener("keyup", () => {
+        toZipcode(addressZipcode.value, cityList);
+    });
+}
+if (address1Zipcode) {
+    address1Zipcode.addEventListener("keyup", () => {
+        toZipcode(address1Zipcode.value, cityList);
+    });
 }
 
 

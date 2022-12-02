@@ -68,8 +68,8 @@ INSERT INTO `category` (`id`, `parent_category_id`, `name`, `image`) VALUES
 -- Listage des données de la table MUSE.contact : ~0 rows (environ)
 
 -- Listage des données de la table MUSE.doctrine_migration_versions : ~1 rows (environ)
-INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
-	('DoctrineMigrations\\Version20221130112926', '2022-11-30 12:29:32', 36);
+-- INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
+-- 	('DoctrineMigrations\\Version20221130112926', '2022-11-30 12:29:32', 36);
 
 -- Listage des données de la table MUSE.order_details : ~26 rows (environ)
 INSERT INTO `order_details` (`id`, `product_id`, `cart_id`, `quantity`, `sub_total`) VALUES

@@ -5,7 +5,9 @@ namespace App\Form;
 use App\Entity\Address;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class AddressType extends AbstractType
@@ -15,8 +17,21 @@ class AddressType extends AbstractType
         $builder
             ->add('name')
             ->add('country')
-            ->add('zipcode')
-            ->add('city')
+            ->add('zipcode', TextType::class, [
+                'attr' => ['maxlength' => 5],
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[0-9]{5}$/',
+                        'message' => 'Code postal invalide : entrée à 5 chiffres (ex: "75000")'
+                        ]),
+                    ]
+                ])
+
+            ->add('city', TextType::class, [
+                'attr' => [
+                    'list' => 'cityList',
+                    ],  
+                ])
             ->add('pathType')
             ->add('pathNumber')
             ->add('billingAddress', CheckboxType::class, [

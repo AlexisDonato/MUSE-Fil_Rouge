@@ -18,6 +18,7 @@ class OrderAddressType extends AbstractType
             ->add('name')
             ->add('country')
             ->add('zipcode', TextType::class, [
+                'attr' => ['maxlength' => 5],
                 'constraints' => [
                     new Regex([
                         'pattern' => '/^[0-9]{5}$/',
