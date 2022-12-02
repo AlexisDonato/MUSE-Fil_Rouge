@@ -188,10 +188,10 @@ function toZipcode() {
         })
     })
 }
+const cityList = document.getElementById('cityList');
 const registrationZipcode = document.getElementById("registration_form_address_zipcode")
 registrationZipcode.addEventListener("keyup", toZipcode);
 
-const cityList = document.getElementById('cityList');
 
 
 
