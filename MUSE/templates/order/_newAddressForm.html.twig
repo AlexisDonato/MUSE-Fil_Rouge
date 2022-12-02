@@ -1,25 +1,32 @@
 {{ form_start(newAddressForm) }}
 <div class="container">
 	<div class="row">
-		<div class="form-group col-md-6">
+		<div class="form-group col-md-3">
 			{{ form_row(newAddressForm.name, {
             label: "Titre de l'adresse"
         }) }}
 			<small>(ex: Domicile, Adresse de livraison n°1, Adresse de facturation n°3...)</small>
 		</div>
-		<div class="form-group col-md-6">
+		<div class="form-group col-md-3">
 			{{ form_row(newAddressForm.country, {
             label: "Pays"
         }) }}
 		</div>
-		<div class="form-group col-md-6">
+		<div class="form-group col-md-3">
 			{{ form_row(newAddressForm.zipcode, {
             label: "Code postal"
         }) }}
 		</div>
-		<div class="form-group col-md-6">
+		<div class="form-group col-md-3">
 			{{ form_row(newAddressForm.city, {
             label: "Ville"
+        }) }}
+		</div>
+	</div>
+	<div class="row d-flex justify-content-center">
+		<div class="form-group col-md-3">
+			{{ form_row(newAddressForm.pathNumber, {
+            label: "N° de voie"
         }) }}
 		</div>
 		<div class="form-group col-md-6">
@@ -27,11 +34,8 @@
             label: "Voie"
         }) }}<small>(ex: Rue du Gal de Gaulle, Avenue, Impasse...)</small>
 		</div>
-		<div class="form-group col-md-6">
-			{{ form_row(newAddressForm.pathNumber, {
-            label: "N° de voie"
-        }) }}
-		</div>
+	</div>
+	<div class="row">
 		<div class="form-group col-md-6">
 			{{ form_row(newAddressForm.billingAddress, {
             label: "Définir comme adresse de facturation"
