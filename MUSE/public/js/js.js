@@ -175,27 +175,27 @@ if (document.getElementById("submit")) {
 }
 
 
-function toZipcode() {
+function toZipcode(zipcode, dataList) {
 
     const apiUrl = 'https://geo.api.gouv.fr/communes?codePostal='
-    let code = registrationZipcode.value;
-    console.log(code); 
 
-    fetch(apiUrl+code).then(response=>{
+    fetch(apiUrl+zipcode).then(response=>{
 
         response.json().then(json => {
 
-            cityList.innerHTML = "";
+            dataList.innerHTML = "";
             
             for (let i=0; i<json.length; i++) {
-                cityList.innerHTML += `<option value="${json[i].nom}">`;
+                dataList.innerHTML += `<option value="${json[i].nom}">`;
             }
         })
     })
 }
 const cityList = document.getElementById('cityList');
 const registrationZipcode = document.getElementById("registration_form_address_zipcode")
-registrationZipcode.addEventListener("keyup", toZipcode);
+registrationZipcode.addEventListener("keyup", () => {
+    toZipcode(registrationZipcode.value, cityList);
+});
 
 
 

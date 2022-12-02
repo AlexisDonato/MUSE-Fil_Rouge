@@ -149,10 +149,6 @@ class RegistrationFormType extends AbstractType
                 ])
 
             ->add('address_city', TextType::class, [
-                'attr' => [
-                    'list' => 'cityList',
-                    'pattern' => '\d{5}'
-                    ],  
                 ])
 
             ->add('address_path_type', TextType::class, [
