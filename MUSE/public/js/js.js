@@ -174,7 +174,7 @@ if (document.getElementById("submit")) {
     document.getElementById("submit").addEventListener("click", checkForm);
 }
 
-
+// Fetch API gouv cities from zipcode
 const registrationZipcode = document.getElementById("registration_form_address_zipcode");
 const orderZipcode = document.getElementById("order_address_zipcode");
 const addressZipcode = document.getElementById("address_zipcode");
@@ -197,8 +197,6 @@ function toZipcode(zipcode, cityList) {
         })
     })
 }
-
-
 
 if (registrationZipcode) {registrationZipcode.addEventListener("keyup", () => {
     toZipcode(registrationZipcode.value, cityList);
