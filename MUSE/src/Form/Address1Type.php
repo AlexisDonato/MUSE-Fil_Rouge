@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class Address1Type extends AbstractType
@@ -28,8 +29,14 @@ class Address1Type extends AbstractType
                     ]
                 ])
 
-            ->add('city', TextType::class, [
-                ])
+            ->add('city', ChoiceType::class, [
+                'label' => [
+                    'for' => 'cityList',
+                ],
+                'attr' => [
+                    'id',
+                    ]
+            ])
                 
             ->add('pathType')
             ->add('pathNumber')
