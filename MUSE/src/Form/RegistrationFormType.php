@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -149,7 +150,13 @@ class RegistrationFormType extends AbstractType
                     ]
                 ])
 
-            ->add('address_city', TextType::class, [
+            ->add('address_city', ChoiceType::class, [
+                    'label' => [
+                        'for' => 'cityList',
+                    ],
+                    'attr' => [
+                        'id' => 'cityList',
+                    ]
                 ])
 
             ->add('address_path_type', TextType::class, [

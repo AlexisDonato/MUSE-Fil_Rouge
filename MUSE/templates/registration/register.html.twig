@@ -88,9 +88,8 @@
 
 			<div class="form-group col-md-3">
 				{{ form_row(registrationForm.address_city, {
-					label: "Ville"
-				}) }}<datalist id="cityList"></datalist>
-			<span id="wrongCity"></span>
+					label: "Ville", 'id': 'cityList'
+				}) }}<span id="wrongCity"></span>
 			</div>
 		</div>
 		<div class="row d-flex justify-content-center">

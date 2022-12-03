@@ -175,7 +175,13 @@ if (document.getElementById("submit")) {
 }
 
 
-function toZipcode(zipcode, dataList) {
+const registrationZipcode = document.getElementById("registration_form_address_zipcode");
+const orderZipcode = document.getElementById("order_address_zipcode");
+const addressZipcode = document.getElementById("address_zipcode");
+const address1Zipcode = document.getElementById("address1_zipcode");
+const cityList = document.getElementById('cityList');
+
+function toZipcode(zipcode, cityList) {
 
     const apiUrl = 'https://geo.api.gouv.fr/communes?codePostal='
 
@@ -183,22 +189,16 @@ function toZipcode(zipcode, dataList) {
 
         response.json().then(json => {
 
-            dataList.innerHTML = "";
-            if (i=0){
+            cityList.innerHTML = "";
 
-            }
             for (let i=0; i<json.length; i++) {
-                dataList.innerHTML += `<option value="${json[i].nom}">`;
+                cityList.innerHTML += `<option value="${json[i].nom}">${json[i].nom}</option>`;
             }
         })
     })
 }
 
-// const cityList = document.getElementById('cityList');
-const registrationZipcode = document.getElementById("registration_form_address_zipcode");
-const orderZipcode = document.getElementById("order_address_zipcode");
-const addressZipcode = document.getElementById("address_zipcode");
-const address1Zipcode = document.getElementById("address1_zipcode");
+
 
 if (registrationZipcode) {registrationZipcode.addEventListener("keyup", () => {
     toZipcode(registrationZipcode.value, cityList);
