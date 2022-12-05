@@ -125,7 +125,7 @@
 				</li>
 			{% elseif app.user %}
 				<li class="nav-item dropdown">
-					<i class="fa-solid fa-user fa-lg text-light ml-5 surround {% if app.request.attributes.get('_route') == 'app_client_show' %}text-light{% elseif app.request.attributes.get('_route') == 'app_validated_orders' %}text-light{% else %}text-secondary{% endif %}"></i>
+					<i class="fa-solid fa-user fa-lg ml-5 surround {% if app.request.attributes.get('_route') == 'app_client_show' %}text-light{% elseif app.request.attributes.get('_route') == 'app_validated_orders' %}text-light{% else %}text-secondary{% endif %}"></i>
 					<a class="nav-link dropdown-toggle text-decoration-none {% if app.request.attributes.get('_route') == 'app_client_show' %}text-light{% elseif app.request.attributes.get('_route') == 'app_validated_orders' %}text-light{% else %}text-secondary{% endif %}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Votre profil</a>
 					<div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item text-light" {% if is_granted('ROLE_ADMIN') %} href="{{ path('app_user_show', {'id': app.user.id}) }}" {% else %} href="{{ path('app_client_show', {'id': app.user.id}) }}" {% endif %}>
