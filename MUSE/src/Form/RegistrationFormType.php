@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\User;
 use App\Entity\Address;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -158,6 +160,10 @@ class RegistrationFormType extends AbstractType
                         'id' => 'cityList',
                     ]
                 ])
+                ->addEventListener(
+                    FormEvents::PRE_SUBMIT,
+                    [$this, 'onPreSubmit']
+                )
 
             ->add('address_path_type', TextType::class, [
                 ])
@@ -178,8 +184,12 @@ class RegistrationFormType extends AbstractType
 
     }
 
-
-
+    public function onPreSubmit(FormEvent $event)
+    {
+        $input = $event->getData()['address_city'];
+        $event->getForm()->add('address_city', ChoiceType::class,
+            ['choices' => [$input]]);
+    }
 
     public function configureOptions(OptionsResolver $resolver): void
     {

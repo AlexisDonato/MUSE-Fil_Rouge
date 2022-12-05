@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Address;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -37,6 +39,10 @@ class OrderAddressType extends AbstractType
                     'id' => 'cityList',
                 ]
             ])
+            ->addEventListener(
+                FormEvents::PRE_SUBMIT,
+                [$this, 'onPreSubmit']
+            )
 
             ->add('pathType')
             ->add('pathNumber')
@@ -51,6 +57,13 @@ class OrderAddressType extends AbstractType
         ;
     }
 
+    public function onPreSubmit(FormEvent $event)
+    {
+        $input = $event->getData()['address_city'];
+        $event->getForm()->add('address_city', ChoiceType::class,
+            ['choices' => [$input]]);
+    }
+    
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

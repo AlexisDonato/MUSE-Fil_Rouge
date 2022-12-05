@@ -44,7 +44,12 @@ class RegistrationController extends AbstractController
         $address = new Address();
         $form = $this->createForm(RegistrationFormType::class);
 
-        $form->handleRequest($request);
+
+        // $data = json_decode($request->getContent(), true);
+
+        $form->handleRequest($request
+        // , $data
+    );
 
         $data = new SearchData();
 
