@@ -30,7 +30,6 @@ class ClientController extends AbstractController
         $cartService->setUser($user);
 
         if ($this->getUser()->isVerified()) {
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
             // The user cannot access other users infos:
             if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
