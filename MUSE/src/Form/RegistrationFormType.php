@@ -124,6 +124,7 @@ class RegistrationFormType extends AbstractType
 
             ->add('proDuns', TextType::class, [
                 'required' => false,
+                'attr' => ['maxlength' => 9],
                 'constraints' => [
                     new Regex([
                         'pattern' => '/^[0-9]{9}$/',
