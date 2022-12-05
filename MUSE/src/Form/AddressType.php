@@ -61,8 +61,8 @@ class AddressType extends AbstractType
 
     public function onPreSubmit(FormEvent $event)
     {
-        $input = $event->getData()['address_city'];
-        $event->getForm()->add('address_city', ChoiceType::class,
+        $input = $event->getData()['city'];
+        $event->getForm()->add('city', ChoiceType::class,
             ['choices' => [$input]]);
     }
 

@@ -86,6 +86,7 @@ class ClientAddressController extends AbstractController
             $entityManager->persist($cart);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Adresse enregistrée !');
             return $this->redirectToRoute('app_client_address_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -171,6 +172,7 @@ class ClientAddressController extends AbstractController
             $entityManager->persist($cart);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Adresse modifiée !');
             return $this->redirectToRoute('app_client_address_index', [], Response::HTTP_SEE_OTHER);
         }
 
