@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Cart;
 use App\Entity\Coupon;
 use App\Repository\CartRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,7 +27,7 @@ class CouponType extends AbstractType
                 'help' => 'Ex: "0.20" pour 20%'
             ])
             ->add('validated')
-            ->add('cart', null, [
+            ->add('cart', EntityType::class, [
                 'class' => Cart::class,
                 'query_builder' => function (CartRepository $cartRepository) {
                     return $cartRepository->createQueryBuilder('c')
@@ -35,6 +36,7 @@ class CouponType extends AbstractType
                         ->orderBy('u.email', 'ASC');
                 },
                 'choice_label' => 'user',
+                'multiple' => false,
             ])
         ;
     }

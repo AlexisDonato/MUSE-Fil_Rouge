@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="container">
-    <h1>Coupon index</h1>
+    <h1 class="text-center mb-3">Coupon index</h1>
 
     <table class="table table-dark darker table-striped">
         <thead>
@@ -13,6 +13,7 @@
                 <th>Code</th>
                 <th>Taux de remise</th>
                 <th>Validé?</th>
+                <th>Client</th>
                 <th></th>
             </tr>
         </thead>
@@ -23,6 +24,7 @@
                 <td>{{ coupon.code }}</td>
                 <td>{{ coupon.discountRate }}</td>
                 <td>{{ coupon.validated ? 'Oui' : 'Non' }}</td>
+                <td>{% if coupon.cart %}{{ coupon.cart.user }}{% endif %}</td>
                 <td>
                     <a href="{{ path('app_coupon_show', {'id': coupon.id}) }}"><i class="fa-solid fa-eye btn btn-warning border border-light Hl" title="Détails"></i></a>
                     <a href="{{ path('app_coupon_edit', {'id': coupon.id}) }}"><i class="fa-solid fa-pencil btn btn-warning border border-light Hl" title="Modifier"></i></a>
