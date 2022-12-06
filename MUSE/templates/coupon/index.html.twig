@@ -3,6 +3,7 @@
 {% block title %}Coupon index{% endblock %}
 
 {% block body %}
+<div class="container">
     <h1>Coupon index</h1>
 
     <table class="table table-dark darker table-striped">
@@ -11,7 +12,7 @@
                 <th>Id</th>
                 <th>Code</th>
                 <th>Taux de remise</th>
-                <th>Validaté</th>
+                <th>Validé?</th>
                 <th></th>
             </tr>
         </thead>
@@ -29,11 +30,12 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Aucun bon trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-     <button class="btn btn-warning text-warning mb-1"><a class="text-decoration-none" href="{{ path('app_coupon_new') }}">Create new</a></button>
+     <button class="btn btn-warning mb-1"><a class="text-decoration-none text-light" href="{{ path('app_coupon_new') }}">Nouveau bon</a></button>
+     </div>
 {% endblock %}

@@ -3,9 +3,11 @@
 {% block title %}New Coupon{% endblock %}
 
 {% block body %}
-    <h1>Create new Coupon</h1>
+<div class="container">
+    <h1 class="text-center mb-5">Nouveau bon</h1>
 
     {{ include('coupon/_form.html.twig') }}
 
-    <a href="{{ path('app_coupon_index') }}">back to list</a>
+    <button class="btn btn-warning border border-light mb-1"><a class="text-decoration-none text-light" href="{{ path('app_coupon_index') }}">back to list</a></button>
+</div>
 {% endblock %}

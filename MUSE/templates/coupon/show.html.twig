@@ -16,19 +16,19 @@
                 <td>{{ coupon.code }}</td>
             </tr>
             <tr>
-                <th>DiscountRate</th>
+                <th>Taux de remise</th>
                 <td>{{ coupon.discountRate }}</td>
             </tr>
             <tr>
-                <th>Validated</th>
+                <th>Validé?</th>
                 <td>{{ coupon.validated ? 'Yes' : 'No' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_coupon_index') }}">back to list</a>
+    <button class="btn btn-warning border border-light mb-1"><a class="text-decoration-none text-light" href="{{ path('app_coupon_index') }}">Retour à la liste</a></button>
 
-    <a href="{{ path('app_coupon_edit', {'id': coupon.id}) }}">edit</a>
+    <button class="btn btn-warning border border-light mb-1"><a class="text-decoration-none text-light" href="{{ path('app_coupon_edit', {'id': coupon.id}) }}">Modifier</a></button>
 
     {{ include('coupon/_delete_form.html.twig') }}
 {% endblock %}
