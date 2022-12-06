@@ -8,6 +8,7 @@ use Twig\Environment;
 use App\Entity\Address;
 use App\Data\SearchData;
 use App\Service\PdfTools;
+use App\Form\CouponInsertType;
 use App\Form\OrderAddressType;
 use App\Form\SelectAddressType;
 use App\Security\EmailVerifier;
@@ -79,6 +80,34 @@ class OrderController extends AbstractController
 
         $cart = $cartService->getClientCart();
 
+        $couponInsertform = $this->createForm(CouponInsertType::class);
+        $couponInsertform->handleRequest($request);
+        $coupon = $couponInsertform->get('code')->getData();
+
+        if ($couponInsertform->isSubmitted() && $couponInsertform->isValid()) {
+
+            if ($coupon == $cart->getCoupon()->getCode() && $cart->getCoupon()->isValidated() == 0) {
+                $cart->setAdditionalDiscountRate($cart->getCoupon()->getDiscountRate());
+                $cart->getCoupon()->setValidated(true);
+
+                $entityManager->persist($cart);
+                $entityManager->persist($cart->getCoupon());
+
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Bon de réduction appliqué !');
+            // Redirects to the last page :
+            $route = $request->headers->get('referer');
+            return $this->redirect($route);
+            }
+            else {
+                $this->addFlash('error', 'Bon de réduction invalide');
+            // Redirects to the last page :
+            $route = $request->headers->get('referer');
+            return $this->redirect($route);
+            }
+        }
+
         $address = new Address();
         $newAddressForm = $this->createForm(OrderAddressType::class);
         $newAddressForm->handleRequest($request);
@@ -149,6 +178,7 @@ class OrderController extends AbstractController
             'discount2' => $productRepository->findProductsDiscount(),
             'addresses' => $addresses,
             'cart'      => $cart,
+            'couponInsertform' => $couponInsertform->createView(),
             'newAddressForm' => $newAddressForm->createView(),
             'selectForm' => $selectForm->createView(),
         ]);

@@ -2,8 +2,8 @@
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="form-group d-flex pb-0">
-            <i class="fa-solid fa-gift fa-lg mt-2 mr-1 surround"></i>{{ form_widget(couponInsertform) }}
-            <button type="submit" class="btn btn-primary border-light Hl">Ajouter</button>
+            <i class="fa-solid fa-gift fa-lg mt-2 mr-1 surround"></i>{{ form_row(couponInsertform.code) }}
+            {{ form_row(couponInsertform.submit, { 'label': 'Ajouter' }) }}
         </div>
     </div>
 </div>

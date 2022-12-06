@@ -5,6 +5,7 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CouponInsertType extends AbstractType
 {
@@ -17,6 +18,9 @@ class CouponInsertType extends AbstractType
                     'placeholder' => 'Insérez votre code ici',
                 )
             ])
+            ->add('submit', SubmitType::class, [
+                'attr' => ['class' => 'btn btn-primary border-light Hl'],
+            ]);
         ;
     }
 
