@@ -15,7 +15,10 @@
 	{% if cart.validated == true %}
 		{% set sumTotal = sumTotal + cart.total %}
 	{% endif %}
-	{% if cart.user.pro == true %}
+{% endfor %}
+
+{% for user in users %}
+	{% if user.pro == true %}
 		{% set pro = pro + 1 %}
 	{% endif %}
 {% endfor %}

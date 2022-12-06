@@ -21,17 +21,17 @@
                 {% set sumTotal = sumTotal + cart.total %}
                 {% set orders = orders + 1 %}
             {% endif %}
-            {% if cart.user.pro == true %}
-                {% set pro = pro + 1 %}
                     {% if cart.validated == true %}
                         {% set sumPro = sumPro + cart.total %}
-                    {% endif %}    
-            {% else %}
-                {% if cart.validated == true %}
-                    {% set sumClient = sumClient + cart.total %}
-                {% endif %}
-            {% endif %}
+                      {% set sumClient = sumClient + cart.total %}
+                    {% endif %}
     {% endfor %}
+
+{% for user in users %}
+	{% if user.pro == true %}
+		{% set pro = pro + 1 %}
+	{% endif %}
+{% endfor %}
 
     {% for product in products %}
         {% if product.quantity == 0 %}
