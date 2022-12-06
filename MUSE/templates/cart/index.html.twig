@@ -111,7 +111,7 @@
 	</div>
 	<div id="couponInput">
 		<div class="d-flex justify-content-center mt-2 mb-4">
-			<form action="" method="POST" class="form-inline">
+			{# <form action="" method="POST" class="form-inline">
 				<div class="form-group">
 					<div class="input-group">
 						<i class="fa-solid fa-gift fa-lg mt-2 mr-1 surround"></i>
@@ -119,11 +119,12 @@
 					</div>
 					<button type="submit" class="btn btn-primary border-light Hl">Ajouter</button>
 				</div>
-			</form>
+			</form> #}
+			{{ include ('coupon/_coupon_insert_form.html.twig', {'button_label': 'Update'}) }}
 		</div>
 	</div>
 
-{{ include ('coupon/_coupon_insert_form.html.twig', {'button_label': 'Update'}) }}
+
 
 <div class="text-center">
 	<a href="{{ path("app_order") }}" class="btn btn-info btn-lg border-light mb-3 Hl" title="Finalisez votre commande">Finalisez votre commande</a>
