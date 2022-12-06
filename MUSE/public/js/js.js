@@ -1,42 +1,46 @@
 // Client side forms check
 
+const name = document.querySelector(".LastNameField");
+const wrongName = document.getElementById('wrongName');
+const nameRE = new RegExp(/^[A-Z][a-zàéèêëîïôöûüùç.]+([ -][A-Z][a-zàéèêëîïôöûüùç.])*/);
+
+const firstName = document.querySelector(".FirstNameField");
+const wrongFirstName = document.getElementById("wrongFirstName");
+const firstNameRE = new RegExp(/^[A-Z][a-zàéèêëîïôöûüùç.]+([ -][A-Z][a-zàéèêëîïôöûüùç.])*/);
+
+const email = document.querySelector(".EmailField");
+const wrongEmail = document.getElementById("wrongEmail");
+const emailRE = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,3}))$/);
+
+const password = document.querySelector(".password-field");
+const wrongPassword = document.getElementById("wrongPassword");
+const passwordRE = new RegExp(/^\S*(?=\S{6,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/);
+
+const phone = document.querySelector(".PhoneField");
+const wrongPhone = document.getElementById("wrongPhone");
+const phoneRE = new RegExp(/^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/); // French phone numbers
+
+const pro_cb =document.getElementById("registration_form_pro");
+
+const proCompanyName = document.getElementById("registration_form_proCompanyName");
+const wrongProCompanyName = document.getElementById("wrongProCompanyName");
+
+const proJobPosition = document.getElementById("registration_form_proJobPosition");
+const wrongProJobPosition = document.getElementById("wrongProJobPosition");
+
+const duns = document.getElementById("registration_form_proDuns");
+const wrongDuns = document.getElementById("wrongDuns");
+const dunsRE = new RegExp(/^[0-9]{9}$/);
+
+const registrationZipcode = document.getElementById("registration_form_address_zipcode");
+const wrongZipcode = document.getElementById('wrongZipcode');
+const zipcodeRE = new RegExp(/^[0-9]{5}$/);
+
+const cityList = document.getElementById('cityList');
+const wrongCity = document.getElementById('wrongCity');
+
+
 function checkForm(event) {
-
-    let name = document.querySelector(".LastNameField");
-    let wrongName = document.getElementById('wrongName');
-    let nameRE = new RegExp(/^[A-Z][a-zàéèêëîïôöûüùç.]+([ -][A-Z][a-zàéèêëîïôöûüùç.])*/);
-
-    let firstName = document.querySelector(".FirstNameField");
-    let wrongFirstName = document.getElementById("wrongFirstName");
-    let firstNameRE = new RegExp(/^[A-Z][a-zàéèêëîïôöûüùç.]+([ -][A-Z][a-zàéèêëîïôöûüùç.])*/);
-
-    let email = document.querySelector(".EmailField");
-    let wrongEmail = document.getElementById("wrongEmail");
-    let emailRE = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,3}))$/);
-
-    let password = document.querySelector(".password-field");
-    let wrongPassword = document.getElementById("wrongPassword");
-    let passwordRE = new RegExp(/^\S*(?=\S{6,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$/);
-
-    let phone = document.querySelector(".PhoneField");
-    let wrongPhone = document.getElementById("wrongPhone");
-    let phoneRE = new RegExp(/^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/); // French phone numbers
-
-    let pro_cb =document.getElementById("registration_form_pro");
-
-    let proCompanyName = document.getElementById("registration_form_proCompanyName");
-    let wrongProCompanyName = document.getElementById("wrongProCompanyName");
-
-    let proJobPosition = document.getElementById("registration_form_proJobPosition");
-    let wrongProJobPosition = document.getElementById("wrongProJobPosition");
-
-    let duns = document.getElementById("registration_form_proDuns");
-    let wrongDuns = document.getElementById("wrongDuns");
-    let dunsRE = new RegExp(/^[0-9]{9}$/);
-
-    let registrationZipcode = document.getElementById("registration_form_address_zipcode");
-    let wrongZipcode = document.getElementById('wrongZipcode');
-    let zipcodeRE = new RegExp(/^[0-9]{5}$/);
 
     wrongFirstName.textContent = "";
     wrongName.textContent = "";
@@ -46,7 +50,8 @@ function checkForm(event) {
     wrongProCompanyName.textContent = "";
     wrongDuns.textContent = "";
     wrongProJobPosition.textContent = "";
-    wrongZipcode = "";
+    wrongZipcode.textContent = "";
+    wrongCity.textContent = "";
 
     if (!nameRE.test(name.value)) {
         event.preventDefault();
@@ -123,7 +128,8 @@ function checkForm(event) {
 
     if (!zipcodeRE.test(registrationZipcode.value)) {
         event.preventDefault();
-        wrongZipcode.style.color = "orange";
+        console.log(registrationZipcode.value);
+        wrongZipcode.style.color = "orange"
         wrongZipcode.innerHTML = "<i class='fa-solid fa-circle-exclamation'></i> Code postal invalide (ex: 75000)";
         email.focus();
         registrationZipcode.focus();
@@ -134,6 +140,14 @@ function checkForm(event) {
         wrongZipcode.innerHTML = "<i class='fa-solid fa-circle-exclamation'></i> Code postal requis (ex: 75000)";
         email.focus();
         registrationZipcode.focus();
+    }
+
+    if (cityList.validity.valueMissing || cityList.value == "") {
+        event.preventDefault();
+        wrongCity.style.color = "red";
+        wrongCity.innerHTML = "<i class='fa-solid fa-circle-exclamation'></i> Ville requise, vérifiez votre code postal";
+        email.focus();
+        registrationCity.focus();
     }
 
     if ((pro_cb.checked==true) && proCompanyName.validity.valueMissing) {
@@ -175,11 +189,9 @@ if (document.getElementById("submit")) {
 }
 
 // Fetch API gouv cities from zipcode
-const registrationZipcode = document.getElementById("registration_form_address_zipcode");
 const orderZipcode = document.getElementById("order_address_zipcode");
 const addressZipcode = document.getElementById("address_zipcode");
 const address1Zipcode = document.getElementById("address1_zipcode");
-const cityList = document.getElementById('cityList');
 
 function toZipcode(zipcode, cityList) {
 

@@ -137,25 +137,6 @@ h2:hover {
     -webkit-text-stroke: 0.5px rgb(51, 134, 139);
 }
 
-
-/* .hometitle {
-    font-family: "Audiowide", sans-serif;
-    -webkit-text-stroke: 1px rgb(0, 0, 0);
-    text-shadow: 0 0 5px rgb(0, 204, 255);
-    color: rgb(0, 153, 255);
-    transition: 0.5s;
-}
-
-
-.hometitle:hover {
-    color: rgb(160, 68, 96);
-    text-shadow: 0 0 5px #ff0000,
-              0 0 25px #ff0000,
-              0 0 50px #ff0000,
-              0 0 100px #ff0000;
-    -webkit-text-stroke: 0.5px rgb(0, 0, 0);
-} */
-
 .hometitle2 {
     -webkit-text-stroke: 1px rgb(0, 0, 0);
     text-shadow: 0 0 5px rgb(58, 218, 191);
@@ -282,7 +263,7 @@ h2:hover {
 
 .brand {
     border: solid 2px #1f4d50;
-    border-radius: 10px 40px;
+    border-radius: 10px 30px;
     width: 220px;
     height: auto;
     transition: 0.3s;

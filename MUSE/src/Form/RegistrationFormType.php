@@ -151,7 +151,7 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Code postal invalide : entrée à 5 chiffres (ex: "75000")'
                         ]),
                     ]
-                ])
+                ])               
 
             ->add('address_city', ChoiceType::class, [
                     'label' => [
