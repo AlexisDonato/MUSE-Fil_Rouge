@@ -61,6 +61,9 @@ class Cart
     #[ORM\Column(length: 150, nullable: true)]
     private ?string $invoice = null;
 
+    #[ORM\OneToOne(mappedBy: 'cart', cascade: ['persist', 'remove'])]
+    private ?Coupon $coupon = null;
+
 
     public function __construct()
     {
@@ -263,5 +266,27 @@ class Cart
     public function __toString()
     {
         return $this->clientOrderId;
+    }
+
+    public function getCoupon(): ?Coupon
+    {
+        return $this->coupon;
+    }
+
+    public function setCoupon(?Coupon $coupon): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($coupon === null && $this->coupon !== null) {
+            $this->coupon->setCart(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($coupon !== null && $coupon->getCart() !== $this) {
+            $coupon->setCart($this);
+        }
+
+        $this->coupon = $coupon;
+
+        return $this;
     }
 }

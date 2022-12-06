@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Data\SearchData;
+use App\Form\CouponInsertType;
 use App\Service\Cart\CartService;
+use App\Repository\CouponRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\OrderDetailsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +20,7 @@ class CartController extends AbstractController
 {
     #[Route('/cart', name: 'app_cart_index')]
 
-    public function index(CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?UserInterface $user, ?OrderDetailsRepository $orderDetails): Response
+    public function index(Request $request, CouponRepository $couponRepository, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?UserInterface $user, ?OrderDetailsRepository $orderDetails, EntityManagerInterface $entityManager): Response
     {
         if (!$this->isGranted('ROLE_CLIENT')) {
             $this->addFlash('info', 'Merci de vous connecter ou de vous inscrire au préalable');
@@ -33,10 +36,41 @@ class CartController extends AbstractController
         $cartService->setUser($user);
         $total = $cartService->getTotal($orderDetails);
 
+        $cart = $cartService->getClientCart();
+
+        $couponInsertform = $this->createForm(CouponInsertType::class);
+        $couponInsertform->handleRequest($request);
+        $coupon = $couponInsertform->get('code')->getData();
+
+        if ($couponInsertform->isSubmitted() && $couponInsertform->isValid()) {
+
+            if ($coupon == $cart->getCoupon()->getCode() && $cart->getCoupon()->isValidated() == 0) {
+                $cart->setAdditionalDiscountRate($cart->getCoupon()->getDiscountRate());
+                $cart->getCoupon()->setValidated(true);
+
+                $entityManager->persist($cart);
+                $entityManager->persist($cart->getCoupon());
+
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Bon de réduction appliqué !');
+            // Redirects to the last page :
+            $route = $request->headers->get('referer');
+            return $this->redirect($route);
+            }
+            else {
+                $this->addFlash('error', 'Bon de réduction invalide');
+            // Redirects to the last page :
+            $route = $request->headers->get('referer');
+            return $this->redirect($route);
+            }
+        }
+    
         return $this->render('cart/index.html.twig', [
+            'couponInsertform'      =>$couponInsertform->createView(),
+            'total'     => $total,
             'items'     => $cartService->getFullCart($orderDetails),
             'count'     => $cartService->getItemCount($orderDetails),
-            'total'     => $total,
             'products'  => $productRepository->findSearch($data),
             'products2' => $productRepository->findAll(),
             'categories' => $categoryRepository->findAll(),
