@@ -21,6 +21,10 @@ class CouponController extends AbstractController
     #[Route('/', name: 'app_coupon_index', methods: ['GET'])]
     public function index(CouponRepository $couponRepository, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?OrderDetailsRepository $orderDetails): Response
     {
+        if (!$this->isGranted('ROLE_SALES')) {
+            $this->addFlash('error', 'Accès refusé');
+            return $this->redirectToRoute('login');  
+        }
         $data = new SearchData();
         
         return $this->render('coupon/index.html.twig', [
@@ -37,6 +41,10 @@ class CouponController extends AbstractController
     #[Route('/new', name: 'app_coupon_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CouponRepository $couponRepository, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?OrderDetailsRepository $orderDetails): Response
     {
+        if (!$this->isGranted('ROLE_SALES')) {
+            $this->addFlash('error', 'Accès refusé');
+            return $this->redirectToRoute('login');  
+        }
         $coupon = new Coupon();
         $form = $this->createForm(CouponType::class, $coupon);
         $form->handleRequest($request);
@@ -63,6 +71,10 @@ class CouponController extends AbstractController
     #[Route('/{id}', name: 'app_coupon_show', methods: ['GET'])]
     public function show(Coupon $coupon, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?OrderDetailsRepository $orderDetails): Response
     {
+        if (!$this->isGranted('ROLE_SALES')) {
+            $this->addFlash('error', 'Accès refusé');
+            return $this->redirectToRoute('login');  
+        }
         $data = new SearchData();
 
         return $this->render('coupon/show.html.twig', [
@@ -78,6 +90,10 @@ class CouponController extends AbstractController
     #[Route('/{id}/edit', name: 'app_coupon_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Coupon $coupon, CouponRepository $couponRepository, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?OrderDetailsRepository $orderDetails): Response
     {
+        if (!$this->isGranted('ROLE_SALES')) {
+            $this->addFlash('error', 'Accès refusé');
+            return $this->redirectToRoute('login');  
+        }
         $form = $this->createForm(CouponType::class, $coupon);
         $form->handleRequest($request);
 
@@ -103,6 +119,10 @@ class CouponController extends AbstractController
     #[Route('/{id}', name: 'app_coupon_delete', methods: ['POST'])]
     public function delete(Request $request, Coupon $coupon, CouponRepository $couponRepository): Response
     {
+        if (!$this->isGranted('ROLE_SALES')) {
+            $this->addFlash('error', 'Accès refusé');
+            return $this->redirectToRoute('login');  
+        }
         if ($this->isCsrfTokenValid('delete'.$coupon->getId(), $request->request->get('_token'))) {
             $couponRepository->remove($coupon, true);
         }
