@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Cart;
 use App\Entity\User;
+use App\Entity\Coupon;
 use App\Entity\Address;
 use App\Entity\Product;
 use App\Entity\Category;
@@ -11,6 +12,7 @@ use App\Entity\Supplier;
 use App\Entity\OrderDetails;
 use App\Repository\CartRepository;
 use App\Repository\UserRepository;
+use App\Repository\CouponRepository;
 use App\Repository\AddressRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
@@ -37,9 +39,10 @@ class DashboardController extends AbstractDashboardController
     private ProductRepository $productRepository;
     private OrderDetailsRepository $orderDetails;
     private CartRepository $cartRepository;
+    private  CouponRepository $couponRepository;
 
 
-    public function __construct(UserRepository $userRepository, AddressRepository $addressRepository, SupplierRepository $supplierRepository, CategoryRepository $categoryRepository, ProductRepository $productRepository, OrderDetailsRepository $orderDetails, CartRepository $cartRepository)
+    public function __construct(UserRepository $userRepository, AddressRepository $addressRepository, SupplierRepository $supplierRepository, CategoryRepository $categoryRepository, ProductRepository $productRepository, OrderDetailsRepository $orderDetails, CartRepository $cartRepository, CouponRepository $couponRepository)
     {
         $this->userRepository = $userRepository;
         $this->addressRepository = $addressRepository;
@@ -48,6 +51,7 @@ class DashboardController extends AbstractDashboardController
         $this->productRepository = $productRepository;
         $this->orderDetails = $orderDetails;
         $this->cartRepository = $cartRepository;
+        $this->couponRepository = $couponRepository;
 
     }
 
@@ -76,6 +80,8 @@ class DashboardController extends AbstractDashboardController
         $orderDetails = $this->orderDetails->findAll();
 
         $carts = $this->cartRepository->findAll();
+
+        $coupons = $this->couponRepository->findAll();
 
         $ordersByDate = $this->cartRepository->findOrdersByDate();
 
@@ -117,6 +123,7 @@ class DashboardController extends AbstractDashboardController
             'products' => $products,
             'orderDetails' => $orderDetails,
             'carts' => $carts,
+            'coupons' => $coupons,
             'ordersByDate' => $ordersByDate,
             'ordersByYear' => $ordersByYear,
             'salesBySupplier' => $salesBySupplier,
@@ -157,6 +164,7 @@ public function configureUserMenu(UserInterface $user): UserMenu
         yield MenuItem::linkToCrud('Products', 'fa fa-guitar', Product::class);
         yield MenuItem::linkToCrud('Orders Details', 'fa fa-folder-tree', OrderDetails::class);
         yield MenuItem::linkToCrud('Carts', 'fa fa-cart-shopping', Cart::class);
+        yield MenuItem::linkToCrud('Coupons', 'fa-solid fa-tags', Coupon::class);
         yield MenuItem::linkToUrl("Page d'accueil", 'fas fa-home', $this->generateUrl('app_home'));
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
