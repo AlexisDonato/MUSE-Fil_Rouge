@@ -53,7 +53,6 @@ class CouponController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $couponRepository->save($coupon, true);
-            $cartService->getClientcart()->setCoupon($coupon);
 
             return $this->redirectToRoute('app_coupon_index', [], Response::HTTP_SEE_OTHER);
         }
