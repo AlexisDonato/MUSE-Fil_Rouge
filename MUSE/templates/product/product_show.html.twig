@@ -73,7 +73,7 @@
 							{% if product.quantity > 0 %}
 								<td>{{ product.quantity }}
 								{% else %}
-									<td class="text-danger">Non
+									<td class="text-danger"><b>Non</b>
 									{% endif %}
 								</td>
 							</tr>
@@ -125,7 +125,7 @@
 						<tr>
 							<th class="text-success">Ajouter au panier</th>
 							<td>
-								<a href="{{ path('app_cart_add', {'id': product.id}) }}" title="Ajouter au panier" class="btn btn-primary border border-light Hl{% if product.quantity == 0 %} disabled btn-secondary {% endif %}">
+								<a href="{{ path('app_cart_add', {'id': product.id}) }}" title="Ajouter au panier" class="btn btn-primary border border-light Hl{% if product.quantity == 0 %} btn-secondary disabled {% endif %}">
 									<i class="fa-solid fa-cart-plus"></i>
 								</a>
 							</td>
@@ -163,7 +163,7 @@
 							<a href="{{ path('app_product_show', {'id': accessory.id}) }}"><img style="height: 20rem; width: auto;" class="img-thumbnail border border-secondary bg darker" src="/img/{{ accessory.image }}" onerror="this.onerror=null; this.src='{{ accessory.image1 }}'" alt="..."></a>
 							<div class="carousel-caption d-none d-md-block">
 							<a class="text-decoration-none" href="{{ path('app_product_show', {'id': accessory.id}) }}"><h3  id="audioFont" class="text-light Hl shadow">{{accessory.name}}</h3></a>
-							<h3 class="text-light surround">{{accessory.price}} €</h3>
+							<h3 class="text-light surround">{{accessory.price}} €<sup> HT</sup></h3>
 							<a href="{{ path('app_cart_add', {'id': accessory.id}) }}" title="Ajouter au panier" class="btn btn-info border-light Hl{% if accessory.quantity == 0 %} disabled btn-dark{% endif %}">
 								<i class="fa-solid fa-cart-plus fa-sm"></i>
 							</a>
