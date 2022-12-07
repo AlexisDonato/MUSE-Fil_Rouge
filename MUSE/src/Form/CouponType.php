@@ -22,22 +22,15 @@ class CouponType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('code')
+            ->add('code', null, [
+                'help' => 'Pour plus de sécurité, mélangez les caractères. Ex: "Mµ$€20°/o" pour 20%...'
+            ])
             ->add('discountRate', null, [
                 'help' => 'Ex: "0.20" pour 20%'
             ])
-            ->add('validated')
-            // ->add('cart', EntityType::class, [
-            //     'class' => Cart::class,
-            //     'query_builder' => function (CartRepository $cartRepository) {
-            //         return $cartRepository->createQueryBuilder('c')
-            //             ->join("c.user", "u")
-            //             ->where('c.validated = 0')
-            //             ->orderBy('u.email', 'ASC');
-            //     },
-            //     'choice_label' => 'user',
-            //     'multiple' => true,
-            // ])
+            ->add('validated', null, [
+                'help' => 'Pour activer le bon'
+                ])
         ;
     }
 
