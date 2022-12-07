@@ -40,13 +40,19 @@ class CartController extends AbstractController
 
         $couponInsertform = $this->createForm(CouponInsertType::class);
         $couponInsertform->handleRequest($request);
-        $coupon = $couponInsertform->get('code')->getData();
+        $couponCode = $couponInsertform->get('code')->getData();
+        $couponInsert = $couponRepository->findOneBy(["code" => $couponCode]);
+
+        $coupon = null;
+        if ($couponInsert) {
+            $coupon = $couponRepository->findOneByCartAndCoupon($couponInsert, $this->getUser());
+        }
 
         if ($couponInsertform->isSubmitted() && $couponInsertform->isValid()) {
 
-            if ($coupon == $cart->getCoupon()->getCode() && $cart->getCoupon()->isValidated() == 0) {
+            if ($coupon) {
+                $cart->setCoupon($coupon);
                 $cart->setAdditionalDiscountRate($cart->getCoupon()->getDiscountRate());
-                $cart->getCoupon()->setValidated(true);
 
                 $entityManager->persist($cart);
                 $entityManager->persist($cart->getCoupon());

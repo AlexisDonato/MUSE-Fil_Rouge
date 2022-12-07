@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CouponRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,8 +25,15 @@ class Coupon
     #[ORM\Column(nullable: true)]
     private ?bool $validated = null;
 
-    #[ORM\OneToOne(inversedBy: 'coupon', cascade: ['persist', 'remove'])]
-    private ?Cart $cart = null;
+    #[ORM\OneToMany(mappedBy: 'coupon', targetEntity: Cart::class)]
+    private Collection $cart;
+
+    public function __construct()
+    {
+        $this->cart = new ArrayCollection();
+    }
+
+
 
     public function getId(): ?int
     {
@@ -67,15 +76,39 @@ class Coupon
         return $this;
     }
 
-    public function getCart(): ?Cart
+    /**
+     * @return Collection<int, Cart>
+     */
+    public function getCart(): Collection
     {
         return $this->cart;
     }
 
-    public function setCart(?Cart $cart): self
+    public function addCart(Cart $cart): self
     {
-        $this->cart = $cart;
+        if (!$this->cart->contains($cart)) {
+            $this->cart->add($cart);
+            $cart->setCoupon($this);
+        }
 
         return $this;
     }
+
+    public function removeCart(Cart $cart): self
+    {
+        if ($this->cart->removeElement($cart)) {
+            // set the owning side to null (unless already changed)
+            if ($cart->getCoupon() === $this) {
+                $cart->setCoupon(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->code;
+    }
+
 }

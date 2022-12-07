@@ -14,6 +14,26 @@ billingAddress
 deliveryAddress
 }
 
+class Cart{
+PK - id
+clientOrderId
+validated
+orderDetails
+user
+orderDate
+shipped
+shipmentDate
+carrier
+carrierShipmentId
+total
+billingAddress
+deliveryAddress
+additionalDiscountRate
+invoice
+coupon
+}
+
+Cart -- OrderDetails
 class Category{
 PK - id
 name
@@ -34,25 +54,15 @@ subject
 enquiryDate
 }
 
-class Cart{
+class Coupon{
 PK - id
-clientOrderId
+code
+discountRate
 validated
-orderDetails
-user
-orderDate
-shipped
-shipmentDate
-carrier
-carrierShipmentId
-total
-billingAddress
-deliveryAddress
-additionalDiscountRate
-invoice
+cart
 }
 
-Cart -- OrderDetails
+Coupon -- Cart
 class OrderDetails{
 PK - id
 productId
@@ -60,17 +70,6 @@ quantity
 cart
 product
 subTotal
-}
-
-class ResetPasswordRequest{
-PK - id
-user
-}
-
-ResetPasswordRequest -- User
-class Supplier{
-PK - id
-name
 }
 
 class Product{
@@ -87,6 +86,17 @@ image1
 image2
 supplier
 category
+}
+
+class ResetPasswordRequest{
+PK - id
+user
+}
+
+ResetPasswordRequest -- User
+class Supplier{
+PK - id
+name
 }
 
 class User{
@@ -107,6 +117,7 @@ proCompanyName
 proDuns
 proJobPosition
 address
+agreeTerms
 }
 
 User -- Cart

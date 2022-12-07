@@ -36,7 +36,7 @@ class CouponType extends AbstractType
                         ->orderBy('u.email', 'ASC');
                 },
                 'choice_label' => 'user',
-                'multiple' => false,
+                'multiple' => true,
             ])
         ;
     }

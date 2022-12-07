@@ -16,6 +16,7 @@ use App\Service\Cart\CartService;
 use App\Repository\CartRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\CouponRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\OrderDetailsRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -60,7 +61,7 @@ class OrderController extends AbstractController
     }
 
     #[Route('/order', name: 'app_order')]
-    public function index(CartService $cartService, ProductRepository $productRepository, Request $request, CategoryRepository $categoryRepository, OrderDetailsRepository $orderDetails, ?UserInterface $user, EntityManagerInterface $entityManager): Response
+    public function index(CartService $cartService, ProductRepository $productRepository, Request $request, CategoryRepository $categoryRepository, OrderDetailsRepository $orderDetails, ?UserInterface $user, EntityManagerInterface $entityManager, CouponRepository $couponRepository): Response
     {
         if (!$this->isGranted('ROLE_CLIENT')) {
             $this->addFlash('error', 'Accès refusé');
@@ -82,13 +83,19 @@ class OrderController extends AbstractController
 
         $couponInsertform = $this->createForm(CouponInsertType::class);
         $couponInsertform->handleRequest($request);
-        $coupon = $couponInsertform->get('code')->getData();
+        $couponCode = $couponInsertform->get('code')->getData();
+        $couponInsert = $couponRepository->findOneBy(["code" => $couponCode]);
+
+        $coupon = null;
+        if ($couponInsert) {
+            $coupon = $couponRepository->findOneByCartAndCoupon($couponInsert, $this->getUser());
+        }
 
         if ($couponInsertform->isSubmitted() && $couponInsertform->isValid()) {
 
-            if ($coupon == $cart->getCoupon()->getCode() && $cart->getCoupon()->isValidated() == 0) {
+            if ($coupon) {
+                $cart->setCoupon($coupon);
                 $cart->setAdditionalDiscountRate($cart->getCoupon()->getDiscountRate());
-                $cart->getCoupon()->setValidated(true);
 
                 $entityManager->persist($cart);
                 $entityManager->persist($cart->getCoupon());

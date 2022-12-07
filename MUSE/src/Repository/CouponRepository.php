@@ -63,4 +63,24 @@ class CouponRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+   public function findOneByCartAndCoupon($couponId, $userId): ?Coupon
+   {
+       $result  = $this->createQueryBuilder('c')
+        ->join("c.cart", "ca")
+        ->where('ca.coupon = :val')
+        ->setParameter('val', $couponId)
+        ->andWhere('ca.user = :val2')
+        ->setParameter('val2', $userId)
+           ->getQuery()
+           ->getOneOrNullResult();
+
+        if ($result==null) {
+            $result = $this->find($couponId);
+        }
+        else {
+            $result = null;
+        }
+        return $result;
+   }
 }
