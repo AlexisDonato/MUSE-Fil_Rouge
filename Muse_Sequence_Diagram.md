@@ -1,3 +1,4 @@
+```mermaid
 
 sequenceDiagram
 participant User
@@ -34,4 +35,4 @@ Système->>User: Valide la commande, envoiet un mail recapitulatif.
 
 
 
-
+```
