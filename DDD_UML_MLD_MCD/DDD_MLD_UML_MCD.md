@@ -259,3 +259,6 @@ CREATE TABLE shipped(
 
 ```
 
+# Arborescence
+<img src="Muse_arborescence.drawio.png">
+
