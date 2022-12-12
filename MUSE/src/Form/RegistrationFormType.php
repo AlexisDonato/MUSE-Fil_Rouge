@@ -31,6 +31,9 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'attr' => ['class' => 'EmailField'],
                 'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de renseigner votre email',
+                    ]),
                     new Regex([
                         'pattern' => '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/',
                         'message' => 'Email invalide'
@@ -40,7 +43,7 @@ class RegistrationFormType extends AbstractType
 
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'Les champs doivent correspondre',
                 'options' => ['attr' => ['class' => 'password-field']],
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -57,7 +60,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères, 1 minuscule, 1 majuscule et 1 chiffre',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
@@ -72,6 +75,9 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'attr' => ['class' => 'FirstNameField'],
                     'constraints' => [
+                        new NotBlank([
+                            'message' => 'Merci de renseigner votre Prénom',
+                        ]),
                         new Regex([
                             'pattern' => "/^[A-Z][a-zàéèêëîïôöûüùç.]+([ -][A-Z][a-zàéèêëîïôöûüùç.])*/",
                             'message' => "Prénom invalide (numéros non autorisés, n'oubliez pas les majuscules)"
@@ -83,6 +89,9 @@ class RegistrationFormType extends AbstractType
             'required' => true,
             'attr' => ['class' => 'LastNameField'],
                 'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de renseigner votre nom de famille',
+                    ]),
                     new Regex([
                         'pattern' => "/^[A-Z][a-zàéèêëîïôöûüùç.]+([ -][A-Z][a-zàéèêëîïôöûüùç.])*/",
                         'message' => "Nom invalide (numéros non autorisés, n'oubliez pas les majuscules)"
@@ -103,6 +112,9 @@ class RegistrationFormType extends AbstractType
                     'class' => 'PhoneField',
                     ],  
                 'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de renseigner votre numéro de téléphone',
+                    ]),
                     new Regex([
                         'pattern' => "/^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/", // French phone number
                         'message' => 'Numéro de téléphone invalide'
@@ -120,12 +132,20 @@ class RegistrationFormType extends AbstractType
 
             ->add('proCompanyName', TextType::class, [
                 'required' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de renseigner la raison sociale',
+                    ])
+                ]
                 ])
 
             ->add('proDuns', TextType::class, [
                 'required' => false,
                 'attr' => ['maxlength' => 9],
                 'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de renseigner le DUNS',
+                    ]),
                     new Regex([
                         'pattern' => '/^[0-9]{9}$/',
                         'message' => 'Numéro invalide : entrée à 9 chiffres (ex: "123456789")'
@@ -135,6 +155,11 @@ class RegistrationFormType extends AbstractType
 
             ->add('proJobPosition', TextType::class, [
                 'required' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de renseigner votre poste au sein de la société',
+                    ])
+                ]
                 ])
 
             ->add('address_name', TextType::class, [
