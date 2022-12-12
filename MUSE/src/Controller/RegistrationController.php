@@ -9,7 +9,6 @@ use App\Data\SearchData;
 use App\Security\EmailVerifier;
 use App\Service\Cart\CartService;
 use App\Form\RegistrationFormType;
-use App\Repository\UserRepository;
 use App\Repository\AddressRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
