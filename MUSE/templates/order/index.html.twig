@@ -71,12 +71,12 @@
 						<td class="roboto h5{% if detail.product.discountRate != 0 %} text-warning{% endif %}">{{ ((detail.product.price * detail.quantity) * (1 - ( detail.product.discountRate + detail.cart.additionalDiscountRate)) * (1 +  app.user.vat ))|format_currency('EUR', locale='fr') }}
 						</td>
 					<td>
-						<a href="{{ path("app_cart_add", {id: detail.product.id}) }}" title="Ajouter 1" class="btn btn-success btn-sm {% if detail.product.quantity == 0 %} disabled {% endif %}">
+						<a href="{{ path("app_cart_add", {id: detail.product.id}) }}" title="Ajouter 1" class="btn btn-primary btn-sm border border-secondary Hl {% if detail.product.quantity == 0 %} disabled {% endif %}">
 							<i class="bi bi-cart-plus"></i>
 						</a>
-						<a href="{{ path("app_cart_remove", {id: detail.product.id}) }}" title="Retirer 1" class="btn btn-primary btn-sm">
+						<a href="{{ path("app_cart_remove", {id: detail.product.id}) }}" title="Retirer 1" class="btn btn-warning btn-sm border border-secondary Hl">
 							<i class="bi bi-cart-dash"></i>
-						<a href="{{ path ('app_cart_delete', {'id': detail.product.id}) }}" title="Retirer la ligne" class="btn btn-danger ml-1 btn-sm">
+						<a href="{{ path ('app_cart_delete', {'id': detail.product.id}) }}" title="Retirer la ligne" class="btn btn-danger ml-1 btn-sm border border-secondary Hl">
 							<i class="fas fa-trash"></i>
 						</a>
 					</td>
@@ -92,7 +92,7 @@
 					€
 				</td>
 				<td colspan="5">
-					<a href="{{ path("app_cart_deleteAll") }}" class="btn btn-danger" title="Supprimer le panier">
+					<a href="{{ path("app_cart_deleteAll") }}" class="btn btn-danger border border-secondary Hl" title="Supprimer le panier">
 						<i class="bi bi-cart-x"></i>
 					</a>
 				</td>

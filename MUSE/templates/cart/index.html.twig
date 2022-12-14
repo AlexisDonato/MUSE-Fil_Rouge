@@ -72,7 +72,7 @@
 						<a href="{{ path("app_cart_add", {id: item.product.id}) }}" title="Ajouter 1" class="btn btn-primary border border-secondary btn-sm Hl {% if item.product.quantity == 0 %} disabled {% endif %}">
 							<i class="bi bi-cart-plus"></i>
 						</a>
-						<a href="{{ path("app_cart_remove", {id: item.product.id}) }}" title="Retirer 1" class="btn btn-success btn-sm border border-secondary Hl">
+						<a href="{{ path("app_cart_remove", {id: item.product.id}) }}" title="Retirer 1" class="btn btn-warning btn-sm border border-secondary Hl">
 							<i class="bi bi-cart-dash"></i>
 							<a href="{{ path ('app_cart_delete', {'id': item.product.id}) }}" title="Retirer la ligne" class="btn btn-danger border border-secondary ml-1 btn-sm Hl">
 								<i class="fas fa-trash"></i>
