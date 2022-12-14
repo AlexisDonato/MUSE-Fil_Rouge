@@ -25,7 +25,8 @@ class ClientController extends AbstractController
     {
         $data = new SearchData();
 
-        $addresses = $this->getDoctrine()->getRepository(Address::class)->findByUser($user);
+        // $addresses = $this->getDoctrine()->getRepository(Address::class)->findByUser($user);
+        $addresses = $addressRepository->findByUser($user);
 
         $cartService->setUser($user);
 
@@ -60,11 +61,11 @@ class ClientController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_client_edit', methods: ['GET', 'POST'])]
-    public function edit(CartService $cartService, Request $request, User $user, UserRepository $userRepository, CategoryRepository $categoryRepository,ProductRepository $productRepository, OrderDetailsRepository $orderDetails): Response
+    public function edit(AddressRepository $addressRepository, CartService $cartService, Request $request, User $user, UserRepository $userRepository, CategoryRepository $categoryRepository,ProductRepository $productRepository, OrderDetailsRepository $orderDetails): Response
     {
         $data = new SearchData();
 
-        $addresses = $this->getDoctrine()->getRepository(Address::class)->findByUser($user);
+        $addresses = $addressRepository->findByUser($user);
         
         $cartService->setUser($user);
 
