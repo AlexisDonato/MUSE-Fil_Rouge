@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\Address;
 use App\Form\User1Type;
 use App\Data\SearchData;
 use App\Service\Cart\CartService;

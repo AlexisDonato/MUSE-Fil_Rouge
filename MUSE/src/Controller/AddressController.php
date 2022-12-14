@@ -50,41 +50,6 @@ class AddressController extends AbstractController
         ]);
     }
 
-    // #[Route('/by_user_index', name: 'app_address_by_user_index', methods: ['GET'])]
-    // public function index2(UserRepository $userRepository, AddressRepository $addressRepository, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?OrderDetailsRepository $orderDetails): Response
-    // {
-    //     if (!$this->isGranted('ROLE_SALES')) {
-    //         $this->addFlash('error', 'Accès refusé');
-    //         return $this->redirectToRoute('login');  
-    //     }
-
-    //     $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
-
-    //     $categories = $categoryRepository->findAll();
-    //     $data = new SearchData();
-    //     $products = $productRepository->findSearch($data);
-    //     $products2 =$productRepository->findAll();
-    //     $discount = $productRepository->findDiscount($data);
-    //     $discount2 =$productRepository->findBy(['discount' => true]);
-
-    //     $addresses = $this->getDoctrine()->getRepository(Address::class)->findByUser($user);
-    //     $user = $addresses->getUser();;
-    //     dd($user, $addresses);
-
-
-
-    //     return $this->render('address/by_user_index.html.twig', [
-    //         'items'     => $cartService->getFullCart($orderDetails),
-    //         'count'     => $cartService->getItemCount($orderDetails),
-    //         'total'     => $cartService->getTotal($orderDetails),
-    //         'products'  => $products,
-    //         'products2' => $products2,
-    //         'categories' => $categories,
-    //         'discount'  => $discount,
-    //         'discount2' => $discount2,
-    //         'addresses' => $addresses,
-    //     ]);
-    // }
 
     #[Route('/new', name: 'app_address_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AddressRepository $addressRepository, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?UserInterface $user, ?OrderDetailsRepository $orderDetails, EntityManagerInterface $entityManager): Response
