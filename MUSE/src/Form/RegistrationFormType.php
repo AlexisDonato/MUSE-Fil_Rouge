@@ -181,8 +181,13 @@ class RegistrationFormType extends AbstractType
                     'attr' => [
                         'id' => 'cityList',
                     ],
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Merci de renseigner la commune',
+                        ])
+                    ]
                 ])
-                
+
                 ->addEventListener(
                     FormEvents::PRE_SUBMIT,
                     [$this, 'onPreSubmit']
