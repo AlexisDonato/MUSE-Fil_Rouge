@@ -11,7 +11,9 @@
 	<div class="container">
 		<h1 class="text-primary text-center mt-3 mb-3">Inscription</h1>
 		<h4 class="text-center mb-3">Un email de confirmation vous sera envoyé à la validation du formulaire</h4>
-
+<noscript>
+      <h2 class="text-danger">Javascript est désactivé dans votre navigateur web. Certaines fonctionnalités ne fonctionneront pas correctement.</h2>
+</noscript>
 		{{ form_start(registrationForm) }}
 
 		<div class="row">
@@ -116,6 +118,9 @@
 			</div>
 		</div>
 		{{ form_end(registrationForm) }}
+		<noscript>
+			<h2 class="text-danger">Javascript est désactivé dans votre navigateur web. Certaines fonctionnalités ne fonctionneront pas correctement.</h2>
+		</noscript>
 	</div>
 
 {% endblock %}

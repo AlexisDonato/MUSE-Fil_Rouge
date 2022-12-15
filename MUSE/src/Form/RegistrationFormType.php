@@ -180,8 +180,9 @@ class RegistrationFormType extends AbstractType
                     ],
                     'attr' => [
                         'id' => 'cityList',
-                    ]
+                    ],
                 ])
+                
                 ->addEventListener(
                     FormEvents::PRE_SUBMIT,
                     [$this, 'onPreSubmit']

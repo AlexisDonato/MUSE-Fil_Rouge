@@ -147,7 +147,7 @@ function checkForm(event) {
         wrongCity.style.color = "red";
         wrongCity.innerHTML = "<i class='fa-solid fa-circle-exclamation'></i> Ville requise, vérifiez votre code postal";
         email.focus();
-        registrationCity.focus();
+        cityList.focus();
     }
 
     if ((pro_cb.checked==true) && proCompanyName.validity.valueMissing) {
