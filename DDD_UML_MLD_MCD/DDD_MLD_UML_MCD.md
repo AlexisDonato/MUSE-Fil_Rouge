@@ -29,7 +29,7 @@ Codification | Type | Contraintes | Règles
  user_id | INT REFERENCES user(user_id)
  address_name | VARCHAR(50)
  user_country | LONGTEXT | | DC2Type:json
- user_zipcode | INT | > 4 & < 6
+ user_zipcode | INT | > 4 < 6
  user_city | VARCHAR(150)
  address_path | VARCHAR(100)
  address_path_number | VARCHAR (20)
