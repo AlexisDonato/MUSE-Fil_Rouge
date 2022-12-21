@@ -20,7 +20,7 @@ Codification | Type | Contraintes | Règles
  | |
  user_pro | BOOLEAN
  user_pro_company_name | VARCHAR(50) 
- user_pro_duns | VARCHAR(50) | | DUNS = SIRET international (Data universal number system) 
+ user_pro_duns | VARCHAR(50) | 8<x>10 | DUNS = SIRET international (Data universal number system) 
 
 ## Table Address
 Codification | Type | Contraintes | Règles
@@ -29,7 +29,7 @@ Codification | Type | Contraintes | Règles
  user_id | INT REFERENCES user(user_id)
  address_name | VARCHAR(50)
  user_country | LONGTEXT
- user_zipcode | INT | > 4; < 6
+ user_zipcode | INT | 4<x>6
  user_city | VARCHAR(150)
  address_path | VARCHAR(100)
  address_path_number | VARCHAR (20)
