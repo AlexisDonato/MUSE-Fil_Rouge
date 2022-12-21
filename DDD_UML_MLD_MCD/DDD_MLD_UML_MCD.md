@@ -28,7 +28,7 @@ Codification | Type | Contraintes | Règles
  address_id | INT AUTO_INCREMENT PRIMARY KEY
  user_id | INT REFERENCES user(user_id)
  address_name | VARCHAR(50)
- user_country | LONGTEXT | | DC2Type:json
+ user_country | LONGTEXT
  user_zipcode | INT | > 4 < 6
  user_city | VARCHAR(150)
  address_path | VARCHAR(100)
