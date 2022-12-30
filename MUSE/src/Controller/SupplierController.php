@@ -22,6 +22,7 @@ class SupplierController extends AbstractController
     #[Route('/', name: 'app_supplier_index', methods: ['GET'])]
     public function index(SupplierRepository $supplierRepository, ProductRepository $productRepository, CategoryRepository $categoryRepository, CartService $cartService, OrderDetailsRepository $orderDetails, ?UserInterface $user): Response
     {
+        // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
@@ -30,6 +31,7 @@ class SupplierController extends AbstractController
 
         $data = new SearchData();
 
+        // Needed for using CartService
         $cartService->setUser($user);
 
         return $this->render('supplier/index.html.twig', [
@@ -44,9 +46,11 @@ class SupplierController extends AbstractController
         ]);
     }
 
+
     #[Route('/new', name: 'app_supplier_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SupplierRepository $supplierRepository, ProductRepository $productRepository, CategoryRepository $categoryRepository, CartService $cartService, OrderDetailsRepository $orderDetails, ?UserInterface $user): Response
     {
+        // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
@@ -55,12 +59,15 @@ class SupplierController extends AbstractController
 
         $data = new SearchData();
 
+        // Needed for using CartService
         $cartService->setUser($user);
 
+        // The supplier form
         $supplier = new Supplier();
         $form = $this->createForm(SupplierType::class, $supplier);
         $form->handleRequest($request);
 
+        // Saves the supplier if the form is valid
         if ($form->isSubmitted() && $form->isValid()) {
             $supplierRepository->save($supplier, true);
 
@@ -85,6 +92,7 @@ class SupplierController extends AbstractController
     #[Route('/{id}', name: 'app_supplier_show', methods: ['GET'])]
     public function show(Supplier $supplier, ProductRepository $productRepository, CategoryRepository $categoryRepository, CartService $cartService, OrderDetailsRepository $orderDetails, ?UserInterface $user): Response
     {
+        // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
@@ -93,6 +101,7 @@ class SupplierController extends AbstractController
 
         $data = new SearchData();
 
+        // Needed for using CartService
         $cartService->setUser($user);
 
         return $this->render('supplier/show.html.twig', [
@@ -107,9 +116,11 @@ class SupplierController extends AbstractController
         ]);
     }
 
+
     #[Route('/{id}/edit', name: 'app_supplier_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Supplier $supplier, SupplierRepository $supplierRepository, ProductRepository $productRepository, CategoryRepository $categoryRepository, CartService $cartService, OrderDetailsRepository $orderDetails, ?UserInterface $user): Response
     {
+        // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
@@ -118,11 +129,14 @@ class SupplierController extends AbstractController
 
         $data = new SearchData();
 
+        // Needed for using CartService
         $cartService->setUser($user);
 
+        // The supplier form
         $form = $this->createForm(SupplierType::class, $supplier);
         $form->handleRequest($request);
 
+        // Saves the supplier if the form is valid
         if ($form->isSubmitted() && $form->isValid()) {
             $supplierRepository->save($supplier, true);
 
@@ -144,15 +158,18 @@ class SupplierController extends AbstractController
         ]);
     }
 
+
     #[Route('/{id}', name: 'app_supplier_delete', methods: ['POST'])]
     public function delete(Request $request, Supplier $supplier, SupplierRepository $supplierRepository): Response
     {
+        // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
         }
         $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
         
+        // Checks if the csrf token is valid in order to delete the supplier
         if ($this->isCsrfTokenValid('delete'.$supplier->getId(), $request->request->get('_token'))) {
             $supplierRepository->remove($supplier, true);
         }

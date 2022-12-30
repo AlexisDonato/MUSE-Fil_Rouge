@@ -45,11 +45,13 @@ class ResetPasswordController extends AbstractController
     #[Route('', name: 'app_forgot_password_request')]
     public function request(CartService $cartService, Request $request, MailerInterface $mailer, TranslatorInterface $translator, CategoryRepository $categoryRepository, ProductRepository $productRepository, OrderDetailsRepository $orderDetails): Response
     {
+        // The password request form
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
         $data = new SearchData();
 
+        // Sends the email if the form is valid
         if ($form->isSubmitted() && $form->isValid()) {         
             return $this->processSendingPasswordResetEmail(
                 $form->get('email')->getData(),
@@ -195,6 +197,7 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_check_email');
         }
 
+        // Sends the email
         $email = (new TemplatedEmail())
             ->from(new Address('noreply@muse.com', 'Muse Mail Bot'))
             ->to($user->getEmail())

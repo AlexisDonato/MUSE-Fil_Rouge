@@ -32,6 +32,7 @@ class ValidatedOrdersController extends AbstractController
         $this->pdf = $pdf;
     }
 
+    // Method to factorize some data in this controller
     public function getData(?CartRepository $cartRepository, CartService $cartService, ?UserInterface $user, ?OrderDetailsRepository $orderDetails, ProductRepository $productRepository, CategoryRepository $categoryRepository)
     {
         $categories = $categoryRepository->findAll();
@@ -42,7 +43,6 @@ class ValidatedOrdersController extends AbstractController
         $discount2 =$productRepository->findProductsDiscount();
         $cartService->setUser($user);
         $info = [
-            // 'items'     => $cartService->getFullCart($orderDetails),
             'count'     => $cartService->getItemCount($orderDetails),
             'total'     => $cartService->getTotal($orderDetails),
             'products'  => $products,
@@ -58,17 +58,23 @@ class ValidatedOrdersController extends AbstractController
     #[Route('/validated/orders', name: 'app_validated_orders')]
     public function index(CartRepository $cartRepository, CartService $cartService, ?UserInterface $user, ?OrderDetailsRepository $orderDetails, ProductRepository $productRepository, CategoryRepository $categoryRepository): Response
     {
+        // Access restriction for roles other than 'ROLE_CLIENT'
         if (!$this->isGranted('ROLE_CLIENT')) {
             $this->addFlash('info', 'Merci de vous connecter ou de vous inscrire au préalable');
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('login');  
         }
 
+        // The user cannot access other users infos:
         if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
             $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
         }
+
+        // Fetches the validated orders for the corresponding user
         if ($this->isGranted('ROLE_CLIENT')) {
             $clientCarts = $cartRepository->findAllByUser($user->getId(), true);
         }
+
+        // Fetches all the validated orders for the company staff
         if ($this->isGranted('ROLE_SHIP')) {
             $clientCarts = $cartRepository->findAllUsers();
         }
@@ -82,14 +88,17 @@ class ValidatedOrdersController extends AbstractController
         );
     }
 
+
     #[Route('/validated/orders/{id}', name: 'app_validated_orders_show')]
     public function orderShow(Request $request, Cart $cart, CartRepository $cartRepository, CartService $cartService, ?UserInterface $user, ?OrderDetailsRepository $orderDetails, ProductRepository $productRepository, CategoryRepository $categoryRepository)
     {
         $orderId = $request->attributes->get('id');
         $details = $orderDetails->findBy(['cart' => $orderId]);
 
+        // Needed for using CartService
         $cartService->setUser($user);
 
+        // Fetches the user
         $user = $cart->getUser();
 
         return $this->render(
@@ -102,14 +111,17 @@ class ValidatedOrdersController extends AbstractController
         );
     }
 
+
     #[Route('validated/orders/{id}/shipped', name: 'app_shipped_order')]
     public function shippedOrder(Request $request, CartRepository $cartRepository, EntityManagerInterface $entityManager, MailerInterface $mailer, ?UserInterface $user, OrderDetailsRepository $orderDetails)
     {
+        // Access restriction for roles other than 'ROLE_SHIP'
         if (!$this->isGranted('ROLE_SHIP')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
         }
 
+        // Sets additional information on the cart to become an order
         $orderId = $request->attributes->get('id');
         $cart = $cartRepository->find($orderId);
         $cart->setShipped(true);
@@ -124,6 +136,7 @@ class ValidatedOrdersController extends AbstractController
         $orderId = $cart->getId();
         $details = $orderDetails->findBy(['cart' => $orderId]);
 
+        // Sends an email to both the user and the company
         $email = (new TemplatedEmail())
         ->from(new E_address('info_noreply@muse.com', 'Muse MailBot'))
         ->to($cart->getUser()->getEmail())
@@ -135,7 +148,6 @@ class ValidatedOrdersController extends AbstractController
             'user' => $user,
             'cart' => $cart,
         ]);
-        // ->attach($pdf, sprintf('email/order_shipment_%s.pdf', date('d-m-Y')));
         $mailer->send($email);
 
         $this->addFlash('success', 'La commande a bien été envoyée');

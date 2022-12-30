@@ -19,26 +19,26 @@ class TermsAndAgreementsController extends AbstractController
     #[Route('/terms', name: 'app_terms_and_agreements')]
     public function index(CartService $cartService, ?UserInterface $user, ProductRepository $productRepository, Request $request, CategoryRepository $categoryRepository, OrderDetailsRepository $orderDetails): Response
     {
-        $categories = $categoryRepository->findAll();
         $data = new SearchData();
+        // Paginator
         $data->page = $request->get('page', 1);
+
+        // The search filter
         $form = $this->createForm(SearchType::class, $data);
         $form->handleRequest($request);
-        $products = $productRepository->findSearch($data);
-        $products2 =$productRepository->findAll();
-        $discount = $productRepository->findDiscount($data);
-        $discount2 =$productRepository->findProductsDiscount();
 
+        // Needed for using CartService
         $cartService->setUser($user);
+
         return $this->render('terms_and_agreements/terms.html.twig', [
             'items'     => $cartService->getFullCart($orderDetails),
             'count'     => $cartService->getItemCount($orderDetails),
             'total' => $cartService->getTotal($orderDetails),
-            'products' => $products,
-            'products2' => $products2,
-            'categories' => $categories,
-            'discount' => $discount,
-            'discount2' => $discount2,
+            'products' => $productRepository->findSearch($data),
+            'products2' => $productRepository->findAll(),
+            'categories' => $categoryRepository->findAll(),
+            'discount' => $productRepository->findDiscount($data),
+            'discount2' => $productRepository->findProductsDiscount(),
             'form' => $form->createView()
         ]);
     }
@@ -47,26 +47,26 @@ class TermsAndAgreementsController extends AbstractController
     #[Route('/sustainability', name: 'app_sustainability')]
     public function index2(CartService $cartService, ?UserInterface $user, ProductRepository $productRepository, Request $request, CategoryRepository $categoryRepository, OrderDetailsRepository $orderDetails): Response
     {
-        $categories = $categoryRepository->findAll();
         $data = new SearchData();
+        // Paginator
         $data->page = $request->get('page', 1);
+
+        // The search filter
         $form = $this->createForm(SearchType::class, $data);
         $form->handleRequest($request);
-        $products = $productRepository->findSearch($data);
-        $products2 =$productRepository->findAll();
-        $discount = $productRepository->findDiscount($data);
-        $discount2 =$productRepository->findProductsDiscount();
 
+        // Needed for using CartService
         $cartService->setUser($user);
+
         return $this->render('terms_and_agreements/sustainability.html.twig', [
             'items'     => $cartService->getFullCart($orderDetails),
             'count'     => $cartService->getItemCount($orderDetails),
             'total' => $cartService->getTotal($orderDetails),
-            'products' => $products,
-            'products2' => $products2,
-            'categories' => $categories,
-            'discount' => $discount,
-            'discount2' => $discount2,
+            'products' => $productRepository->findSearch($data),
+            'products2' => $productRepository->findAll(),
+            'categories' => $categoryRepository->findAll(),
+            'discount' => $productRepository->findDiscount($data),
+            'discount2' => $productRepository->findProductsDiscount(),
             'form' => $form->createView()
         ]);
     }
@@ -75,26 +75,26 @@ class TermsAndAgreementsController extends AbstractController
     #[Route('/withdrawal', name: 'app_withdrawal')]
     public function index3(CartService $cartService, ?UserInterface $user, ProductRepository $productRepository, Request $request, CategoryRepository $categoryRepository, OrderDetailsRepository $orderDetails): Response
     {
-        $categories = $categoryRepository->findAll();
         $data = new SearchData();
+        // Paginator
         $data->page = $request->get('page', 1);
+
+        // The search filter
         $form = $this->createForm(SearchType::class, $data);
         $form->handleRequest($request);
-        $products = $productRepository->findSearch($data);
-        $products2 =$productRepository->findAll();
-        $discount = $productRepository->findDiscount($data);
-        $discount2 =$productRepository->findProductsDiscount();
 
+        // Needed for using CartService
         $cartService->setUser($user);
+
         return $this->render('terms_and_agreements/withdrawal.html.twig', [
             'items'     => $cartService->getFullCart($orderDetails),
             'count'     => $cartService->getItemCount($orderDetails),
             'total' => $cartService->getTotal($orderDetails),
-            'products' => $products,
-            'products2' => $products2,
-            'categories' => $categories,
-            'discount' => $discount,
-            'discount2' => $discount2,
+            'products' => $productRepository->findSearch($data),
+            'products2' => $productRepository->findAll(),
+            'categories' => $categoryRepository->findAll(),
+            'discount' => $productRepository->findDiscount($data),
+            'discount2' => $productRepository->findProductsDiscount(),
             'form' => $form->createView()
         ]);
     }
@@ -103,26 +103,27 @@ class TermsAndAgreementsController extends AbstractController
     #[Route('/shipping_options', name: 'app_shipping_options')]
     public function index4(CartService $cartService, ?UserInterface $user, ProductRepository $productRepository, Request $request, CategoryRepository $categoryRepository, OrderDetailsRepository $orderDetails): Response
     {
-        $categories = $categoryRepository->findAll();
+
         $data = new SearchData();
+        // Paginator
         $data->page = $request->get('page', 1);
+
+        // The search filter
         $form = $this->createForm(SearchType::class, $data);
         $form->handleRequest($request);
-        $products = $productRepository->findSearch($data);
-        $products2 =$productRepository->findAll();
-        $discount = $productRepository->findDiscount($data);
-        $discount2 =$productRepository->findProductsDiscount();
 
+        // Needed for using CartService
         $cartService->setUser($user);
+
         return $this->render('terms_and_agreements/shipping_options.html.twig', [
             'items'     => $cartService->getFullCart($orderDetails),
             'count'     => $cartService->getItemCount($orderDetails),
             'total' => $cartService->getTotal($orderDetails),
-            'products' => $products,
-            'products2' => $products2,
-            'categories' => $categories,
-            'discount' => $discount,
-            'discount2' => $discount2,
+            'products' => $productRepository->findSearch($data),
+            'products2' => $productRepository->findAll(),
+            'categories' => $categoryRepository->findAll(),
+            'discount' => $productRepository->findDiscount($data),
+            'discount2' => $productRepository->findProductsDiscount(),
             'form' => $form->createView()
         ]);
     }
@@ -131,26 +132,26 @@ class TermsAndAgreementsController extends AbstractController
     #[Route('/returns', name: 'app_returns')]
     public function index5(CartService $cartService, ?UserInterface $user, ProductRepository $productRepository, Request $request, CategoryRepository $categoryRepository, OrderDetailsRepository $orderDetails): Response
     {
-        $categories = $categoryRepository->findAll();
         $data = new SearchData();
+        // Paginator
         $data->page = $request->get('page', 1);
+
+        // The search filter
         $form = $this->createForm(SearchType::class, $data);
         $form->handleRequest($request);
-        $products = $productRepository->findSearch($data);
-        $products2 =$productRepository->findAll();
-        $discount = $productRepository->findDiscount($data);
-        $discount2 =$productRepository->findProductsDiscount();
 
+        // Needed for using CartService
         $cartService->setUser($user);
+
         return $this->render('terms_and_agreements/returns.html.twig', [
             'items'     => $cartService->getFullCart($orderDetails),
             'count'     => $cartService->getItemCount($orderDetails),
             'total' => $cartService->getTotal($orderDetails),
-            'products' => $products,
-            'products2' => $products2,
-            'categories' => $categories,
-            'discount' => $discount,
-            'discount2' => $discount2,
+            'products' => $productRepository->findSearch($data),
+            'products2' => $productRepository->findAll(),
+            'categories' => $categoryRepository->findAll(),
+            'discount' => $productRepository->findDiscount($data),
+            'discount2' => $productRepository->findProductsDiscount(),
             'form' => $form->createView()
         ]);
     }
@@ -159,26 +160,26 @@ class TermsAndAgreementsController extends AbstractController
     #[Route('/plan', name: 'app_plan')]
     public function index6(CartService $cartService, ?UserInterface $user, ProductRepository $productRepository, Request $request, CategoryRepository $categoryRepository, OrderDetailsRepository $orderDetails): Response
     {
-        $categories = $categoryRepository->findAll();
         $data = new SearchData();
+        // Paginator
         $data->page = $request->get('page', 1);
+
+        // The search filter
         $form = $this->createForm(SearchType::class, $data);
         $form->handleRequest($request);
-        $products = $productRepository->findSearch($data);
-        $products2 =$productRepository->findAll();
-        $discount = $productRepository->findDiscount($data);
-        $discount2 =$productRepository->findProductsDiscount();
 
+        // Needed for using CartService
         $cartService->setUser($user);
+        
         return $this->render('terms_and_agreements/plan.html.twig', [
             'items'     => $cartService->getFullCart($orderDetails),
             'count'     => $cartService->getItemCount($orderDetails),
             'total' => $cartService->getTotal($orderDetails),
-            'products' => $products,
-            'products2' => $products2,
-            'categories' => $categories,
-            'discount' => $discount,
-            'discount2' => $discount2,
+            'products' => $productRepository->findSearch($data),
+            'products2' => $productRepository->findAll(),
+            'categories' => $categoryRepository->findAll(),
+            'discount' => $productRepository->findDiscount($data),
+            'discount2' => $productRepository->findProductsDiscount(),
             'form' => $form->createView()
         ]);
     }

@@ -17,12 +17,15 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
+// This are the routes for the admin or the staff of the company
 #[Route('/user')]
 class UserController extends AbstractController
 {
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(CartService $cartService, UserRepository $userRepository, CategoryRepository $categoryRepository, ProductRepository $productRepository, OrderDetailsRepository $orderDetails, ?UserInterface $user): Response
     {
+        // Double access restriction for roles other than 'ROLE_SHIP'
         if (!$this->isGranted('ROLE_SHIP')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
@@ -31,6 +34,7 @@ class UserController extends AbstractController
 
         $data = new SearchData();
         
+        // Needed for using CartService
         $cartService->setUser($user);
 
         return $this->render('user/index.html.twig', [
@@ -47,49 +51,11 @@ class UserController extends AbstractController
         ]);
     }
 
-    // #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    // public function new(Request $request, UserRepository $userRepository, CategoryRepository $categoryRepository, ProductRepository $productRepository): Response
-    // {
-    //     $this->denyAccessUnlessGranted('ROLE_SALES', null, 'User tried to access a page without having ROLE_SALES');
-
-    //     $user = new User();
-    //     $form = $this->createForm(UserType::class, $user);
-    //     $form->handleRequest($request);
-
-    //     $categories = $categoryRepository->findAll();
-    //     $data = new SearchData();
-    //     $products = $productRepository->findSearch($data);
-    //     $products2 =$productRepository->findAll();
-    //     $discount = $productRepository->findDiscount($data);
-    //             $discount2 =$productRepository->findProductsDiscount();
-            
-    //     if ($form->isSubmitted() && $form->isValid()) {
-
-    //         // transforms json column into str
-    //         $roles = $form->get('roles')->getData();
-    //         $user->setRoles($roles);
-
-    //         // $userRepository->add($user, true);
-
-    //         $userRepository->add($user, true);
-
-    //         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
-    //     }
-
-    //     return $this->renderForm('user/new.html.twig', [
-    //         'user' => $user,
-    //         'form' => $form,
-    //         'products' => $products,
-    //         'products2' => $products2,
-    //         'categories' => $categories,
-    //         'discount' => $discount,
-    //         'discount2' => $discount2,
-    //     ]);
-    // }
  
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(UserRepository $userRepository, CartService $cartService, User $user, CategoryRepository $categoryRepository, ProductRepository $productRepository, OrderDetailsRepository $orderDetails): Response
     {
+        // Double access restriction for roles other than 'ROLE_SHIP'
         if (!$this->isGranted('ROLE_SHIP')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
@@ -103,6 +69,7 @@ class UserController extends AbstractController
 
         $data = new SearchData();
 
+        // Needed for using CartService
         $cartService->setUser($user);
 
         return $this->render('user/show.html.twig', [
@@ -122,24 +89,32 @@ class UserController extends AbstractController
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(?Address $address, CartService $cartService, CategoryRepository $categoryRepository, ProductRepository $productRepository, Request $request, User $user, UserRepository $userRepository, OrderDetailsRepository $orderDetails): Response
     {
-        if (!$this->isGranted('ROLE_SALES')) {
+         // Double access restriction for roles other than 'ROLE_SALES'
+         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
         }
         $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
-        if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
-            $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+        // The user, if its role is different from 'ROLE_SALES', cannot access other users infos:
+        if (!$this->isGranted('ROLE_SALES')) {
+            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+                $this->addFlash('error', 'Accès refusé');
+                return $this->redirectToRoute('login');  
+                $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+            }
         }
+
+        // The user form
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         $data = new SearchData();
 
+        // Needed for using CartService
         $cartService->setUser($user);
 
-        // $address->setUser($user);
-
+        // Saves the user information if the form is valid
         if ($form->isSubmitted() && $form->isValid()) {
 
             // transforms json column into str
@@ -149,7 +124,6 @@ class UserController extends AbstractController
             $userRepository->add($user, true);
 
                 return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
-            // return $this->redirectToRoute('{{ path('app_user_show', {'id': app.user.id}) }}', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/edit.html.twig', [
@@ -171,10 +145,23 @@ class UserController extends AbstractController
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
+        // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
         }
+        $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+
+        // The user, if its role is different from 'ROLE_SALES', cannot access other users infos:
+        if (!$this->isGranted('ROLE_SALES')) {
+            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+                $this->addFlash('error', 'Accès refusé');
+                return $this->redirectToRoute('login');  
+                $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+            }
+        }
+
+        // Checks if the csrf token is valid in order to delete the user
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);
         }
