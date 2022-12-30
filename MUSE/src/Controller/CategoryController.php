@@ -23,9 +23,11 @@ class CategoryController extends AbstractController
         $data = new SearchData();
         $data->page = $request->get('page', 1);
 
+        // The search filter
         $form = $this->createForm(SearchType::class, $data);
         $form->handleRequest($request);
 
+        // Needed for using CartService
         $cartService->setUser($user);
 
         return $this->render('category/index.html.twig', [
