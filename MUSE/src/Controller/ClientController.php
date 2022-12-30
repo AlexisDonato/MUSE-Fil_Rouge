@@ -22,21 +22,32 @@ class ClientController extends AbstractController
     #[Route('/{id}', name: 'app_client_show', methods: ['GET'])]
     public function show(AddressRepository $addressRepository, CartService $cartService, User $user, CategoryRepository $categoryRepository,ProductRepository $productRepository, OrderDetailsRepository $orderDetails): Response
     {
-        $data = new SearchData();
+        // Double access restriction for roles other than 'ROLE_CLIENT'
+        if (!$this->isGranted('ROLE_CLIENT')) {
+            $this->addFlash('error', 'Accès refusé');
+            return $this->redirectToRoute('login');  
+        }
+        $this->denyAccessUnlessGranted('ROLE_CLIENT', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
-        // $addresses = $this->getDoctrine()->getRepository(Address::class)->findByUser($user);
-        $addresses = $addressRepository->findByUser($user);
-
-        $cartService->setUser($user);
-
-        if ($this->getUser()->isVerified()) {
-
-            // The user cannot access other users infos:
-            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
+        // The user, without the role 'ROLE_SALES', cannot access other users infos:
+        if (!$this->isGranted('ROLE_SALES')) {
+            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
                 $this->addFlash('error', 'Accès refusé');
                 return $this->redirectToRoute('login');  
                 $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
             }
+        }
+        $data = new SearchData();
+
+        // Fetches the user addresses
+        $addresses = $addressRepository->findByUser($user);
+
+        // Needed for using CartService
+        $cartService->setUser($user);
+
+        // Access if the user account is verified
+        if ($this->getUser()->isVerified()) {
+
             return $this->render('client/show.html.twig', [
                 'items'     => $cartService->getFullCart($orderDetails),
                 'count'     => $cartService->getItemCount($orderDetails),
@@ -62,25 +73,39 @@ class ClientController extends AbstractController
     #[Route('/{id}/edit', name: 'app_client_edit', methods: ['GET', 'POST'])]
     public function edit(AddressRepository $addressRepository, CartService $cartService, Request $request, User $user, UserRepository $userRepository, CategoryRepository $categoryRepository,ProductRepository $productRepository, OrderDetailsRepository $orderDetails): Response
     {
-        $data = new SearchData();
+        // Double access restriction for roles other than 'ROLE_CLIENT'
+        if (!$this->isGranted('ROLE_CLIENT')) {
+            $this->addFlash('error', 'Accès refusé');
+            return $this->redirectToRoute('login');  
+        }
+        $this->denyAccessUnlessGranted('ROLE_CLIENT', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
-        $addresses = $addressRepository->findByUser($user);
-        
-        $cartService->setUser($user);
-
-        if ($this->getUser()->isVerified()) {
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
-
-
-            // The user cannot access other users infos:
-            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
+        // The user, without the role 'ROLE_SALES', cannot access other users infos:
+        if (!$this->isGranted('ROLE_SALES')) {
+            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
                 $this->addFlash('error', 'Accès refusé');
                 return $this->redirectToRoute('login');  
                 $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
             }
+        }
+
+        $data = new SearchData();
+
+        // Fetches the user addresses
+        $addresses = $addressRepository->findByUser($user);
+        
+        // Needed for using CartService
+        $cartService->setUser($user);
+
+        // Access if the user account is verified
+        if ($this->getUser()->isVerified()) {
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+
+            // The user information form
             $form = $this->createForm(User1Type::class, $user);
             $form->handleRequest($request);
 
+            // Edits the user information if the form is valid
             if ($form->isSubmitted() && $form->isValid()) {
                 $userRepository->add($user, true);
 

@@ -24,32 +24,38 @@ class ContactController extends AbstractController
     #[Route('/contact', name: 'app_contact')]
     public function index(Request $request, ?UserInterface $user, CartService $cartService, EntityManagerInterface $entityManager, CategoryRepository $categoryRepository, ProductRepository $productRepository, OrderDetailsRepository $orderDetails, MailerInterface $mailer): Response
     {
+        // The contact form
         $contact = new Contact();
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
         $data = new SearchData();
 
+        // The form info
         $name = $contact->getName();
         $refEmail = $contact->getEmail();
         $date = new \DateTime('@'.strtotime('now'));
         $contact->setEnquiryDate($date);
-
         $subjects = $contact->getSubject();
+
         foreach ($subjects as $subject) {
             echo $subject;
         }
         $message = $contact->getMessage();
 
+        // Binds the contact message to the user if exists
         if ($user !== null) {
             $contact->setUser($user);
         }
 
+        // Saves the contact info in the database if the form is valid
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($contact);
             $entityManager->flush();
 
             $id = $contact->getId();
+
+            // Sends an email both to the user and to the company
             $email = (new TemplatedEmail())
             ->from(new Address('info_noreply@muse.com', 'Muse MailBot'))
             ->to($contact->getEmail())

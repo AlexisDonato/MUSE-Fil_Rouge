@@ -32,6 +32,7 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class OrderController extends AbstractController
 {
+    // Method to factorize some data in this controller
     public function getData(CartService $cartService, ?UserInterface $user, ?OrderDetailsRepository $orderDetails, ProductRepository $productRepository, CategoryRepository $categoryRepository)
     {
         $data = new SearchData();
@@ -52,6 +53,7 @@ class OrderController extends AbstractController
         return $info;
     }
 
+
     private EmailVerifier $emailVerifier;
 
     public function __construct(EmailVerifier $emailVerifier)
@@ -59,37 +61,52 @@ class OrderController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
+
     #[Route('/order', name: 'app_order')]
     public function index(CartService $cartService, ProductRepository $productRepository, Request $request, CategoryRepository $categoryRepository, OrderDetailsRepository $orderDetails, ?UserInterface $user, EntityManagerInterface $entityManager, CouponRepository $couponRepository): Response
     {
+        // Double access restriction for roles other than 'ROLE_CLIENT'
         if (!$this->isGranted('ROLE_CLIENT')) {
             $this->addFlash('error', 'Accès refusé');
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('login');  
         }
+        $this->denyAccessUnlessGranted('ROLE_CLIENT', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
-        if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
-            $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+        // The user, without the role 'ROLE_SALES', cannot access other users infos:
+        if (!$this->isGranted('ROLE_SALES')) {
+            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+                $this->addFlash('error', 'Accès refusé');
+                return $this->redirectToRoute('login');  
+                $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+            }
         }
 
         $data = new SearchData();
+        // Paginator
         $data->page = $request->get('page', 1);
 
+        // Fetches the user addresses
         $addresses = $this->getDoctrine()->getRepository(Address::class)->findByUser($user);
 
+        // Needed for using CartService
         $cartService->setUser($user);
 
+        // Retrieves the client cart
         $cart = $cartService->getClientCart();
 
+        // The coupon form
         $couponInsertform = $this->createForm(CouponInsertType::class);
         $couponInsertform->handleRequest($request);
         $couponInsert = $couponInsertform->get('code')->getData();
         $couponCode = $couponRepository->findOneBy(["code" => $couponInsert]);
 
+        // Checks if the coupon exists
         $coupon = null;
         if ($couponCode) {
             $coupon = $couponRepository->findOneByCartAndCoupon($couponCode, $this->getUser());
         }
 
+        // Sets a discount rate on the cart if the form is valid
         if ($couponInsertform->isSubmitted() && $couponInsertform->isValid()) {
 
             if ($coupon && $coupon->isValidated(true)) {
@@ -102,22 +119,26 @@ class OrderController extends AbstractController
                 $entityManager->flush();
 
                 $this->addFlash('success', 'Bon de réduction appliqué !');
+
             // Redirects to the last page :
             $route = $request->headers->get('referer');
             return $this->redirect($route);
             }
             else {
                 $this->addFlash('error', 'Bon de réduction invalide');
+
             // Redirects to the last page :
             $route = $request->headers->get('referer');
             return $this->redirect($route);
             }
         }
 
+        // The new address form on the order page
         $address = new Address();
         $newAddressForm = $this->createForm(OrderAddressType::class);
         $newAddressForm->handleRequest($request);
 
+        // Saves the new address if the form is valid
         if ($newAddressForm->isSubmitted() && $newAddressForm->isValid()) {
 
             $this->addFlash('success', 'Adresse ajoutée !');
@@ -141,6 +162,7 @@ class OrderController extends AbstractController
             $entityManager->persist($address);
             $entityManager->flush();
 
+            // Sets the delivery and billing addresses for the current cart if the checkboxes are validated
             if ($newAddressForm->get('billingAddress')->getData(true)) {
                 $cart->setBillingAddress($address);
             }
@@ -153,12 +175,12 @@ class OrderController extends AbstractController
             return $this->redirectToRoute("app_order");
         }
 
+        // The "delivery and billing addresses" select form
         $selectForm = $this->createForm(SelectAddressType::class);
         $selectForm->handleRequest($request);
         $addresses = $this->getDoctrine()->getRepository(Address::class)->findByUser($user);
 
-
-
+        // Sets the delivery and billing addresses for the current cart when selected
         if ($selectForm->isSubmitted() && $selectForm->isValid()) {
 
             $this->addFlash('success', 'Adresses de FACTURATION et LIVRAISON définies!');
@@ -190,6 +212,7 @@ class OrderController extends AbstractController
         ]);
     }
 
+    // This method is only used when checking out with the Stripe form
     public function checkoutAction(Request $request)
     {
         if ($request->isMethod('POST')) {
@@ -208,36 +231,48 @@ class OrderController extends AbstractController
         }
     }
 
+
     #[Route('/order/validated', name: 'app_order_validated')]
     public function validateOrder(Request $request, PdfTools $pdf, EntrypointLookupInterface $entrypointLookup, ?CartService $cartService, ?CartRepository $cartRepository, ?Cart $cart, ?UserInterface $user, ?EntityManagerInterface $entityManager, OrderDetailsRepository $orderDetails, MailerInterface $mailer)
     {
+        // Double access restriction for roles other than 'ROLE_CLIENT'
         if (!$this->isGranted('ROLE_CLIENT')) {
             $this->addFlash('error', 'Accès refusé');
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('login');  
+        }
+        $this->denyAccessUnlessGranted('ROLE_CLIENT', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+
+        // The user, without the role 'ROLE_SALES', cannot access other users infos:
+        if (!$this->isGranted('ROLE_SALES')) {
+            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+                $this->addFlash('error', 'Accès refusé');
+                return $this->redirectToRoute('login');  
+                $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+            }
         }
 
-        if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
-            $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
-        }
-
+        // Needed for using CartService
         $cartService->setUser($user);
 
+        // Retrieves the client cart
         $cart = $cartService->getClientCart();
 
-
+        // Doesn't allow the user to validate the order without having set delivery and billing addresses
         if ($cart->getBillingAddress() == null && $cart->getDeliveryAddress() == null) {
-
             $this->addFlash('error', "Merci d'enregister vos adresses de facturation et de livraison au préalable!");
             $route = $request->headers->get('referer');
             return $this->redirect($route);
+
         } else {
 
+            // Sets the order in the database
             $cart->setValidated(true);
             $cart->setShipped(false);
             $cart->setTotal($cartService->getTotal($orderDetails));
             $date = new \DateTime('@' . strtotime('now'));
             $cart->setOrderDate($date);
 
+            // Sets the path for the order invoice in the database
             $orderId = $cart->getId();
             $clientOrderId = $cart->getClientOrderId();
             $cart->setInvoice('INVOICE-' . $clientOrderId . '.pdf');
@@ -248,10 +283,13 @@ class OrderController extends AbstractController
             $clientOrderId = $cart->getClientOrderId();
             $details = $orderDetails->findBy(['cart' => $orderId]);
 
+            // Fetches the user addresses
             $addresses = $this->getDoctrine()->getRepository(Address::class)->findByUser($user);
 
+            // Generates an invoice thanks to the PdfTools service
             $pdf->generateInvoice($orderId);
 
+            // Sends an email with the order info to both the user and to the shipping service of the company
             $email = (new TemplatedEmail())
                 ->from(new E_address('info_noreply@muse.com', 'Muse MailBot'))
                 ->to($user->getEmail())

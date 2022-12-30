@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
     
+    // Method to factorize some data in this controller
     function getData(CartService $cartService, OrderDetailsRepository $orderDetails) {
         return [
             'items'     => $cartService->getFullCart($orderDetails),
@@ -27,15 +28,17 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
         #[Route('/login', name: 'login')]
         public function index(CartService $cartService, AuthenticationUtils $authenticationUtils, CategoryRepository $categoryRepository, Request $request,ProductRepository $productRepository, OrderDetailsRepository $orderDetails): Response
         {
-         // get the login error if there is one
+            // get the login error if there is one
             $error = $authenticationUtils->getLastAuthenticationError();
 
-        // last username entered by the user
+            // last username entered by the user
             $lastUsername = $authenticationUtils->getLastUsername();
 
             $data = new SearchData();
+            // Paginator
             $data->page = $request->get('page', 1);
 
+            // The login form
             $form = $this->createForm(SearchType::class, $data);
             $form->handleRequest($request);
             

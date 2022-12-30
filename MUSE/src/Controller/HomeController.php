@@ -32,6 +32,7 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(Request $request, ?UserInterface $user, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, CartRepository $cartRepository, OrderDetailsRepository $orderDetails, EntityManagerInterface $entityManager): Response
     {
+        // If the user have the role 'ROLE_CLIENT', checks if the user has a cart. Whereas it will create one
         if ($this->isGranted('ROLE_CLIENT')) {
             $clientCart = $cartRepository->findOneByUser($user->getId());
             
@@ -49,11 +50,12 @@ class HomeController extends AbstractController
         }
 
         $data = new SearchData();
+        // Paginator
         $data->page = $request->get('page', 1);
+        // The search filter
         $searchForm = $this->createForm(SearchType2::class, $data);
         $searchForm->handleRequest($request);
         
-        //dd($this->cartRepository->findOrderedProducts());
         return $this->render('home/index.html.twig', [
             'items'     => $cartService->getFullCart($orderDetails),
             'count'     => $cartService->getItemCount($orderDetails),

@@ -27,6 +27,7 @@ class ProductController extends AbstractController
     #[Route('/product', name: 'app_product')]
     public function index(CartRepository $cartRepository, CartService $cartService, ?UserInterface $user, ProductRepository $productRepository, Request $request, CategoryRepository $categoryRepository, OrderDetailsRepository $orderDetails, ?EntityManagerInterface $entityManager): Response
     {
+        // If the user have the role 'ROLE_CLIENT', checks if the user has a cart. Whereas it will create one
         if ($this->isGranted('ROLE_CLIENT')) {
             $clientCart = $cartRepository->findOneByUser($user->getId());
 
@@ -44,11 +45,14 @@ class ProductController extends AbstractController
         }
 
         $data = new SearchData();
+        // Paginator
         $data->page = $request->get('page', 1);
 
+        // The search filter
         $searchForm = $this->createForm(SearchType::class, $data);
         $searchForm->handleRequest($request);
  
+        // Needed for using CartService
         $cartService->setUser($user);
 
         return $this->render('product/index.html.twig', [
@@ -64,13 +68,15 @@ class ProductController extends AbstractController
         ]);
     }
 
+
     #[Route('/product/{id}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product, ProductRepository $productRepository, CategoryRepository $categoryRepository, CartService $cartService, OrderDetailsRepository $orderDetails, ?UserInterface $user): Response
     {
         $data = new SearchData();
 
+        // Needed for using CartService
         $cartService->setUser($user);
-// dd($productRepository->findAccessories());
+
         return $this->render('product/product_show.html.twig', [
             'items'     => $cartService->getFullCart($orderDetails),
             'count'     => $cartService->getItemCount($orderDetails),
@@ -86,13 +92,16 @@ class ProductController extends AbstractController
         ]);
     }
 
+
     #[Route('/catalogue/{category}', name: 'app_catalogue')]
     public function index2(CartService $cartService, ProductRepository $productRepository, Request $request, Category $category, CategoryRepository $categoryRepository, OrderDetailsRepository $orderDetails): Response
     {
         $data = new SearchData();
         $data->category = [$category];
+        // Paginator
         $data->page = $request->get('page', 1);
 
+        // The search filter
         $searchForm = $this->createForm(SearchType::class, $data);
         $searchForm->handleRequest($request);
 
@@ -126,11 +135,14 @@ class ProductController extends AbstractController
 
         $data = new SearchData();
         $data->discount = $disc;
+        // Paginator
         $data->page = $request->get('page', 1);
 
+        // The search filter
         $searchForm = $this->createForm(SearchType::class, $data);
         $searchForm->handleRequest($request);
 
+        // Needed for using CartService
         $cartService->setUser($user);
 
         return $this->render('product/index.html.twig', [
@@ -142,7 +154,7 @@ class ProductController extends AbstractController
             'categories' => $categoryRepository->findAll(),
             'discount'  => $productRepository->findDiscount($data),
             'discount2' => $productRepository->findProductsDiscount(),
-            'searchForm'      => $searchForm->createView()
+            'searchForm' => $searchForm->createView()
         ]);
     }
 }
