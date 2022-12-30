@@ -25,15 +25,16 @@ class AddressController extends AbstractController
     #[Route('/', name: 'app_address_index', methods: ['GET'])]
     public function index(UserRepository $userRepository, UserInterface $user, AddressRepository $addressRepository, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?OrderDetailsRepository $orderDetails): Response
     {
+        // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
         }
-
         $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
         $data = new SearchData();
 
+        // Needed for using the CartService
         $cartService->setUser($user);
 
         return $this->render('address/index.html.twig', [
@@ -54,41 +55,32 @@ class AddressController extends AbstractController
     #[Route('/new', name: 'app_address_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AddressRepository $addressRepository, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?UserInterface $user, ?OrderDetailsRepository $orderDetails, EntityManagerInterface $entityManager): Response
     {
+        // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
         }
-
         $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
+        // The address form
         $address = new Address();
         $form = $this->createForm(AddressType::class, $address);
         $form->handleRequest($request);
 
         $data = new SearchData();
 
+        // Needed for using the CartService
         $cartService->setUser($user);
 
+        // Retrieves the client cart
         $cart = $cartService->getClientCart();
 
         $address->setUser($user);
 
+        // Sets the delivery and billing addresses for the current cart if the checkboxes are validated
         if ($form->isSubmitted() && $form->isValid()) {
             $addressRepository->save($address, true);
 
-            // $address->setName($form->get('name')->getData());
-            // $address->setCountry($form->get('country')->getData());
-            // $address->setZipcode($form->get('zipcode')->getData());
-            // $address->setCity($form->get('city')->getData());
-            // $address->setPathType($form->get('pathType')->getData());
-            // $address->setPathNumber($form->get('pathNumber')->getData());
-            // $address->setBillingAddress($form->get('billingAddress')->getData());
-            // $address->setDeliveryAddress($form->get('deliveryAddress')->getData());
-
-            // $address->setUser($user);
-
-            // $entityManager->persist($address);
-            // $entityManager->flush();
             if ($form->get('billingAddress')->getData(true)) {
                 $cart->setBillingAddress($address);
             }
@@ -119,14 +111,14 @@ class AddressController extends AbstractController
     #[Route('/{id}', name: 'app_address_show', methods: ['GET'])]
     public function show(Address $address, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?UserInterface $user, ?OrderDetailsRepository $orderDetails): Response
     {
+        // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
         }
-
         $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
-        // The user cannot access other users infos:
+        // The user, if its role is different from 'ROLE_SALES', cannot access other users infos:
         if (!$this->isGranted('ROLE_SALES')) {
             if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
                 $this->addFlash('error', 'Accès refusé');
@@ -137,6 +129,7 @@ class AddressController extends AbstractController
 
         $data = new SearchData();
 
+        // Needed for using the CartService
         $cartService->setUser($user);
 
         return $this->render('address/show.html.twig', [
@@ -156,26 +149,40 @@ class AddressController extends AbstractController
     #[Route('/{id}/edit', name: 'app_address_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Address $address, AddressRepository $addressRepository, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?UserInterface $user, ?OrderDetailsRepository $orderDetails, EntityManagerInterface $entityManager): Response
     {
+        // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
         }
-
         $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
+        // The user, if its role is different from 'ROLE_SALES', cannot access other users infos:
+        if (!$this->isGranted('ROLE_SALES')) {
+            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+                $this->addFlash('error', 'Accès refusé');
+                return $this->redirectToRoute('login');  
+                $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+            }
+        }
+
+        // The address form
         $form = $this->createForm(AddressType::class, $address);
         $form->handleRequest($request);
 
         $data = new SearchData();
 
+        // Needed for using the CartService
         $cartService->setUser($user);
 
+        // Retrieves the client cart
         $cart = $cartService->getClientCart();
 
+        // Edits the address if the form is valid
         if ($form->isSubmitted() && $form->isValid()) {
             $addressRepository->save($address, true);
 
-        if ($form->get('billingAddress')->getData(true)) {
+            // Sets the delivery and billing addresses for the current cart if the checkboxes are validated
+            if ($form->get('billingAddress')->getData(true)) {
                 $cart->setBillingAddress($address);
             }
             if ($form->get('deliveryAddress')->getData(true)) {
@@ -205,13 +212,14 @@ class AddressController extends AbstractController
     #[Route('/{id}', name: 'app_address_delete', methods: ['POST'])]
     public function delete(Request $request, Address $address, AddressRepository $addressRepository, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?UserInterface $user, ?OrderDetailsRepository $orderDetails): Response
     {
+        // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
         }
-
         $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
+        // Checks if the csrf token is valid in order to delete the address
         if ($this->isCsrfTokenValid('delete'.$address->getId(), $request->request->get('_token'))) {
             $addressRepository->remove($address, true);
         }
