@@ -30,21 +30,27 @@ class PdfTools
         $this->templating = $templating;
     }
 
+    // Function to generate an invoice for a given order ID
     public function generateInvoice($orderId)
     {
 
+        // Finds the order based on the order ID
         $order = $this->cartRepository->find($orderId);
 
+        // Gets the user associated with the order
         $user = $this->cartService->getUser($orderId);
 
+        // Gets the order details for the order
         $details = $this->orderDetails->findBy(['cart' => $orderId]);
 
+        // Renders the invoice HTML template and pass in the order, details, and user data
         $html = $this->templating->render('email/invoice.html.twig', array(
             "order" => $order,
             'details' => $details,
             'user' => $user,
         ));
 
+        // Generates a PDF from the HTML and saves it to the 'invoices' directory with the order's client order ID as the filename
         $this->pdf->generateFromHtml($html, '../public/invoices/INVOICE-' . $order->getClientOrderId() . '.pdf', [], true);
     }
 }

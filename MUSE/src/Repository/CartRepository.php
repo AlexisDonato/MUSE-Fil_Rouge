@@ -200,9 +200,9 @@ class CartRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
         ->select('p.id, p.name, p.price, p.description, p.image, (COUNT(p.id) * o.quantity) AS Ordered')
-        //->join(OrderDetails::class, 'o', 'WITH', 'o.cart = c.id')
+        //->join(OrderDetails::class, 'o', 'WITH', 'o.cart = c.id') =======> This is the same as :
         ->join('c.orderDetails', 'o')
-        // ->join(Product::class, 'p', 'WITH', 'p.id = o.product')
+        // ->join(Product::class, 'p', 'WITH', 'p.id = o.product') =======> This is the same as :
         ->join('o.product', 'p')
         ->where('c.validated = 1')
         ->groupBy('p.id')

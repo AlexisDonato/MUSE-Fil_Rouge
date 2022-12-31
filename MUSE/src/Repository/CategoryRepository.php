@@ -65,20 +65,24 @@ class CategoryRepository extends ServiceEntityRepository
 //    }
 
 
-    // Finds the correct category according to if it has a parent or not
+    // Function to find categories by parent
    public function findByParent($parent): array
    {
+    // If a parent category is provided
     if ($parent != null) {
 
         return $this->createQueryBuilder('c')
+        // Select only the categories that have the provided parent
         ->andWhere('c.parentCategory = :val')
         ->setParameter('val', $parent)
         ->getQuery()
         ->getResult()
         ;
     }
+    // If no parent category is provided
     else {
         return $this->createQueryBuilder('c')
+        // Select only the categories that have no parent
         ->andWhere('c.parentCategory is null')
         ->getQuery()
         ->getResult()

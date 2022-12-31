@@ -65,11 +65,12 @@ class CouponRepository extends ServiceEntityRepository
 //    }
 
 
-    // Looks for if the coupon exists or not
+    // Function to find a coupon by cart and coupon ID
    public function findOneByCartAndCoupon($couponId, $userId): ?Coupon
    {
        $result  = $this->createQueryBuilder('c')
         ->join("c.cart", "ca")
+        // Select only the coupons that match the provided coupon ID and user ID
         ->where('ca.coupon = :val')
         ->setParameter('val', $couponId)
         ->andWhere('ca.user = :val2')
@@ -77,10 +78,14 @@ class CouponRepository extends ServiceEntityRepository
            ->getQuery()
            ->getOneOrNullResult();
 
+        // If no coupon was found
         if ($result==null) {
+            // Finds the coupon by its ID
             $result = $this->find($couponId);
         }
+        // If a coupon was found
         else {
+            // Sets the result to null
             $result = null;
         }
         return $result;
