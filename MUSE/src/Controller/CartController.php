@@ -83,7 +83,7 @@ class CartController extends AbstractController
         }
     
         return $this->render('cart/index.html.twig', [
-            'couponInsertform'      =>$couponInsertform->createView(),
+            'couponInsertform' =>$couponInsertform->createView(),
             'total'     => $total,
             'items'     => $cartService->getFullCart($orderDetails),
             'count'     => $cartService->getItemCount($orderDetails),

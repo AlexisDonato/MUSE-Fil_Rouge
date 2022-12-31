@@ -39,9 +39,6 @@ class PdfTools
 
         $details = $this->orderDetails->findBy(['cart' => $orderId]);
 
-
-        // $clientOrderId = $this->cartRepository->getClientOrderId($orderId);
-
         $html = $this->templating->render('email/invoice.html.twig', array(
             "order" => $order,
             'details' => $details,

@@ -59,6 +59,8 @@ class CartRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+
+    // In order to fetch the current client cart
     public function findOneByUser($client_id): ?Cart
     {
         return $this->createQueryBuilder('c')
@@ -69,6 +71,7 @@ class CartRepository extends ServiceEntityRepository
         ->getOneOrNullResult();
     }
 
+    // In order to fetch all the carts/orders for one client
     public function findAllByUser($client_id): ?array
     {
         return $this->createQueryBuilder('c')
@@ -79,6 +82,7 @@ class CartRepository extends ServiceEntityRepository
         ->getResult();
     }
 
+    // In order to fetch all the carts/orders of all clients
     public function findAllUsers()
     {
         return $this->createQueryBuilder('c')

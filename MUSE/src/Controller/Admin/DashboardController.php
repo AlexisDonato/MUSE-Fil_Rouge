@@ -185,7 +185,4 @@ public function configureUserMenu(UserInterface $user): UserMenu
 
         
     }
-
-
-    // Chart.js doesn't work...
 }

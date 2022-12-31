@@ -64,6 +64,8 @@ class CategoryRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+
+    // Finds the correct category according to if it has a parent or not
    public function findByParent($parent): array
    {
     if ($parent != null) {

@@ -27,19 +27,20 @@ class ProductRepository extends ServiceEntityRepository
 
 
     /**
-     * Fetching products with a search
+     * Fetching products with a search filter
      *
      * @return PaginationInterface
      */
     public function findSearch(SearchData $search): PaginationInterface
     {
-        // dd($search);
         $query = $this
             ->createQueryBuilder('p')
             ->select('c', 'p', 's')
             ->join('p.category', 'c')
             ->join('p.supplier', 's');
 
+        // Here we look for :
+        // what has been written in the search input
         if (!empty($search->q)) {
             $query = $query
                 ->andWhere('p.name LIKE :q')
@@ -49,35 +50,41 @@ class ProductRepository extends ServiceEntityRepository
                 ->setParameter('q', "%{$search->q}%");
         }
 
+        // what has been written in the min input
         if (!empty($search->min)) {
             $query = $query
                 ->andWhere('p.price >= :min')
                 ->setParameter('min', $search->min);
         }
 
+        // what has been written in the max input
         if (!empty($search->max)) {
             $query = $query
                 ->andWhere('p.price <= :max')
                 ->setParameter('max', $search->max);
         }
 
+        // if the discount checkbox has been checked
         if (!empty($search->discount)) {
             $query = $query
                 ->andWhere('p.discountRate != 0');
         }
 
+        // if some categories has been selected
         if (!empty($search->category)) {
             $query = $query
                 ->andWhere('c.id IN (:category)')
                 ->setParameter('category', $search->category);
         }
 
+        // if some suppliers has been selected
         if (!empty($search->supplier)) {
             $query = $query
                 ->andWhere('s.id IN (:supplier)')
                 ->setParameter('supplier', $search->supplier);
         }
 
+        // returns the query thanks to the paginator
         $query = $query->getQuery();
         return $this->paginator->paginate(
             $query,
@@ -87,7 +94,7 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     /**
-     * Fetching products on discount with a search
+     * Fetching products on discount
      *
      * @return PaginationInterface
      */

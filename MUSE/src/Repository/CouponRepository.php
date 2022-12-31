@@ -64,6 +64,8 @@ class CouponRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+
+    // Looks for if the coupon exists or not
    public function findOneByCartAndCoupon($couponId, $userId): ?Coupon
    {
        $result  = $this->createQueryBuilder('c')
