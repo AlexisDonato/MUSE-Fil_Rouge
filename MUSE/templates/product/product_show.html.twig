@@ -113,14 +113,13 @@
 										<td class="roboto h5">
 										{% endif %}
 										{% if app.user %}
-											{{ (product.price) * (1 - (product.discountRate)) * (1 +  app.user.vat)}}
+											{{ ((product.price) * (1 - (product.discountRate)) * (1 +  app.user.vat)) }}
 										{% else %}
-											{{ (product.price) * (1 - (product.discountRate)) * 1.2 }}
+											{{ ((product.price) * (1 - (product.discountRate)) * 1.2) }}
 										{% endif %}
 										€</b>
 								</td>
 							</tr>
-							{% if is_granted('IS_AUTHENTICATED_FULLY') %}{% endif %}
 						</tr>
 						<tr>
 							<th class="text-success">Ajouter au panier</th>
