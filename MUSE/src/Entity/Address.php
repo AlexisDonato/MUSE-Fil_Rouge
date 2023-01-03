@@ -185,4 +185,3 @@ class Address
         return $this->name . $deliveryAddress . $billingAddress . " : " . $this->pathNumber . " " . $this->pathType . " " . $this->zipcode . " " . $this->city;
     }
 }
-// $this->billingAddress . '' . $this->deliveryAddress = true . 

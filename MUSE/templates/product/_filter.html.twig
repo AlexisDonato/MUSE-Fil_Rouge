@@ -4,30 +4,30 @@
 
 <div class="row">
 	<div class="col-sm-6 col-md-12 col-lg-6">
-<small class="text-primary">
-	<b>Catégories</b>
-</small>
-<small class="text-wrap">{{ form_row(searchForm.category, {attr: {class: 'filterCat'}}) }}</small>
+		<small class="text-primary">
+			<b>Catégories</b>
+		</small>
+		<small class="text-wrap">{{ form_row(searchForm.category, {attr: {class: 'filterCat'}}) }}</small>
 	</div>
-	<div class="col-sm-6 col-md-12 col-lg-6">
-<small class="text-primary">
-	<b>Marques</b>
-</small>
-<small>{{ form_row(searchForm.supplier, {attr: {class: 'filterCat'}}) }}</small>
+		<div class="col-sm-6 col-md-12 col-lg-6">
+			<small class="text-primary">
+				<b>Marques</b>
+			</small>
+			<small>{{ form_row(searchForm.supplier, {attr: {class: 'filterCat'}}) }}</small>
+		</div>
 	</div>
-</div>
 
-<small class="text-primary">
-	<b>Prix</b>
-</small>
-<div class="row">
-	<div class="col-sm-6 col-md-12 col-lg-6">
-		{{ form_row(searchForm.min) }}
+	<small class="text-primary">
+		<b>Prix</b>
+	</small>
+	<div class="row">
+		<div class="col-sm-6 col-md-12 col-lg-6">
+			{{ form_row(searchForm.min) }}
+		</div>
+		<div class="col-sm-6 col-md-12 col-lg-6">
+			{{ form_row(searchForm.max) }}
+		</div>
 	</div>
-	<div class="col-sm-6 col-md-12 col-lg-6">
-		{{ form_row(searchForm.max) }}
-	</div>
-</div>
 
 <small class="text-primary">
 	<b>Promotions</b>
