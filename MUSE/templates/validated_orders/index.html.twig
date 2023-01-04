@@ -26,10 +26,10 @@
 								<td>{{ order.user.email }}</td>
 							{% endif %}
 							<td>{{order.ClientOrderId}}</td>
-							<td>{{order.orderDate|format_datetime('short', 'none', locale='fr')}}</td>
+							<td>{{order.orderDate|date('d-m-Y H:i:s')}}</td>
 							<td>
 								{% if order.shipped == 1 %}
-									{{order.shipmentDate|format_datetime('short', 'none', locale='fr')}}
+									{{order.shipmentDate|date('d-m-Y H:i:s')}}
 								{% else %}
 									-
 								{% endif %}

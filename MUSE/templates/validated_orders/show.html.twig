@@ -8,10 +8,10 @@
 		<h1 class="text-center text-light mt-3 mb-5">Votre commande n° :
 			{{ cart.clientorderId }}</h1>
 		<h3 class="text-center mb-3">Date de commande :
-			{{ cart.orderDate|format_datetime('short', 'none', locale='fr') }}</h3>
+			{{ cart.orderDate|date('d-m-Y H:i:s') }}</h3>
 		{% if cart.shipped == 1 %}<br>
 			<h3 class="text-center mb-3">Date d'expédition :
-				{{ cart.shipmentDate|format_datetime('short', 'none', locale='fr') }}</h3>
+				{{ cart.shipmentDate|date('d-m-Y H:i:s') }}</h3>
 			<br><h3 class="text-center mb-3">Transporteur :
 				{{ carrier }}</h3>
 			<br><h3 class="text-center mb-3">N° de suivi :
