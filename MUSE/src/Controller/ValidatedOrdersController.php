@@ -121,7 +121,7 @@ class ValidatedOrdersController extends AbstractController
             return $this->redirectToRoute('login');  
         }
 
-        // Sets additional information on the cart to become an order
+        // Sets additional information on the cart to become a shipped order
         $orderId = $request->attributes->get('id');
         $cart = $cartRepository->find($orderId);
         $cart->setShipped(true);

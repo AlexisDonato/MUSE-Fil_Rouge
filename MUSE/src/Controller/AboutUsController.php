@@ -28,6 +28,7 @@ class AboutUsController extends AbstractController
             'categories' => $categoryRepository->findAll(),
             'discount'  => $productRepository->findDiscount($data),
             'discount2' => $productRepository->findProductsDiscount(),
+            'count'     => $cartService->getItemCount($orderDetails),
         ]);
     }
 }

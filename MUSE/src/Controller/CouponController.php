@@ -68,6 +68,7 @@ class CouponController extends AbstractController
         return $this->renderForm('coupon/new.html.twig', [
             'coupon' => $coupon,
             'form' => $form,
+            'count'     => $cartService->getItemCount($orderDetails),
             'products'  => $productRepository->findSearch($data),
             'products2' => $productRepository->findAll(),
             'categories' => $categoryRepository->findAll(),
