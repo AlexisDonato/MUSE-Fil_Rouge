@@ -265,7 +265,7 @@ class OrderController extends AbstractController
 
         } else {
 
-            // Sets the order in the database
+            // Sets additional information on the cart to become an order
             $cart->setValidated(true);
             $cart->setShipped(false);
             $cart->setTotal($cartService->getTotal($orderDetails));
