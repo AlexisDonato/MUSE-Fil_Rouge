@@ -41,12 +41,8 @@
 									{% endif %}
 								</td>
 								<td>
-									<button class="btn btn-warning mb-3">
-										<a class="text-decoration-none text-white" href="{{ path('app_address_show', {'id': address.id}) }}">Détails</a>
-									</button>
-									<button class="btn btn-warning mb-3">
-										<a class="text-decoration-none text-white" href="{{ path('app_address_edit', {'id': address.id}) }}">Modifier</a>
-									</button>
+									<a class="text-decoration-none text-white" href="{{ path('app_address_show', {'id': address.id}) }}"><i class="fa-solid fa-eye btn btn-warning border border-light Hl mb-1" title="Détails"></i></a>
+									<a class="text-decoration-none text-white" href="{{ path('app_address_edit', {'id': address.id}) }}"><i class="fa-solid fa-pencil btn btn-primary border border-light Hl" title="Modifier"></i></a>
 								</td>
 							</tr>
 						{% else %}

@@ -40,7 +40,7 @@
 				</tr>
 				<tr>
 					<th>Date de naissance</th>
-					<td>{{ user.birthdate|format_datetime('short', 'none', locale='fr') }}</td>
+					<td>{{ user.birthdate|date('d-m-Y') }}</td>
 				</tr>
 				<tr>
 					<th>N° téléphone</th>
@@ -52,7 +52,7 @@
 				</tr>
 				<tr>
 					<th>Date d'enregistrement</th>
-					<td>{{ user.registerDate|format_datetime('short', 'none', locale='fr') }}</td>
+					<td>{{ user.registerDate|date('d-m-Y') }}</td>
 				</tr>
 				<tr>
 					<th>Adresse(s)</th>

@@ -20,8 +20,8 @@
                 <td>{{ supplier.id }}</td>
                 <td>{{ supplier.name }}</td>
                 <td>
-                    <button class="btn btn-warning border-light mb-1"><a class="text-decoration-none text-dark" href="{{ path('app_supplier_show', {'id': supplier.id}) }}">Détails</a></button>
-                    <button class="btn btn-warning border-light mb-1"><a class="text-decoration-none text-dark" href="{{ path('app_supplier_edit', {'id': supplier.id}) }}">Modifier</a></button>
+                    <a class="text-decoration-none text-dark" href="{{ path('app_supplier_show', {'id': supplier.id}) }}"><i class="fa-solid fa-eye btn btn-warning border border-light Hl" title="Détails"></i></a>
+                    <a class="text-decoration-none text-dark" href="{{ path('app_supplier_edit', {'id': supplier.id}) }}"><i class="fa-solid fa-pencil btn btn-warning border border-light Hl" title="Modifier"></i></a>
                 </td>
             </tr>
         {% else %}

@@ -31,13 +31,13 @@
                 <td>{{ user.password }}</td>
                 <td>{{ user.userName }}</td>
                 <td>{{ user.userLastname }}</td>
-                <td>{{ user.birthdate|format_datetime('short', 'none', locale='fr') }}</td>
+                <td>{{ user.birthdate|date('d-m-Y') }}</td>
                 <td><i>{{ addresses|length }}</i></td>
                 <td>{{ user.isVerified ? 'Oui' : 'Non' }}</td>
-                <td>{{ user.registerDate|format_datetime('short', 'none', locale='fr') }}</td>
+                <td>{{ user.registerDate|date('d-m-Y') }}</td>
                 <td>
-                    <button class="btn btn-danger border-light mb-1"><a class="text-decoration-none text-light" href="{{ path('app_user_show', {'id': user.id}) }}">Détails</a></button>
-                    <button class="btn btn-danger border-light mb-1" ><a class="text-decoration-none text-light" style="width: 1150px;" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a></button>
+                    <a class="text-decoration-none text-light" href="{{ path('app_user_show', {'id': user.id}) }}"><i class="fa-solid fa-eye btn btn-danger border border-light Hl mb-1" title="Détails"></i></a>
+                    <a class="text-decoration-none text-light" style="width: 1150px;" href="{{ path('app_user_edit', {'id': user.id}) }}"><i class="fa-solid fa-pencil btn btn-danger border border-light Hl" title="Modifier"></i></a>
                 </td>
             </tr>
         {% else %}
