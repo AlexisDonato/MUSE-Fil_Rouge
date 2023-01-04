@@ -1,42 +1,38 @@
 <h2 class="text-center text-info bg-dark rounded">Evolution de la société</h2>
 
-<div class="row d-flex justify-content-around align-items-center rounded bg-dark">
-{% include '/dashboard/annotation_chart1.html.twig' %}
-<div class="mb-3 rounded d-flex align-items-center justify-content-between p-4 bg-dark border border-secondary" id='chart_div' style='width: 900px; height: 600px;'></div>
-</div>
-
+{# *** CALENDAR CHART *** #}
 <div class="row rounded bg-dark">
-<div class="col d-flex justify-content-around align-items-center ">
-{% include '/dashboard/calendar_chart.html.twig' %}
-<div class="mb-3 rounded bg-dark border border-secondary" id="calendar_basic" style="width: 1000px; height: auto;"></div>
-</div>
+        <div class="col d-flex justify-content-around align-items-center ">
+            {% include '/dashboard/calendar_chart.html.twig' %}
+        <div class="mb-3 rounded bg-dark border border-secondary" id="calendar_basic" style="width: 1000px; height: auto;"></div>
+    </div>
 </div>
 
-
+{# *** TURNOVER / YEAR *** #}
 <div class="row mt-5 rounded border border-secondary">
-<div class="col-12">
-<h3>C.A. par année</h3>
-    <table class="table table-dark darker table-striped">
-        <thead>
-            <tr class="text-info">
+    <div class="col-12">
+    <h3>C.A. par année</h3>
+        <table class="table table-dark darker table-striped">
+            <thead>
+                <tr class="text-info">
+                    {% for ody in ordersByYear %}
+                    <th>{{ody.Year}}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
                 {% for ody in ordersByYear %}
-                <th>{{ody.Year}}</th>
+                    <td class="text-warning">{{ody.Total}} €</td>
                 {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-            {% for ody in ordersByYear %}
-                <td class="text-warning">{{ody.Total}} €</td>
-            {% endfor %}
-            </tr>
-        </tbody>
-    </table>
-</div>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 
-{# *** Fil Rouge table *** #}
+{# *** ADDITIONAL TABLE *** #}
 <div class="row mt-5 rounded border border-secondary">
 <div class="col-12">
     <table class="table table-dark darker table-striped">
