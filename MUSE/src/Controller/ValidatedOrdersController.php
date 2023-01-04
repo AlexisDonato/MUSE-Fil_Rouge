@@ -150,7 +150,7 @@ class ValidatedOrdersController extends AbstractController
         ]);
         $mailer->send($email);
 
-        $this->addFlash('success', 'La commande a bien été envoyée');
+        $this->addFlash('success', 'La commande a bien été expédiée. Un mail de contfirmation vous a été envoyé');
         return $this->redirectToRoute('app_validated_orders');
 
     }
