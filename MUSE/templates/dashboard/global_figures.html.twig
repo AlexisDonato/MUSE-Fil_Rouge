@@ -38,6 +38,7 @@
 	{% set sumProd = sumProd + detail.quantity %}
 {% endfor %}
 
+{# *** USERS *** #}
 <div class="container-fluid mt-2 mb-2">
 	<div class="row d-flex justify-content-around align-items-center rounded bg-dark">
 		<div class="col-sm-6 col-xl-3 mb-2">
@@ -63,7 +64,7 @@
 							</strong>
 						</li>
 						<li>Paniers sans commande :
-							<strong class="text-warning">{{ carts|length - sumVal }}</strong>
+							<strong class="text-danger badge badge-pill badge-warning">{{ carts|length - sumVal }}</strong>
 						</li>
 						<li>Moyenne de commandes par utilisateur :
 							<strong class="text-warning">{{ (sumVal / users|length)|number_format(2, '.', '') }}</strong>
@@ -82,6 +83,7 @@
 	</div>
 	</div>
 
+{# *** TOP 10's *** #}
 <div class="row d-flex justify-content-around align-items-center rounded bg-dark">
 <div class="col-sm-6 col-xl-5 mb-2 bg-dark rounded border border-secondary mt-2">
 <div><b>Top 10 des clients par Ventes</b></div>
@@ -182,6 +184,7 @@
 </div>
 	<hr>
 
+{# *** SUPPLIERS *** #}
 	<div class="row d-flex justify-content-around align-items-center rounded bg-dark">
 		<div class="col-sm-6 col-xl-3">
 			<div class="rounded d-flex justify-content-center bg-dark border border-secondary">
@@ -246,10 +249,9 @@
 				</tbody>
 				</table>
 			</div> #}
-
-
 <hr>
 
+{# *** PRODUCTS *** #}
 <div class="row d-flex justify-content-around align-items-center rounded bg-dark">
 	<div class="col-sm-6 col-xl-3">
 		<div class="rounded d-flex justify-content-center bg-dark border border-secondary mt-2 mb-2">
@@ -301,6 +303,7 @@
 
 <hr>
 
+{# *** CARTS DETAILS *** #}
 <div class="row d-flex justify-content-around align-items-center rounded bg-dark">
 	<div class="col-sm-6 col-xl-3">
 		<div class="rounded d-flex justify-content-center bg-dark border border-secondary mt-2 mb-2">
@@ -345,6 +348,7 @@
 
 <hr>
 
+{# *** CARTS / ORDERS *** #}
 <div class="row d-flex justify-content-around align-items-center rounded bg-dark">
 	<div class="col-sm-6 col-xl-3">
 		<div class="rounded d-flex justify-content-center bg-dark border border-secondary mt-2 mb-2">
@@ -364,7 +368,7 @@
 					</li>
 
 					<li>Commandes en cours de livraison :
-						<strong class="text-warning">{{ sumVal - sumShip }}</strong>
+						<strong class="text-danger badge badge-pill badge-warning">{{ sumVal - sumShip }}</strong>
 					</li>
 
 					<li>Moyenne des commandes par utilisateur :
