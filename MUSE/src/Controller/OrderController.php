@@ -212,26 +212,7 @@ class OrderController extends AbstractController
         ]);
     }
 
-    // This method is only used when checking out with the Stripe form
-    public function checkoutAction(Request $request)
-    {
-        if ($request->isMethod('POST')) {
-            $token = $request->request->get('stripeToken');
-            \Stripe\Stripe::setApiKey("pk_test_HxZzNHy8LImKK9LDtgMDRBwd");
-            \Stripe\Charge::create(array(
-                "amount" => $this->get('cart')->getTotal() * 100,
-                "currency" => "eur",
-                "source" => $token,
-                "description" => "Test charge!"
-            ));
-
-            $this->getCart()->setValidated(true);
-
-            return $this->redirectToRoute('app_order_validated');
-        }
-    }
-
-
+    
     #[Route('/order/validated', name: 'app_order_validated')]
     public function validateOrder(Request $request, PdfTools $pdf, EntrypointLookupInterface $entrypointLookup, ?CartService $cartService, ?CartRepository $cartRepository, ?Cart $cart, ?UserInterface $user, ?EntityManagerInterface $entityManager, OrderDetailsRepository $orderDetails, MailerInterface $mailer)
     {
