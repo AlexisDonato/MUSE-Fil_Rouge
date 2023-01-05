@@ -1,4 +1,6 @@
 {# *** TWIG CALCULATIONS *** #}
+
+{# Initialize variables to store the calculated values. #}
 {% set sumTotal = 0 %}
 {% set sumVal = 0 %}
 {% set pro = 0 %}
@@ -10,34 +12,45 @@
 {% set sumDisc = 0 %}
 {% set sumOut = 0 %}
 
+{# Iterate over the carts and calculate the total number of validated and shipped orders #}
 {% for cart in carts %}
 	{% set sumVal = sumVal + cart.validated %}
 	{% set sumShip = sumShip + cart.shipped %}
+
+	{# Only add the total if the order has been validated #}
 	{% if cart.validated == true %}
 		{% set sumTotal = sumTotal + cart.total %}
 	{% endif %}
 {% endfor %}
 
+{# Iterate over the users and count the number of pro users #}
 {% for user in users %}
 	{% if user.pro == true %}
 		{% set pro = pro + 1 %}
 	{% endif %}
 {% endfor %}
 
+{# Iterate over the products and calculate various quantities #}
 {% for product in products %}
 	{% set sumQuant = sumQuant + product.quantity %}
 	{% set sumPrice = sumPrice + product.price %}
+
+	{# Count the number of products with a discount #}
 	{% if product.discountRate != 0 %}
 		{% set sumDisc = sumDisc + 1 %}
 	{% endif %}
+
+	{# Count the number of products that are out of stock #}
 	{% if product.quantity == 0 %}
 		{% set sumOut = sumOut + 1 %}
 	{% endif %}
 {% endfor %}
 
+{# Iterate over the order details and count the total number of products #}
 {% for detail in orderDetails %}
 	{% set sumProd = sumProd + detail.quantity %}
 {% endfor %}
+
 
 {# *** USERS *** #}
 <div class="container-fluid mt-2 mb-2">
