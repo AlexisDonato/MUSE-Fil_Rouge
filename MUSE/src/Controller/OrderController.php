@@ -13,9 +13,10 @@ use App\Form\SelectAddressType;
 use App\Security\EmailVerifier;
 use App\Service\Cart\CartService;
 use App\Repository\CartRepository;
+use App\Repository\CouponRepository;
+use App\Repository\AddressRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
-use App\Repository\CouponRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\OrderDetailsRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -63,7 +64,7 @@ class OrderController extends AbstractController
 
 
     #[Route('/order', name: 'app_order')]
-    public function index(CartService $cartService, ProductRepository $productRepository, Request $request, CategoryRepository $categoryRepository, OrderDetailsRepository $orderDetails, ?UserInterface $user, EntityManagerInterface $entityManager, CouponRepository $couponRepository): Response
+    public function index(AddressRepository $addressRepository, CartService $cartService, ProductRepository $productRepository, Request $request, CategoryRepository $categoryRepository, OrderDetailsRepository $orderDetails, ?UserInterface $user, EntityManagerInterface $entityManager, CouponRepository $couponRepository): Response
     {
         // Double access restriction for roles other than 'ROLE_CLIENT'
         if (!$this->isGranted('ROLE_CLIENT')) {
@@ -74,7 +75,7 @@ class OrderController extends AbstractController
 
         // The user, without the role 'ROLE_SALES', cannot access other users infos:
         if (!$this->isGranted('ROLE_SALES')) {
-            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
                 $this->addFlash('error', 'Accès refusé');
                 return $this->redirectToRoute('login');  
                 $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
@@ -86,7 +87,7 @@ class OrderController extends AbstractController
         $data->page = $request->get('page', 1);
 
         // Fetches the user addresses
-        $addresses = $this->getDoctrine()->getRepository(Address::class)->findByUser($user);
+        $addresses = $this->$addressRepository->findByUser($user);
 
         // Needed for using CartService
         $cartService->setUser($user);
@@ -178,7 +179,7 @@ class OrderController extends AbstractController
         // The "delivery and billing addresses" select form
         $selectForm = $this->createForm(SelectAddressType::class);
         $selectForm->handleRequest($request);
-        $addresses = $this->getDoctrine()->getRepository(Address::class)->findByUser($user);
+        $addresses = $this->$addressRepository->findByUser($user);
 
         // Sets the delivery and billing addresses for the current cart when selected
         if ($selectForm->isSubmitted() && $selectForm->isValid()) {
@@ -214,7 +215,7 @@ class OrderController extends AbstractController
 
     
     #[Route('/order/validated', name: 'app_order_validated')]
-    public function validateOrder(Request $request, PdfTools $pdf, EntrypointLookupInterface $entrypointLookup, ?CartService $cartService, ?CartRepository $cartRepository, ?Cart $cart, ?UserInterface $user, ?EntityManagerInterface $entityManager, OrderDetailsRepository $orderDetails, MailerInterface $mailer)
+    public function validateOrder(AddressRepository $addressRepository, Request $request, PdfTools $pdf, EntrypointLookupInterface $entrypointLookup, ?CartService $cartService, ?CartRepository $cartRepository, ?Cart $cart, ?UserInterface $user, ?EntityManagerInterface $entityManager, OrderDetailsRepository $orderDetails, MailerInterface $mailer)
     {
         // Double access restriction for roles other than 'ROLE_CLIENT'
         if (!$this->isGranted('ROLE_CLIENT')) {
@@ -225,7 +226,7 @@ class OrderController extends AbstractController
 
         // The user, without the role 'ROLE_SALES', cannot access other users infos:
         if (!$this->isGranted('ROLE_SALES')) {
-            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
                 $this->addFlash('error', 'Accès refusé');
                 return $this->redirectToRoute('login');  
                 $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
@@ -265,12 +266,13 @@ class OrderController extends AbstractController
             $details = $orderDetails->findBy(['cart' => $orderId]);
 
             // Fetches the user addresses
-            $addresses = $this->getDoctrine()->getRepository(Address::class)->findByUser($user);
+            // $addresses = $this->getDoctrine()->getRepository(Address::class)->findByUser($user);
+            $addresses = $this->$addressRepository->findByUser($user);
 
             // Generates an invoice thanks to the PdfTools service
             $pdf->generateInvoice($orderId);
 
-            // Sends an email with the order info to both the user and to the shipping service of the company
+            // Sends an email with the order info to both the user and to the shipping service of the company, with the invoice attached to it
             $email = (new TemplatedEmail())
                 ->from(new E_address('info_noreply@muse.com', 'Muse MailBot'))
                 ->to($user->getEmail())

@@ -35,7 +35,7 @@ class ClientAddressController extends AbstractController
         $data = new SearchData();
 
         // Fetches the user addresses
-        $addresses = $this->getDoctrine()->getRepository(Address::class)->findByUser($user);
+        $addresses = $this->$addressRepository->findByUser($user);
 
         // Needed for using CartService
         $cartService->setUser($user);
@@ -126,7 +126,7 @@ class ClientAddressController extends AbstractController
 
         // The user, without the role 'ROLE_SALES', cannot access other users infos:
         if (!$this->isGranted('ROLE_SALES')) {
-            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
                 $this->addFlash('error', 'Accès refusé');
                 return $this->redirectToRoute('login');  
                 $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
@@ -164,7 +164,7 @@ class ClientAddressController extends AbstractController
 
         // The user, without the role 'ROLE_SALES', cannot access other users infos:
         if (!$this->isGranted('ROLE_SALES')) {
-            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
                 $this->addFlash('error', 'Accès refusé');
                 return $this->redirectToRoute('login');  
                 $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
@@ -217,7 +217,7 @@ class ClientAddressController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_client_address_delete', methods: ['POST'])]
-    public function delete(Request $request, Address $address, AddressRepository $addressRepository): Response
+    public function delete(Request $request, Address $address, AddressRepository $addressRepository, UserInterface $user): Response
     {
         // Double access restriction for roles other than 'ROLE_CLIENT'
         if (!$this->isGranted('ROLE_CLIENT')) {
@@ -228,7 +228,7 @@ class ClientAddressController extends AbstractController
 
         // The user, without the role 'ROLE_SALES', cannot access other users infos:
         if (!$this->isGranted('ROLE_SALES')) {
-            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
                 $this->addFlash('error', 'Accès refusé');
                 return $this->redirectToRoute('login');  
                 $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");

@@ -13,6 +13,7 @@ use App\Repository\OrderDetailsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/category')]
@@ -95,7 +96,7 @@ class AdminCategoryController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_admin_category_show', methods: ['GET'])]
-    public function show(Category $category, CategoryRepository $categoryRepository,ProductRepository $productRepository, OrderDetailsRepository $orderDetails, CartService $cartService): Response
+    public function show(Category $category, CategoryRepository $categoryRepository,ProductRepository $productRepository, OrderDetailsRepository $orderDetails, CartService $cartService, ?UserInterface $user): Response
     {
         // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
@@ -104,9 +105,9 @@ class AdminCategoryController extends AbstractController
         }
         $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
-        // The user, if its role is different from 'ROLE_SALES', cannot access other users infos:
+        // The user, without the role 'ROLE_SALES', cannot access other users infos:
         if (!$this->isGranted('ROLE_SALES')) {
-            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
                 $this->addFlash('error', 'Accès refusé');
                 return $this->redirectToRoute('login');  
                 $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
@@ -129,7 +130,7 @@ class AdminCategoryController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_admin_category_edit', methods: ['GET', 'POST'])]
-    public function edit(EntityManagerInterface $entityManager, Request $request, Category $category, CategoryRepository $categoryRepository,ProductRepository $productRepository, OrderDetailsRepository $orderDetails, CartService $cartService): Response
+    public function edit(EntityManagerInterface $entityManager, Request $request, Category $category, CategoryRepository $categoryRepository,ProductRepository $productRepository, OrderDetailsRepository $orderDetails, CartService $cartService, ?UserInterface $user): Response
     {
         // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
@@ -138,9 +139,9 @@ class AdminCategoryController extends AbstractController
         }
         $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
-        // The user, if its role is different from 'ROLE_SALES', cannot access other users infos:
+        // The user, without the role 'ROLE_SALES', cannot access other users infos:
         if (!$this->isGranted('ROLE_SALES')) {
-            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
                 $this->addFlash('error', 'Accès refusé');
                 return $this->redirectToRoute('login');  
                 $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
@@ -188,7 +189,7 @@ class AdminCategoryController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_admin_category_delete', methods: ['POST'])]
-    public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
+    public function delete(Request $request, Category $category, CategoryRepository $categoryRepository, ?UserInterface $user): Response
     {
         // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
@@ -197,9 +198,9 @@ class AdminCategoryController extends AbstractController
         }
         $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
-        // The user, if its role is different from 'ROLE_SALES', cannot access other users infos:
+        // The user, without the role 'ROLE_SALES', cannot access other users infos:
         if (!$this->isGranted('ROLE_SALES')) {
-            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
                 $this->addFlash('error', 'Accès refusé');
                 return $this->redirectToRoute('login');  
                 $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");

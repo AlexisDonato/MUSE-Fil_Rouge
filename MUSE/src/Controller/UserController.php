@@ -8,6 +8,7 @@ use App\Entity\Address;
 use App\Data\SearchData;
 use App\Service\Cart\CartService;
 use App\Repository\UserRepository;
+use App\Repository\AddressRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\OrderDetailsRepository;
@@ -53,7 +54,7 @@ class UserController extends AbstractController
 
  
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
-    public function show(UserRepository $userRepository, CartService $cartService, User $user, CategoryRepository $categoryRepository, ProductRepository $productRepository, OrderDetailsRepository $orderDetails): Response
+    public function show(AddressRepository $addressRepository, UserRepository $userRepository, CartService $cartService, User $user, CategoryRepository $categoryRepository, ProductRepository $productRepository, OrderDetailsRepository $orderDetails): Response
     {
         // Double access restriction for roles other than 'ROLE_SHIP'
         if (!$this->isGranted('ROLE_SHIP')) {
@@ -82,12 +83,12 @@ class UserController extends AbstractController
             'categories' => $categoryRepository->findAll(),
             'discount' => $productRepository->findDiscount($data),
             'discount2' => $productRepository->findProductsDiscount(),
-            'addresses' =>$this->getDoctrine()->getRepository(Address::class)->findByUser($user),            
+            'addresses' =>$this->$addressRepository->findByUser($user),            
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(?Address $address, CartService $cartService, CategoryRepository $categoryRepository, ProductRepository $productRepository, Request $request, User $user, UserRepository $userRepository, OrderDetailsRepository $orderDetails): Response
+    public function edit(AddressRepository $addressRepository, ?Address $address, CartService $cartService, CategoryRepository $categoryRepository, ProductRepository $productRepository, Request $request, User $user, UserRepository $userRepository, OrderDetailsRepository $orderDetails): Response
     {
          // Double access restriction for roles other than 'ROLE_SALES'
          if (!$this->isGranted('ROLE_SALES')) {
@@ -137,7 +138,7 @@ class UserController extends AbstractController
             'categories' => $categoryRepository->findAll(),
             'discount' => $productRepository->findDiscount($data),
             'discount2' => $productRepository->findProductsDiscount(),
-            'addresses' =>$this->getDoctrine()->getRepository(Address::class)->findByUser($user),      
+            'addresses' =>$this->$addressRepository->findByUser($user),      
             'address'   =>$address, 
         ]);
     }
@@ -154,7 +155,7 @@ class UserController extends AbstractController
 
         // The user, if its role is different from 'ROLE_SALES', cannot access other users infos:
         if (!$this->isGranted('ROLE_SALES')) {
-            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
                 $this->addFlash('error', 'Accès refusé');
                 return $this->redirectToRoute('login');  
                 $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");

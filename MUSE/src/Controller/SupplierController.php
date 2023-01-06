@@ -99,6 +99,15 @@ class SupplierController extends AbstractController
         }
         $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
+        // The user, without the role 'ROLE_SALES', cannot access other users infos:
+        if (!$this->isGranted('ROLE_SALES')) {
+            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
+                $this->addFlash('error', 'Accès refusé');
+                return $this->redirectToRoute('login');  
+                $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+            }
+        }
+
         $data = new SearchData();
 
         // Needed for using CartService
@@ -126,6 +135,15 @@ class SupplierController extends AbstractController
             return $this->redirectToRoute('login');  
         }
         $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+
+        // The user, without the role 'ROLE_SALES', cannot access other users infos:
+        if (!$this->isGranted('ROLE_SALES')) {
+            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
+                $this->addFlash('error', 'Accès refusé');
+                return $this->redirectToRoute('login');  
+                $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+            }
+        }
 
         $data = new SearchData();
 

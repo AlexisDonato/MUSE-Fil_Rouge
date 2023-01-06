@@ -5,14 +5,15 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Data\SearchData;
 use App\Form\ProductType;
+use App\Service\Cart\CartService;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
-use App\Repository\OrderDetailsRepository;
-use App\Service\Cart\CartService;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\OrderDetailsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -107,7 +108,7 @@ class AdminProductController extends AbstractController
     }
 
     #[Route('/admin/product/{id}', name: 'app_admin_product_show', methods: ['GET'])]
-    public function show(Product $product, ProductRepository $productRepository, CategoryRepository $categoryRepository, CartService $cartService, OrderDetailsRepository $orderDetails): Response
+    public function show(Product $product, ProductRepository $productRepository, CategoryRepository $categoryRepository, CartService $cartService, OrderDetailsRepository $orderDetails, UserInterface $user): Response
     {
         // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
@@ -116,9 +117,9 @@ class AdminProductController extends AbstractController
         }
         $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
-        // The user, if its role is different from 'ROLE_SALES', cannot access other users infos:
+        // The user, without the role 'ROLE_SALES', cannot access other users infos:
         if (!$this->isGranted('ROLE_SALES')) {
-            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
                 $this->addFlash('error', 'Accès refusé');
                 return $this->redirectToRoute('login');  
                 $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
@@ -141,7 +142,7 @@ class AdminProductController extends AbstractController
     }
 
     #[Route('/admin/product/{id}/edit', name: 'app_admin_product_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Product $product, ProductRepository $productRepository, CategoryRepository $categoryRepository, EntityManagerInterface $entityManager, CartService $cartService, OrderDetailsRepository $orderDetails): Response
+    public function edit(Request $request, Product $product, ProductRepository $productRepository, CategoryRepository $categoryRepository, EntityManagerInterface $entityManager, CartService $cartService, OrderDetailsRepository $orderDetails, ?UserInterface $user): Response
     {
         // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
@@ -150,9 +151,9 @@ class AdminProductController extends AbstractController
         }
         $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
-        // The user, if its role is different from 'ROLE_SALES', cannot access other users infos:
+        // The user, without the role 'ROLE_SALES', cannot access other users infos:
         if (!$this->isGranted('ROLE_SALES')) {
-            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
                 $this->addFlash('error', 'Accès refusé');
                 return $this->redirectToRoute('login');  
                 $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
@@ -212,7 +213,7 @@ class AdminProductController extends AbstractController
     }
 
     #[Route('/admin/product/{id}', name: 'app_admin_product_delete', methods: ['POST'])]
-    public function delete(Request $request, Product $product, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Product $product, EntityManagerInterface $entityManager, UserInterface $user): Response
     {
         // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
@@ -221,9 +222,9 @@ class AdminProductController extends AbstractController
         }
         $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
-        // The user, if its role is different from 'ROLE_SALES', cannot access other users infos:
+        // The user, without the role 'ROLE_SALES', cannot access other users infos:
         if (!$this->isGranted('ROLE_SALES')) {
-            if ($this->getUser()->getUserIdentifier() != $address->getUser()->getUserIdentifier()) {
+            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
                 $this->addFlash('error', 'Accès refusé');
                 return $this->redirectToRoute('login');  
                 $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
