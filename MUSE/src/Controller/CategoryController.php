@@ -21,6 +21,8 @@ class CategoryController extends AbstractController
     public function index($parent, CartService $cartService, CategoryRepository $categoryRepository, Request $request, ProductRepository $productRepository, OrderDetailsRepository $orderDetails, ?UserInterface $user): Response
     {
         $data = new SearchData();
+
+        // Paginator
         $data->page = $request->get('page', 1);
 
         // The search filter

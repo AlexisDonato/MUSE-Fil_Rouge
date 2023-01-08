@@ -23,16 +23,12 @@ class AdminCartController extends AbstractController
     #[Route('/', name: 'app_admin_cart_index', methods: ['GET'])]
     public function index(CartRepository $cartRepository, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?UserInterface $user, ?OrderDetailsRepository $orderDetails): Response
     {
-        // Access restriction for roles other than 'ROLE_SALES'
+        // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
         }
-
-        // The user cannot access other users infos:
-        if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
-            $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
-        }
+        $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
         $data = new SearchData();
 
@@ -57,16 +53,12 @@ class AdminCartController extends AbstractController
     #[Route('/new', name: 'app_admin_cart_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?UserInterface $user, ?OrderDetailsRepository $orderDetails): Response
     {
-        // Access restriction for roles other than 'ROLE_SALES'
+        // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
         }
-
-        // The user cannot access other users infos:
-        if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
-            $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
-        }
+        $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
         // The cart form
         $cart = new Cart();
@@ -105,15 +97,20 @@ class AdminCartController extends AbstractController
     #[Route('/{id}', name: 'app_admin_cart_show', methods: ['GET'])]
     public function show(Cart $cart, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?UserInterface $user, ?OrderDetailsRepository $orderDetails): Response
     {
-        // Access restriction for roles other than 'ROLE_SALES'
+        // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
         }
+        $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
-        // The user cannot access other users infos:
-        if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
-            $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+        // The user, without the role 'ROLE_SALES', cannot access other users infos:
+        if (!$this->isGranted('ROLE_SALES')) {
+            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
+                $this->addFlash('error', 'Accès refusé');
+                return $this->redirectToRoute('login');  
+                $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+            }
         }
 
         $data = new SearchData();
@@ -139,15 +136,20 @@ class AdminCartController extends AbstractController
     #[Route('/{id}/edit', name: 'app_admin_cart_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Cart $cart, EntityManagerInterface $entityManager, CartService $cartService, ProductRepository $productRepository, CategoryRepository $categoryRepository, ?UserInterface $user, ?OrderDetailsRepository $orderDetails): Response
     {
-        // Access restriction for roles other than 'ROLE_SALES'
+        // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
         }
+        $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
-        // The user cannot access other users infos:
-        if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
-            $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+        // The user, without the role 'ROLE_SALES', cannot access other users infos:
+        if (!$this->isGranted('ROLE_SALES')) {
+            if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
+                $this->addFlash('error', 'Accès refusé');
+                return $this->redirectToRoute('login');  
+                $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
+            }
         }
 
         $data = new SearchData();
@@ -185,16 +187,12 @@ class AdminCartController extends AbstractController
     #[Route('/{id}', name: 'app_admin_cart_delete', methods: ['POST'])]
     public function delete(Request $request, Cart $cart, EntityManagerInterface $entityManager): Response
     {
-        // Access restriction for roles other than 'ROLE_SALES'
+        // Double access restriction for roles other than 'ROLE_SALES'
         if (!$this->isGranted('ROLE_SALES')) {
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('login');  
         }
-
-        // The user cannot access other users infos:
-        if ($this->getUser()->getUserIdentifier() != $user->getUserIdentifier()) {
-            $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
-        }
+        $this->denyAccessUnlessGranted('ROLE_SALES', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
 
         // Checks if the csrf token is valid in order to delete the cart
         if ($this->isCsrfTokenValid('delete'.$cart->getId(), $request->request->get('_token'))) {
