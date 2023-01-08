@@ -21,7 +21,7 @@ class Coupon
     private ?int $id = null;
 
     #[ORM\Column(length: 15, nullable: true)]
-    #[Groups(["read:coupon"])]
+    #[Groups(["read:coupon", "read:cart"])]
     private ?string $code = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 4, scale: 3, nullable: true)]
