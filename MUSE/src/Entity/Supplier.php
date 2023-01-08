@@ -6,6 +6,7 @@ use App\Repository\SupplierRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SupplierRepository::class)]
+#[ApiResource]
 class Supplier
 {
     #[ORM\Id]

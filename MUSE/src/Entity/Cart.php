@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: CartRepository::class)]
+#[ApiResource]
 class Cart
 {
     #[ORM\Id]

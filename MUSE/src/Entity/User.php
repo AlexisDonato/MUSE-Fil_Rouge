@@ -15,62 +15,83 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[ApiResource(
+    normalizationContext: [ "groups" => ["read:user"]]
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer', unique: true)]
+    #[Groups(["read:user"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Groups(["read:user"])]
     private $email;
 
     #[ORM\Column(type: 'json')]
+    #[Groups(["read:user"])]
     private $roles = [];
 
     #[ORM\Column(type: 'string')]
+    #[Groups(["read:user"])]
     private $password;
 
     #[ORM\Column(type: 'string', length: 100)]
+    #[Groups(["read:user"])]
     private $userName;
 
     #[ORM\Column(type: 'string', length: 100)]
+    #[Groups(["read:user"])]
     private $userLastname;
 
     #[ORM\Column(type: 'datetime')]
+    #[Groups(["read:user"])]
     private $birthdate;
 
     #[ORM\Column(type: 'string', length: 25)]
+    #[Groups(["read:user"])]
     private $phoneNumber;
 
     #[ORM\Column(type: 'boolean')]
+    #[Groups(["read:user"])]
     private $isVerified = false;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Cart::class)]
+    #[Groups(["read:user"])]
     private Collection $carts;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(["read:user"])]
     private ?\DateTimeInterface $registerDate = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 4, scale: 2, nullable: true)]
+    #[Groups(["read:user"])]
     private ?string $vat = "0.2";
 
     #[ORM\Column]
+    #[Groups(["read:user"])]
     private ?bool $pro = false;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Groups(["read:user"])]
     private ?string $proCompanyName = null;
 
     #[ORM\Column(length: 9, nullable: true)]
+    #[Groups(["read:user"])]
     private ?string $proDuns = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Groups(["read:user"])]
     private ?string $proJobPosition = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Address::class)]
+    #[Groups(["read:user"])]
     private Collection $address;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["read:user"])]
     private ?bool $agreeTerms = null;
 
     public function __construct()
