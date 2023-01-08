@@ -7,39 +7,51 @@ use App\Repository\AddressRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
-#[ApiResource(normalizationContext:["groups"=>"read:user"])]
+#[ApiResource(
+    normalizationContext:["groups"=>"read:address"]
+)]
 class Address
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(unique: true)]
+    #[Groups(["read:user", "read:address"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Groups(["read:address"])]
     private ?string $name = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Groups(["read:address"])]
     private ?string $country = null;
 
     #[ORM\Column(length: 25, nullable: true)]
+    #[Groups(["read:address"])]
     private ?string $zipcode = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Groups(["read:address"])]
     private ?string $city = null;
 
     #[ORM\Column(length: 150, nullable: true)]
+    #[Groups(["read:address"])]
     private ?string $pathType = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups(["read:address"])]
     private ?string $pathNumber = null;
 
     #[ORM\ManyToOne(inversedBy: 'address', fetch: "EAGER")]
+    #[Groups(["read:address"])]
     private ?User $user = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["read:address"])]
     private ?bool $billingAddress = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["read:address"])]
     private ?bool $deliveryAddress = null;
 
     public function getId(): ?int

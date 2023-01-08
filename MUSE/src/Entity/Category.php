@@ -8,25 +8,32 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext:["groups"=>"read:category"]
+)]
 class Category
 {
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer', unique: true)]
+    #[Groups(["read:category"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 100)]
+    #[Groups(["read:category", "read:product"])]
     private $name;
 
     #[ORM\ManyToOne(targetEntity: self::class, fetch: "EAGER")]
+    #[Groups(["read:category"])]
     private ?self $parentCategory = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
+    #[Groups(["read:category"])]
     private Collection $product;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["read:category"])]
     private ?string $image = null;
 
     public function __construct()

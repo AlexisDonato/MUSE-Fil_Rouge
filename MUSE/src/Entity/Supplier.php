@@ -6,15 +6,19 @@ use App\Repository\SupplierRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SupplierRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext:["groups"=>"read:supplier"]
+)]
 class Supplier
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(unique: true)]
+    #[Groups(["read:supplier"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Groups(["read:supplier"])]
     private ?string $name = null;
 
     public function getId(): ?int

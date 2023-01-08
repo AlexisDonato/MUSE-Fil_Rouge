@@ -9,29 +9,37 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: OrderDetailsRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext:["groups"=>"read:orderDetail"]
+)]
 class OrderDetails
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(unique: true)]
+    #[Groups(["read:orderDetail"])]
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(["read:orderDetail"])]
     private ?int $productId = null;
 
     #[ORM\Column]
+    #[Groups(["read:orderDetail"])]
     private ?int $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'orderDetails', fetch: "EAGER")]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["read:orderDetail"])]
     private ?Cart $cart = null;
 
     #[ORM\ManyToOne(fetch: "EAGER")]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["read:orderDetail"])]
     private ?Product $product = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["read:orderDetail"])]
     private ?float $subTotal = null;
 
     public function __construct()

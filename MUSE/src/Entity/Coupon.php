@@ -9,24 +9,31 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CouponRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext:["groups"=>"read:coupon"]
+)]
 class Coupon
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["read:coupon"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 15, nullable: true)]
+    #[Groups(["read:coupon"])]
     private ?string $code = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 4, scale: 3, nullable: true)]
+    #[Groups(["read:coupon"])]
     private ?string $discountRate = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["read:coupon"])]
     private ?bool $validated = null;
 
     #[ORM\OneToMany(mappedBy: 'coupon', targetEntity: Cart::class)]
+    #[Groups(["read:coupon"])]
     private Collection $cart;
 
     public function __construct()

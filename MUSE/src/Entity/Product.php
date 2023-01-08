@@ -9,48 +9,63 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext:["groups"=>"read:product"]
+)]
 class Product
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer', unique: true)]
+    #[Groups(["read:product"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 150)]
+    #[Groups(["read:product"])]
     private $name;
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(["read:product"])]
     private $price;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(["read:product"])]
     private $description;
 
     #[ORM\Column(type: 'text')]
+    #[Groups(["read:product"])]
     private $content;
 
     #[ORM\Column(type: 'boolean')]
+    #[Groups(["read:product"])]
     private $discount;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 3)]
+    #[Groups(["read:product"])]
     private ?string $discountRate = '0';
 
     #[ORM\Column(nullable: true)]
+    #[Groups(["read:product"])]
     private ?int $quantity = null;
 
     #[ORM\Column(length: 200, nullable: true)]
+    #[Groups(["read:product"])]
     private ?string $image = null;
 
     #[ORM\Column(length: 200, nullable: true)]
+    #[Groups(["read:product"])]
     private ?string $image1 = null;
 
     #[ORM\Column(length: 200, nullable: true)]
+    #[Groups(["read:product"])]
     private ?string $image2 = null;
 
     #[ORM\ManyToOne(fetch: "EAGER")]
+    #[Groups(["read:product"])]
     private ?Supplier $supplier = null;
 
     #[ORM\ManyToOne(inversedBy: 'product', fetch: "EAGER")]
+    #[Groups(["read:product"])]
     private ?Category $category = null;
 
     public function __construct()

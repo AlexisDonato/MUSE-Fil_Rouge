@@ -11,58 +11,76 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: CartRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext:["groups"=>"read:cart"]
+)]
 class Cart
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer', unique: true)]
+    #[Groups(["read:cart"])]
     private $id = null;
 
     #[ORM\Column]
+    #[Groups(["read:user", "read:cart"])]
     private ?string $clientOrderId = null;
 
     #[ORM\Column]
+    #[Groups(["read:cart"])]
     private ?bool $validated = false;
 
     #[ORM\OneToMany(mappedBy: 'cart', targetEntity: OrderDetails::class, orphanRemoval: true)]
+    #[Groups(["read:cart"])]
     private Collection $orderDetails;
 
     #[ORM\ManyToOne(inversedBy: 'carts', fetch: "EAGER")]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(["read:cart"])]
     private ?User $user = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(["read:cart"])]
     private ?\DateTimeInterface $orderDate = null;
 
     #[ORM\Column]
+    #[Groups(["read:cart"])]
     private ?bool $shipped = false;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(["read:cart"])]
     private ?\DateTimeInterface $shipmentDate = null;
 
     #[ORM\Column(length: 25, nullable: true)]
+    #[Groups(["read:cart"])]
     private ?string $carrier = null;
 
     #[ORM\Column(length: 25, nullable: true)]
+    #[Groups(["read:cart"])]
     private ?string $carrierShipmentId = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 12, scale: 2, nullable: true)]
+    #[Groups(["read:cart"])]
     private ?string $total = null;
 
     #[ORM\ManyToOne(fetch: "EAGER")]
+    #[Groups(["read:cart"])]
     private ?Address $billingAddress = null;
 
     #[ORM\ManyToOne(fetch: "EAGER")]
+    #[Groups(["read:cart"])]
     private ?Address $deliveryAddress = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 3)]
+    #[Groups(["read:cart"])]
     private ?string $additionalDiscountRate = '0';
 
     #[ORM\Column(length: 150, nullable: true)]
+    #[Groups(["read:cart"])]
     private ?string $invoice = null;
 
     #[ORM\ManyToOne(inversedBy: 'cart')]
+    #[Groups(["read:cart"])]
     private ?Coupon $coupon = null;
 
 
