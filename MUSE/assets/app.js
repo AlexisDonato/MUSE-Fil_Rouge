@@ -9,12 +9,12 @@
 import './styles/app.css';
 
 // start the Stimulus application
-import './bootstrap';
+// import './bootstrap';
 
-import { startStimulusApp } from '@symfony/stimulus-bridge';
+// import { startStimulusApp } from '@symfony/stimulus-bridge';
  
-export const app = startStimulusApp(require.context(
-    '@symfony/stimulus-bridge/lazy-controller-loader!./controllers',
-    true,
-    /\.(j|t)sx?$/
-));
+// export const app = startStimulusApp(require.context(
+//     '@symfony/stimulus-bridge/lazy-controller-loader!./controllers',
+//     true,
+//     /\.(j|t)sx?$/
+// ));

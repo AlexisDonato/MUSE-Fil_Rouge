@@ -6,7 +6,9 @@ use App\Entity\Product;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\OrderDetailsRepository;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: OrderDetailsRepository::class)]
 #[ApiResource(
