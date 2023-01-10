@@ -278,6 +278,7 @@ function toZipcode(zipcode, cityList) {
         // Display the error message in French
         wrongCity.innerHTML = "Une erreur s'est produite lors de la requête : " + error;
     });
+}
 
 // Sets up event listeners on the corresponding input elements
 if (registrationZipcode) {registrationZipcode.addEventListener("keyup", () => {

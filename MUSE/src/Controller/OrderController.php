@@ -87,7 +87,7 @@ class OrderController extends AbstractController
         $data->page = $request->get('page', 1);
 
         // Fetches the user addresses
-        $addresses = $this->$addressRepository->findByUser($user);
+        $addresses = $addressRepository->findByUser($user);
 
         // Needed for using CartService
         $cartService->setUser($user);
@@ -179,7 +179,7 @@ class OrderController extends AbstractController
         // The "delivery and billing addresses" select form
         $selectForm = $this->createForm(SelectAddressType::class);
         $selectForm->handleRequest($request);
-        $addresses = $this->$addressRepository->findByUser($user);
+        $addresses = $addressRepository->findByUser($user);
 
         // Sets the delivery and billing addresses for the current cart when selected
         if ($selectForm->isSubmitted() && $selectForm->isValid()) {
@@ -267,7 +267,7 @@ class OrderController extends AbstractController
 
             // Fetches the user addresses
             // $addresses = $this->getDoctrine()->getRepository(Address::class)->findByUser($user);
-            $addresses = $this->$addressRepository->findByUser($user);
+            $addresses = $addressRepository->findByUser($user);
 
             // Generates an invoice thanks to the PdfTools service
             $pdf->generateInvoice($orderId);

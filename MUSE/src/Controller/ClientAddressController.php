@@ -35,7 +35,7 @@ class ClientAddressController extends AbstractController
         $data = new SearchData();
 
         // Fetches the user addresses
-        $addresses = $this->$addressRepository->findByUser($user);
+        $addresses = $addressRepository->findByUser($user);
 
         // Needed for using CartService
         $cartService->setUser($user);

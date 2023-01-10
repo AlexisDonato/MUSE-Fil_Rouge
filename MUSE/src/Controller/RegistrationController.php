@@ -146,7 +146,7 @@ class RegistrationController extends AbstractController
         $user = $this->getUser();
 
         // Fetches the user addresses
-        $addresses = $this->getDoctrine()->getRepository(Address::class)->findByUser($user);
+        $addresses = $addressRepository->findByUser($user);
 
         $date = new DateTime('@'.strtotime('now'));
         $user->setRegisterDate($date);
