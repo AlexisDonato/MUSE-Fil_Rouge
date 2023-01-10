@@ -38,6 +38,7 @@ class OrderController extends AbstractController
     {
         $data = new SearchData();
 
+        // Needed for using the CartService
         $cartService->setUser($user);
 
         $info = [
