@@ -267,8 +267,17 @@ function toZipcode(zipcode, cityList) {
                 cityList.innerHTML += `<option value="${json[i].nom}">${json[i].nom}</option>`;
             }
         })
+        // Handle errors occurred during JSON parsing
+        .catch(error => {
+            // Display the error message in French
+            wrongCity.innerHTML = "Une erreur s'est produite lors de la récupération des données : " + error;
+        });
     })
-}
+    // Handle errors occurred during the fetch request
+    .catch(error => {
+        // Display the error message in French
+        wrongCity.innerHTML = "Une erreur s'est produite lors de la requête : " + error;
+    });
 
 // Sets up event listeners on the corresponding input elements
 if (registrationZipcode) {registrationZipcode.addEventListener("keyup", () => {
