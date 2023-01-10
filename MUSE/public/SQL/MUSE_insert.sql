@@ -17,13 +17,13 @@
 -- Listage des données de la table MUSE.address : ~5 rows (environ)
 INSERT INTO `address` (`id`, `user_id`, `name`, `country`, `zipcode`, `city`, `path_type`, `path_number`, `billing_address`, `delivery_address`) VALUES
 	(1, 4, 'Bureau', 'France', '60210', 'Grandvilliers', 'Rue du Poulet', '12', 1, 1),
-	(2, 5, 'Domicile', 'France', '60000', 'Beauvais', 'Avenue de la Plèbe', '21', 1, 1),
+	(2, 5, 'Domicile', 'France', '60210', 'Daméraucourt', 'Avenue de la Plèbe', '21', 1, 1),
 	(3, 6, 'Bureau', 'France', '80000', 'Amiens', 'impasse', 'admin', NULL, NULL),
 	(6, 9, 'Domicile', 'admin', '67000', 'Amiens', 'rue de la Strasse', 'qsdfqsdf', NULL, NULL),
 	(7, 9, 'Livraison', 'France', '68000', 'Colmar', 'rue de la Kneppfle', '32', 1, 1),
 	(9, 9, 'Livraison', 'France', '68000', 'Colmar', 'rue de la Kneppfle', '32', 1, 1);
 
--- Listage des données de la table MUSE.cart : ~21 rows (environ)
+-- Listage des données de la table MUSE.cart : ~23 rows (environ)
 INSERT INTO `cart` (`id`, `user_id`, `billing_address_id`, `delivery_address_id`, `client_order_id`, `validated`, `order_date`, `shipped`, `shipment_date`, `carrier`, `carrier_shipment_id`, `total`, `additional_discount_rate`, `invoice`, `coupon_id`) VALUES
 	(1, 1, NULL, NULL, 'MUSE::63807EDC0CB50', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL, NULL),
 	(2, 4, 1, 1, 'MUSE::638113B285855', 1, '2022-11-25 19:15:15', 0, NULL, NULL, NULL, 44627.00, 0.000, 'INVOICE-MUSE::638113B285855.pdf', NULL),
@@ -44,8 +44,10 @@ INSERT INTO `cart` (`id`, `user_id`, `billing_address_id`, `delivery_address_id`
 	(19, 9, 7, 7, 'MUSE::6388CCCE92728', 1, '2022-12-01 15:50:46', 0, NULL, NULL, NULL, 2292.96, 0.000, 'INVOICE-MUSE::6388CCCE92728.pdf', NULL),
 	(20, 9, 9, 9, 'MUSE::6388CD57F0A1B', 1, '2022-12-06 14:09:29', 0, NULL, NULL, NULL, 3200.46, 0.050, 'INVOICE-MUSE::6388CD57F0A1B.pdf', NULL),
 	(22, 9, NULL, NULL, 'MUSE::638F4D1AC6D9E', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL, NULL),
-	(23, 5, NULL, NULL, 'MUSE::6390566C42974', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.050, NULL, 8),
-	(24, 4, 1, 1, 'MUSE::6391A4B462D3E', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL, NULL);
+	(23, 5, 2, 2, 'MUSE::6390566C42974', 1, '2022-12-16 08:31:22', 0, NULL, NULL, NULL, 707.88, 0.150, 'INVOICE-MUSE::6390566C42974.pdf', 9),
+	(24, 4, 1, 1, 'MUSE::6391A4B462D3E', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL, NULL),
+	(25, 5, 2, 2, 'MUSE::639C2CDB57326', 1, '2023-01-10 08:48:24', 0, NULL, NULL, NULL, 1252.86, 0.000, 'INVOICE-MUSE::639C2CDB57326.pdf', NULL),
+	(26, 5, NULL, NULL, 'MUSE::63BD265A061B8', 0, NULL, 0, NULL, NULL, NULL, NULL, 0.000, NULL, NULL);
 
 -- Listage des données de la table MUSE.category : ~0 rows (environ)
 INSERT INTO `category` (`id`, `parent_category_id`, `name`, `image`) VALUES
@@ -120,15 +122,16 @@ INSERT INTO `order_details` (`id`, `product_id`, `cart_id`, `quantity`, `sub_tot
 	(37, 38, 20, 1, 1644.96),
 	(38, 40, 20, 1, 484.92),
 	(39, 23, 1, 1, 2629),
-	(40, 1, 23, 1, 416.4),
+	(40, 1, 23, 2, 791.16),
 	(41, 2, 18, 1, 1148.455),
 	(42, 3, 24, 1, 658.9),
-	(43, 82, 1, 1, 1175.9);
+	(43, 82, 1, 1, 1175.9),
+	(44, 2, 25, 1, 1252.86);
 
 -- Listage des données de la table MUSE.product : ~0 rows (environ)
 INSERT INTO `product` (`id`, `supplier_id`, `category_id`, `name`, `price`, `description`, `content`, `discount`, `discount_rate`, `quantity`, `image`, `image1`, `image2`) VALUES
-	(1, 1, 6, 'Ignition Cavern SE', 347, '4 cordes - Table en épicéa - Fond et éclisses en érable flammé - Manche 1 pièce en érable - Touche en jatoba - Filets de table et de fond blancs - Diapason: 760 mm (30") - Largeur au sillet: 42 mm - 22 frettes - 2 micros double bobinage Höfner', 'Conditionnement (UVC) - 1 Pièce(s) - Couleur Sunburst - Corps Erable - Manche Erable - Touche Jatoba - Frettes 22 - Diapason Short scale - Micros HH - Electronique Passif - Étui inclus Non - Housse incluse Non', 0, 0.000, 16, 'Ignition Cavern SE.jpg', 'Ignition Cavern SE-1.jpg', 'Ignition Cavern SE-2.jpg'),
-	(2, 2, 6, 'BTB846-CBL', 1099, '6 cordes Série BTB Corps en frêne avec ailes en okoumé Table en peuplier veiné Manche traversant en érable/noyer Touche en palissandre Diapason: 889 mm (35") Rayon de la touche: 950 mm (37,4") Largeur au sillet: 54 mm (2,13") 24 frettes Medium en acier in', 'Conditionnement (UVC)\r\n1 Pièce(s)\r\nForme\r\nBTB\r\nCouleur\r\nBleu\r\nCorps\r\nFrêne, okoumé\r\nManche\r\nErable, noyer\r\nTouche\r\nPalissandre\r\nFrettes\r\n24\r\nDiapason\r\nExtra long scale\r\nMicros\r\nHH\r\nÉlectronique\r\nActive\r\nÉtui inclus\r\nNon\r\nHousse incluse\r\nNon', 0, 0.050, 29, 'BTB846-CBL.jpg', 'BTB846-CBL-1.jpg', 'BTB846-CBL-2.jpg'),
+	(1, 1, 6, 'Ignition Cavern SE', 347, '4 cordes - Table en épicéa - Fond et éclisses en érable flammé - Manche 1 pièce en érable - Touche en jatoba - Filets de table et de fond blancs - Diapason: 760 mm (30") - Largeur au sillet: 42 mm - 22 frettes - 2 micros double bobinage Höfner', 'Conditionnement (UVC) - 1 Pièce(s) - Couleur Sunburst - Corps Erable - Manche Erable - Touche Jatoba - Frettes 22 - Diapason Short scale - Micros HH - Electronique Passif - Étui inclus Non - Housse incluse Non', 0, 0.000, 15, 'Ignition Cavern SE.jpg', 'Ignition Cavern SE-1.jpg', 'Ignition Cavern SE-2.jpg'),
+	(2, 2, 6, 'BTB846-CBL2', 1099, '6 cordes Série BTB Corps en frêne avec ailes en okoumé Table en peuplier veiné Manche traversant en érable/noyer Touche en palissandre Diapason: 889 mm (35") Rayon de la touche: 950 mm (37,4") Largeur au sillet: 54 mm (2,13") 24 frettes Medium en acier in', 'Conditionnement (UVC)\r\n1 Pièce(s)\r\nForme\r\nBTB\r\nCouleur\r\nBleu\r\nCorps\r\nFrêne, okoumé\r\nManche\r\nErable, noyer\r\nTouche\r\nPalissandre\r\nFrettes\r\n24\r\nDiapason\r\nExtra long scale\r\nMicros\r\nHH\r\nÉlectronique\r\nActive\r\nÉtui inclus\r\nNon\r\nHousse incluse\r\nNon', 0, 0.050, 28, 'BTB846-CBL.jpg', 'BTB846-CBL-1.jpg', 'BTB846-CBL-2.jpg'),
 	(3, 3, 6, 'V3 TS 2nd Gen', 599, '5 cordes Fabriquée par Sire Corps en aulne Manche 1 pièce en érable Profil du manche en C Touche en ébène Rayon de la touche: 241 mm Diapason: 34" (Long Scale) 20 frettes Medium Small Espacement entre 2 cordes: 18 mm Largeur au sillet: 46 mm Sillet en os', 'Conditionnement (UVC)\r\n1 Pièce(s)\r\nCouleur\r\nSunburst\r\nCorps\r\nAulne\r\nManche\r\nErable\r\nTouche\r\nEbène\r\nFrettes\r\n20\r\nDiapason\r\nLong scale\r\nMicros\r\nJJ\r\nÉlectronique\r\nActive, passive\r\nÉtui inclu\r\nNon\r\nHousse incluse\r\nNon', 0, 0.000, 26, 'V3 TS 2nd Gen.jpg', 'V3 TS 2nd Gen-1.jpg', 'V3 TS 2nd Gen-2.jpg'),
 	(4, 4, 6, 'John Petrucci Majesty 7 SM', 7333, '7 cordes Modèle signature John Petrucci Corps en acajou Table en érable marbré Manche traversant en acajou/érable flammé Touche en érable flammé 24 frettes Medium Jumbo en acier inoxydable Diapason: 648 mm (25,5") Rayon de la touche: 17"', 'Conditionnement (UVC)\r\n1 Pièce(s)\r\nCouleur\r\nSpiced Melange\r\nCorps\r\nAcajou\r\nTable d\'harmonie\r\nErable\r\nManche\r\nAcajou\r\nTouche\r\nErable\r\nFrettes\r\n24\r\nDiapason\r\n648 mm\r\nMicros\r\nHH, Piezo\r\nVibrato\r\nMusic Man\r\nHousse incluse\r\nNon\r\nÉtui inclus\r\nOui', 0, 0.000, 12, 'John Petrucci Majesty 7 SM.jpg', 'John Petrucci Majesty 7 SM-1.jpg', 'John Petrucci Majesty 7 SM-2.jpg'),
 	(5, 5, 6, 'AL Bootsy Collins Spacebass', 1229, '4 cordes Signature Bootsy Collins Corps en acajou Manche vissé en érable Touche en wenge Rayon de la touche: 508 mm 24 frettes Long Scale Micros actifs MEC J/TJ Electronique active MEC 2 bandes 1 réglage de volume (Push/Pull pour EQ Bypass)', 'Conditionnement (UVC)\r\n1 Pièce(s)\r\nSignature\r\nBootsy Collins\r\nCouleur\r\nPourpre\r\nCorps\r\nAcajou\r\nTable\r\nAucune\r\nManche\r\nErable\r\nTouche\r\nWenge\r\nFrettes\r\n24\r\nDiapason\r\nLong Scale\r\nPickups\r\nJJJ\r\nElectronique\r\nActif\r\nEtui inclu\r\nNon\r\nHousse inclue\r\nOui', 0, 0.000, 3, 'AL Bootsy Collins Spacebass.jpg', 'AL Bootsy Collins Spacebass-1.jpg', 'AL Bootsy Collins Spacebass-2.jpg'),

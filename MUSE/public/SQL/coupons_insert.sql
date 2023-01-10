@@ -14,14 +14,12 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Listage des données de la table MUSE.address : ~6 rows (environ)
-INSERT INTO `address` (`id`, `user_id`, `name`, `country`, `zipcode`, `city`, `path_type`, `path_number`, `billing_address`, `delivery_address`) VALUES
-	(1, 4, 'Bureau', 'France', '60210', 'Grandvilliers', 'Rue du Poulet', '12', 1, 1),
-	(2, 5, 'Domicile', 'France', '60210', 'Daméraucourt', 'Avenue de la Plèbe', '21', 1, 1),
-	(3, 6, 'Bureau', 'France', '80000', 'Amiens', 'impasse', 'admin', NULL, NULL),
-	(6, 9, 'Domicile', 'admin', '67000', 'Amiens', 'rue de la Strasse', 'qsdfqsdf', NULL, NULL),
-	(7, 9, 'Livraison', 'France', '68000', 'Colmar', 'rue de la Kneppfle', '32', 1, 1),
-	(9, 9, 'Livraison', 'France', '68000', 'Colmar', 'rue de la Kneppfle', '32', 1, 1);
+-- Listage des données de la table MUSE.coupon : ~4 rows (environ)
+INSERT INTO `coupon` (`id`, `code`, `discount_rate`, `validated`) VALUES
+	(3, 'MU$€15', 0.150, 1),
+	(8, 'MU$€5%', 0.050, 1),
+	(9, 'MU$€15%', 0.150, 1),
+	(10, 'MU$€20%', 0.200, 1);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
