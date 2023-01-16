@@ -24,7 +24,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
-    public function index(CartService $cartService, UserRepository $userRepository, CategoryRepository $categoryRepository, ProductRepository $productRepository, OrderDetailsRepository $orderDetails, ?UserInterface $user): Response
+    public function index(AddressRepository $addressRepository, CartService $cartService, UserRepository $userRepository, CategoryRepository $categoryRepository, ProductRepository $productRepository, OrderDetailsRepository $orderDetails, ?UserInterface $user): Response
     {
         // Double access restriction for roles other than 'ROLE_SHIP'
         if (!$this->isGranted('ROLE_SHIP')) {
@@ -48,7 +48,7 @@ class UserController extends AbstractController
             'categories' => $categoryRepository->findAll(),
             'discount' => $productRepository->findDiscount($data),
             'discount2' => $productRepository->findProductsDiscount(),
-            'addresses' =>$this->getDoctrine()->getRepository(Address::class)->findByUser($user),
+            'addresses' =>$addressRepository->findByUser($user),
         ]);
     }
 
@@ -83,7 +83,7 @@ class UserController extends AbstractController
             'categories' => $categoryRepository->findAll(),
             'discount' => $productRepository->findDiscount($data),
             'discount2' => $productRepository->findProductsDiscount(),
-            'addresses' =>$this->$addressRepository->findByUser($user),            
+            'addresses' =>$addressRepository->findByUser($user),            
         ]);
     }
 
@@ -138,7 +138,7 @@ class UserController extends AbstractController
             'categories' => $categoryRepository->findAll(),
             'discount' => $productRepository->findDiscount($data),
             'discount2' => $productRepository->findProductsDiscount(),
-            'addresses' =>$this->$addressRepository->findByUser($user),      
+            'addresses' =>$addressRepository->findByUser($user),      
             'address'   =>$address, 
         ]);
     }
