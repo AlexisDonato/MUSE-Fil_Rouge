@@ -80,9 +80,6 @@ INSERT INTO `coupon` (`id`, `code`, `discount_rate`, `validated`) VALUES
 	(9, 'MU$€15%', 0.150, 1),
 	(10, 'MU$€20%', 0.200, 1);
 
--- Listage des données de la table MUSE.doctrine_migration_versions : ~0 rows (environ)
-INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
-	('DoctrineMigrations\\Version20221130112926', '2022-11-30 12:29:32', 36);
 
 -- Listage des données de la table MUSE.order_details : ~37 rows (environ)
 INSERT INTO `order_details` (`id`, `product_id`, `cart_id`, `quantity`, `sub_total`) VALUES
@@ -305,7 +302,7 @@ INSERT INTO `supplier` (`id`, `name`) VALUES
 	(65, 'Seagull');
 
 -- Listage des données de la table MUSE.user : ~7 rows (environ)
-INSERT INTO `user` (`id`, `email`, `roles`, `password`, `user_name`, `user_lastname`, `birthdate`, `phone_number`, `is_verified`, `register_date`, `vat`, `pro`, `pro_company_name`, `pro_duns`, `pro_job_position`, `agree_terms`) VALUES
+INSERT INTO `user` (`id`, `email`, `roles`, `password`, `user_name`, `user_lastname`, `birthdate`, `phone_number`, `verified`, `register_date`, `vat`, `pro`, `pro_company_name`, `pro_duns`, `pro_job_position`, `agree_terms`) VALUES
 	(1, 'admin@muse.com', '["ROLE_ADMIN","ROLE_SALES","ROLE_SHIP","ROLE_PRO","ROLE_CLIENT","ROLE_USER"]', '$2y$13$ccySVe3LypY0lq.nZKB1ROQbpKUXCH2fmueDtSsTI.GebmJUmWfkG', 'admin', 'admin', '2022-12-12 00:00:00', '0999999999', 1, '2022-12-12 00:00:00', 0.10, 1, NULL, NULL, NULL, 1),
 	(2, 'sales@muse.com', '["ROLE_SALES","ROLE_SHIP","ROLE_PRO","ROLE_CLIENT","ROLE_USER"]', '$2y$13$tvAgwTJWbvYBUOpiyYzXyOsBg4X1jZocwCq5AichRjsHmACQxro3S', 'sales', 'sales', '2022-12-12 00:00:00', '0999999999', 1, '2022-12-12 00:00:00', 0.10, 1, NULL, NULL, NULL, 1),
 	(3, 'ship@muse.com', '["ROLE_SHIP","ROLE_PRO","ROLE_CLIENT","ROLE_USER"]', '$2y$13$wZto0kfDzPviiOga/q5a2uKPXxFZ9G0hOmPKZFlMpvNPcGfd059Iu', 'ship', 'ship', '2022-12-12 00:00:00', '0999999999', 1, '2022-12-12 00:00:00', 0.10, 1, NULL, NULL, NULL, 1),

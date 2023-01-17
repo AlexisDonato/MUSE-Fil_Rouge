@@ -117,7 +117,7 @@ class UserType extends AbstractType
                     ]
                 ])
                 
-            ->add('isVerified', CheckboxType::class, [
+            ->add('verified', CheckboxType::class, [
                 'label' => 'Compte vérifié',
                 'mapped' => true,
                 ])

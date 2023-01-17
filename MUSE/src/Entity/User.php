@@ -29,7 +29,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    #[Groups(["read:user"])]
+    #[Groups(["read:user", "read:address", "read:cart"])]
     private $email;
 
     #[ORM\Column(type: 'json')]
@@ -56,9 +56,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(["read:user"])]
     private $phoneNumber;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column]
     #[Groups(["read:user"])]
-    private $isVerified = false;
+    private ?bool $verified = false;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Cart::class)]
     #[Groups(["read:user"])]
@@ -247,12 +247,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function isVerified(): bool
     {
-        return $this->isVerified;
+        return $this->verified;
     }
 
-    public function setIsVerified(bool $isVerified): self
+    public function setVerified(bool $verified): self
     {
-        $this->isVerified = $isVerified;
+        $this->verified = $verified;
 
         return $this;
     }

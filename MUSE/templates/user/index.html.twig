@@ -33,7 +33,7 @@
                 <td>{{ user.userLastname }}</td>
                 <td>{{ user.birthdate|date('d-m-Y') }}</td>
                 <td><i>{{ addresses|length }}</i></td>
-                <td>{{ user.isVerified ? 'Oui' : 'Non' }}</td>
+                <td>{{ user.verified ? 'Oui' : 'Non' }}</td>
                 <td>{{ user.registerDate|date('d-m-Y') }}</td>
                 <td>
                     <a class="text-decoration-none text-light" href="{{ path('app_user_show', {'id': user.id}) }}"><i class="fa-solid fa-eye btn btn-danger border border-light Hl mb-1" title="Détails"></i></a>
