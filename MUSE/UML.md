@@ -94,11 +94,6 @@ user
 }
 
 ResetPasswordRequest -- User
-class Supplier{
-PK - id
-name
-}
-
 class User{
 PK - id
 email
@@ -108,7 +103,7 @@ userName
 userLastname
 birthdate
 phoneNumber
-isVerified
+verified
 carts
 registerDate
 vat
@@ -122,5 +117,10 @@ agreeTerms
 
 User -- Cart
 User -- Address
+class Supplier{
+PK - id
+name
+}
+
 
 ```

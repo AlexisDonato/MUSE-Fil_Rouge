@@ -16,7 +16,7 @@ class Address
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(unique: true)]
-    #[Groups(["read:user", "read:address"])]
+    #[Groups(["read:user", "read:address", "read:cart"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 100, nullable: true)]

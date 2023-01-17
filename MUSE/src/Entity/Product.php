@@ -23,7 +23,7 @@ class Product
     private $id;
 
     #[ORM\Column(type: 'string', length: 150)]
-    #[Groups(["read:product"])]
+    #[Groups(["read:product", "read:orderDetail"])]
     private $name;
 
     #[ORM\Column(type: 'integer')]

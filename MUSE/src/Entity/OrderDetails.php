@@ -19,7 +19,7 @@ class OrderDetails
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(unique: true)]
-    #[Groups(["read:orderDetail"])]
+    #[Groups(["read:orderDetail", "read:cart"])]
     private ?int $id = null;
 
     #[ORM\Column]

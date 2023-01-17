@@ -25,7 +25,7 @@ class Cart
     private $id = null;
 
     #[ORM\Column]
-    #[Groups(["read:user", "read:cart"])]
+    #[Groups(["read:user", "read:cart", "read:orderDetail", "read:coupon"])]
     private ?string $clientOrderId = null;
 
     #[ORM\Column]
