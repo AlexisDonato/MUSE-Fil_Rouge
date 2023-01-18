@@ -24,7 +24,7 @@ class CartController extends AbstractController
     {
         // Double access restriction for roles other than 'ROLE_CLIENT'
         if (!$this->isGranted('ROLE_CLIENT')) {
-            $this->addFlash('error', 'Accès refusé');
+            $this->addFlash('error', 'Merci de vous connecter ou de vous inscrire au préalable');
             return $this->redirectToRoute('login');  
         }
         $this->denyAccessUnlessGranted('ROLE_CLIENT', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
@@ -105,7 +105,7 @@ class CartController extends AbstractController
     {
         // Double access restriction for roles other than 'ROLE_CLIENT'
         if (!$this->isGranted('ROLE_CLIENT')) {
-            $this->addFlash('error', 'Accès refusé');
+            $this->addFlash('error', 'Merci de vous connecter ou de vous inscrire au préalable');
             return $this->redirectToRoute('login');  
         }
         $this->denyAccessUnlessGranted('ROLE_CLIENT', null, "Vous n'avez pas les autorisations nécessaires pour accéder à la page");
