@@ -121,7 +121,7 @@ class CartRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
         ->select('DATE(u.registerDate) AS Date, COUNT(u.id) AS Numbers')
         ->join(User::class, 'u', 'WITH', 'u.id = c.user')
-        ->where('u.isVerified = 1')
+        ->where('u.verified = 1')
         ->groupBy('Date')
         ->getQuery()
         ->getResult();
