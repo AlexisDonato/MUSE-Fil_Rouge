@@ -128,34 +128,34 @@ class RegistrationFormType extends AbstractType
 
             ->add('proCompanyName', TextType::class, [
                 'required' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Merci de renseigner la raison sociale',
-                    ])
-                ]
+                // 'constraints' => [
+                //     new NotBlank([
+                //         'message' => 'Merci de renseigner la raison sociale',
+                //     ])
+                // ]
                 ])
 
             ->add('proDuns', TextType::class, [
                 'required' => false,
                 'attr' => ['maxlength' => 9],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Merci de renseigner le DUNS',
-                    ]),
-                    new Regex([
-                        'pattern' => '/^[0-9]{9}$/',
-                        'message' => 'Numéro invalide : entrée à 9 chiffres (ex: "123456789")'
-                    ]),
-                ]
+                // 'constraints' => [
+                //     new NotBlank([
+                //         'message' => 'Merci de renseigner le DUNS',
+                //     ]),
+                //     new Regex([
+                //         'pattern' => '/^[0-9]{9}$/',
+                //         'message' => 'Numéro invalide : entrée à 9 chiffres (ex: "123456789")'
+                //     ]),
+                // ]
             ])
 
             ->add('proJobPosition', TextType::class, [
                 'required' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Merci de renseigner votre poste au sein de la société',
-                    ])
-                ]
+                // 'constraints' => [
+                //     new NotBlank([
+                //         'message' => 'Merci de renseigner votre poste au sein de la société',
+                //     ])
+                // ]
                 ])
 
             ->add('address_name', TextType::class, [

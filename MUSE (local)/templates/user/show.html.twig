@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de l'utilisateur
+{% endblock %}
+
+{% block body %}
+	<div class="container justify-content-center">
+		<h1 class="text-danger text-center ml-5 mb-3 mt-3">{% if is_granted('ROLE_ADMIN') %} Profil de : {{ user.email }}{% else %}Utilisateur
+			{{ app.user.email }}{% endif %}</h1>
+
+		<table class="table table-striped table-dark">
+			<tbody>
+				{% if is_granted('ROLE_ADMIN') %}
+					<tr>
+						<th>Id</th>
+						<td>{{ user.id }}</td>
+					</tr>
+				{% endif %}
+				<tr>
+					<th>Email</th>
+					<td>{{ user.email }}</td>
+				</tr>
+				<tr>
+					<th>Roles</th>
+					<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+				</tr>
+				{% if is_granted('ROLE_ADMIN') %}
+					<tr>
+						<th>Mot de passe</th>
+						<td>{{ user.password }}</td>
+					</tr>
+				{% endif %}
+				<tr>
+					<th>Prénom</th>
+					<td>{{ user.userName }}</td>
+				</tr>
+				<tr>
+					<th>Nom</th>
+					<td>{{ user.userLastname }}</td>
+				</tr>
+				<tr>
+					<th>Date de naissance</th>
+					<td>{{ user.birthdate|date('d-m-Y') }}</td>
+				</tr>
+				<tr>
+					<th>N° téléphone</th>
+					<td>{{ user.phoneNumber }}</td>
+				</tr>
+				<tr>
+					<th>Votre compte est vérifié :</th>
+					<td>{{ user.verified ? 'Oui' : 'Non' }}</td>
+				</tr>
+				<tr>
+					<th>Date d'enregistrement</th>
+					<td>{{ user.registerDate|date('d-m-Y') }}</td>
+				</tr>
+				<tr>
+					<th>Adresse(s)</th>
+					<td>
+						{% for address in addresses %}-<b>
+								{{ address.name }}
+								{% if address.billingAddress %}
+									<b class="text-warning">
+										(Facturation)
+									{% elseif address.deliveryAddress %}
+										<b class="text-warning">
+											(Livraison)
+										{% endif %}
+									</b>
+									:</b>
+								<i>{{ address.pathNumber }},
+									{{ address.pathType }}
+									{{ address.zipcode }}
+									{{ address.city }},
+									{{ address.country }}</i><br>
+							{% endfor %}
+							
+							<div class='text-center'>
+								<a href="{{ path('app_address_index', {'id': user.id}) }}" class="mt-2 mb-1 btn-sm">
+									<i class="fa-solid fa-pencil btn btn-warning border border-light mt-3 mb-1" title="Modifier les adresses"></i>
+								</a>
+							</div>
+						</td>
+					</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="d-flex">
+			<button class="btn btn-danger border-light mr-3 mb-1">
+				<a class="text-decoration-none text-light" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
+			</button>
+			{% if is_granted('ROLE_ADMIN') %}
+				<button class="btn btn-danger border-light mr-3 mb-1">
+					<a class="text-decoration-none text-light" href="{{ path('app_user_index') }}">Retour à la liste</a>
+				</button>
+			{% endif %}
+			{% if is_granted('ROLE_ADMIN') %}
+				{{ include('user/_delete_form.html.twig') }}
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

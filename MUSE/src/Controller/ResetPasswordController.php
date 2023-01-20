@@ -199,7 +199,7 @@ class ResetPasswordController extends AbstractController
 
         // Sends the email
         $email = (new TemplatedEmail())
-            ->from(new Address('noreply@muse.com', 'Muse Mail Bot'))
+            ->from(new Address('muse.info.bot@gmail.com', 'Muse Mail Bot'))
             ->to($user->getEmail())
             ->subject('Your password reset request')
             ->htmlTemplate('reset_password/email.html.twig')

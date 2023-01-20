@@ -1,0 +1,11 @@
+easy_admin:
+    entities:
+        # change the following to the namespaces of your own entities
+        - AppBundle\Entity\User
+        - AppBundle\Entity\Product
+        - AppBundle\Entity\Category
+        - AppBundle\Entity\Supplier
+        - AppBundle\Entity\Address
+        - AppBundle\Entity\Cart
+        - AppBundle\Entity\OrderDetails
+        - AppBundle\Entity\Contact

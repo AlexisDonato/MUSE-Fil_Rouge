@@ -1,0 +1,23 @@
+App\Entity\Product:
+  product_{1..123}:
+    name: <productName()>
+    price: <numberBetween(99, 2599)>
+    description: <text(100)>
+    image: http://picsum.photos/id/<numberBetween(100, 230)>/290/180
+    image1: http://picsum.photos/id/<numberBetween(200, 330)>/290/180
+    image2: http://picsum.photos/id/<numberBetween(300, 430)>/290/180
+    category: '@category_*'
+    discount: '15%? 1 : 0'
+    discountRate: '20%? 0.2 : 0'
+    content: "H:<numberBetween(0, 50)>, L:<numberBetween(0, 50)>, l:<numberBetween(0, 50)>"
+    quantity: <numberBetween(0, 50)>
+    supplier: '@supplier_*'
+
+App\Entity\Category:
+  category_{1..12}:
+    name: <category()>
+    # parentCategory: '15%? @category_* : null'
+
+App\Entity\Supplier:
+  supplier_{1..10}:
+    name: <text(10)>

@@ -1,0 +1,67 @@
+{{ form_start(form) }}
+
+<div class="row d-flex align-items-center">
+	<div class="form-group col-md-6">
+		{{ form_row(form.name, {
+            label: "Dénomination"
+        }) }}
+	</div>
+	<div class="form-group col-md-6">
+		{{ form_row(form.price, {
+            label: "Prix"
+        }) }}
+	</div>
+	<div class="form-group col-md-6">
+		{{ form_row(form.description, {
+            label: "Description"
+        }) }}
+	</div>
+	<div class="form-group col-md-6">
+		{{ form_row(form.content, {
+            label: "Caractéristiques"
+        }) }}
+	</div>
+	<div class="form-group col-md-6">
+		{{ form_row(form.image, {
+            label: "Image principale"
+        }) }}
+	</div>
+	<div class="form-group col-md-6">
+		{{ form_row(form.image1, {
+            label: "Image 1"
+        }) }}
+	</div>
+	<div class="form-group col-md-6">
+		{{ form_row(form.image2, {
+            label: "Image 2"
+        }) }}
+	</div>
+	<div class="form-group col-md-6">
+		{{ form_row(form.quantity, {
+            label: "Quantité en stock"
+        }) }}
+	</div>
+	<div class="form-group col-md-6">
+		{{ form_row(form.discount, {
+        label: "En promotion"
+        }) }}
+	</div>
+	<div class="form-group col-md-6">
+		{{ form_row(form.discountRate, {
+            label: "Taux de remise"
+        }) }}
+	</div>
+	<div class="form-group col-md-6">
+		{{ form_row(form.supplier, {
+            label: "Fournisseur"
+        }) }}
+	</div>
+	<div class="form-group col-md-6">
+		{{ form_row(form.category, {
+            label: "Catégorie(s)"
+        }) }}
+	</div>
+</div>
+{{ form_widget(form) }}
+<button class="btn btn-warning text-primary mb-1">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}

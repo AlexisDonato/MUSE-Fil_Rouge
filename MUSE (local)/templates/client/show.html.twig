@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Informations personnelles
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+
+		<h1 class="text-primary text-center mt-3">Informations personnelles</h1>
+
+		<div class="d-flex justify-content-center">
+			<div class="card border-secondary bg-dark darker text-light mb-5 mt-3 rounded" style="width: 30rem;">
+				<i class="fa-solid fa-address-card fa-lg text-center mt-3"></i>
+				<div class="card-body">
+					<h5 class="card-title text-primary text-center">{{ user.email }}</h5>
+					<p class="card-text text-secondary text-center">
+						<i>Vos informations personnelles</i>
+					</p>
+				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item bg-dark text-light">
+						<b id="audioFont" class="surround">Prénom :</b>
+						{{ user.userName }}</li>
+					<li class="list-group-item bg-dark text-light">
+						<b id="audioFont" class="surround">Nom :</b>
+						{{ user.userLastname }}</li>
+					<li class="list-group-item bg-dark text-light">
+						<b id="audioFont" class="surround">Date de naissance :</b>
+						{{ user.birthdate ? user.birthdate|date('d-m-Y') : '' }}</li>
+					<li class="list-group-item bg-dark text-light">
+						<b id="audioFont" class="surround">N° téléphone :</b>
+						{{ user.phoneNumber }}</li>
+
+					<li class="list-group-item bg-dark text-light">
+						<b id="audioFont" class="surround">Votre compte est vérifié :</b>
+						{{ user.verified ? 'Oui' : 'Non' }}</li>
+					<li class="list-group-item bg-dark text-light">
+						<b id="audioFont" class="surround">Date d'enregistrement :</b>
+						{{ user.registerDate ? user.registerDate|date('d-m-Y') : '' }}</li>
+					<li class="list-group-item bg-dark text-light">
+						<div class="text-center">
+							<b id="audioFont" class="surround">Adresse(s) :</b>
+						</div>
+						<br>
+						{% for address in addresses %}-<b>
+								{{ address.name }}
+								{% if address.billingAddress %}
+									<b class="text-warning">
+										(Facturation)
+									{% elseif address.deliveryAddress %}
+										<b class="text-warning">
+											(Livraison)
+										{% endif %}
+									</b>
+									:</b>
+								<i>{{ address.pathNumber }},
+									{{ address.pathType }}
+									{{ address.zipcode }}
+									{{ address.city }},
+									{{ address.country }}</i><br>
+							{% endfor %}
+							<div class='text-center'>
+								<a href="{{ path('app_client_address_index') }}" class="mt-2 mb-1 btn-sm Hl">
+									<i class="fa-solid fa-pencil btn btn-warning border border-light mt-3 mb-1 Hl" title="Modifier vos adresses"></i>
+								</a>
+							</div>
+						</li>
+					</li>
+				</ul>
+				<div class="card-body text-center">
+					<a class="text-decoration-none text-light Hl" href="{{ path('app_client_edit', {'id': user.id}) }}">
+						<i class="fa-solid fa-pencil btn btn-info border border-light Hl" title="Modifier votre profil"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

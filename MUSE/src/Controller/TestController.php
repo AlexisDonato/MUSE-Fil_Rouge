@@ -116,9 +116,9 @@ class TestController extends AbstractController
         $pt->generateInvoice(94);
 
         // $email = (new TemplatedEmail())
-        //         ->from(new \Symfony\Component\Mime\Address('info_noreply@muse.com', 'Muse MailBot'))
+        //         ->from(new \Symfony\Component\Mime\Address('muse.info.bot@gmail.com', 'Muse MailBot'))
         //         ->to("toto@gmail.com")
-        //         ->cc('Shipping@muse.com')
+        //         ->cc('muse.info.bot@gmail.com')
         //         ->subject('Votre commande est validée!')
         //         ->htmlTemplate('email/test2.html.twig')
         //         ->context([

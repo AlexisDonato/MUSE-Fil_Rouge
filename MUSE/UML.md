@@ -54,15 +54,6 @@ subject
 enquiryDate
 }
 
-class Coupon{
-PK - id
-code
-discountRate
-validated
-cart
-}
-
-Coupon -- Cart
 class OrderDetails{
 PK - id
 productId
@@ -72,6 +63,15 @@ product
 subTotal
 }
 
+class Coupon{
+PK - id
+code
+discountRate
+validated
+cart
+}
+
+Coupon -- Cart
 class Product{
 PK - id
 name
@@ -94,6 +94,11 @@ user
 }
 
 ResetPasswordRequest -- User
+class Supplier{
+PK - id
+name
+}
+
 class User{
 PK - id
 email
@@ -117,10 +122,5 @@ agreeTerms
 
 User -- Cart
 User -- Address
-class Supplier{
-PK - id
-name
-}
-
 
 ```

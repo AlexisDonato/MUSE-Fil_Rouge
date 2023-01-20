@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mes informations personnelles
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="text-warning mb-3 mt-3">Modifier mes informations personnelles</h1>
+
+		{{ include('client/_form.html.twig') }}<br>
+
+		<a href="{{ path('app_forgot_password_request') }}" class="btn btn-outline-warning ml-5 mb-3">Réinitialiser le mot de passe</a>
+	</div>
+
+	<ul class="mt-5 surround">
+		<h3 class="text-center h2 mb-3">Vos Adresses :</h3>
+		{% for address in addresses %}
+			<div class="" style="background: rgb(0,0,0); background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(38,37,37,0.7371323529411764) 49%, rgba(0,0,0,0.4514180672268907) 100%);">
+				<li class="h4">
+					<b>{{ address.name }}
+						{% if address.billingAddress %}
+							<b class="text-warning">
+								(Facturation)
+							{% elseif address.deliveryAddress %}
+								<b class="text-warning">
+									(Livraison)
+								{% endif %}
+							</b>
+							:</b>
+						<i>{{ address.pathNumber }},
+							{{ address.pathType }}
+							{{ address.zipcode }}
+							{{ address.city }},
+							{{ address.country }}</i><br>
+				</li>
+			</div>
+					{% endfor %}
+		</ul>
+
+		<a href="{{ path('app_client_address_index') }}" class="btn btn-outline-warning ml-5 mb-3">Modifier vos adresses</a>
+	</div>
+</div>{% endblock %}

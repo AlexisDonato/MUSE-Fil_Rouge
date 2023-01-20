@@ -40,6 +40,7 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(CartService $cartService, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, CategoryRepository $categoryRepository, ProductRepository $productRepository, OrderDetailsRepository $orderDetails, ?UserInterface $user): Response
     {
+        dump("test1");
         // The registration form
         $user = new User();
         $address = new Address();
@@ -50,6 +51,8 @@ class RegistrationController extends AbstractController
 
         // Saves the user information if the form is valid
         if ($form->isSubmitted() && $form->isValid()) {
+            dump("test2");
+
             // userName
             $user->setUserName($form->get('userName')->getData())
                 ->setUserLastName($form->get('userLastName')->getData())
@@ -153,7 +156,7 @@ class RegistrationController extends AbstractController
 
         // Sends an email to the user
         $email = (new TemplatedEmail())
-        ->from(new E_address('info_noreply@muse.com', 'Muse MailBot'))
+        ->from(new E_address('muse.info.bot@gmail.com', 'Muse MailBot'))
         ->to($user->getEmail())
         ->subject('Bienvenue sur Muse!')
         ->htmlTemplate('registration/user_information_email.html.twig')

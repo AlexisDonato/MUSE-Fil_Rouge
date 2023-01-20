@@ -275,9 +275,9 @@ class OrderController extends AbstractController
 
             // Sends an email with the order info to both the user and to the shipping service of the company, with the invoice attached to it
             $email = (new TemplatedEmail())
-                ->from(new E_address('info_noreply@muse.com', 'Muse MailBot'))
+                ->from(new E_address('muse.info.bot@gmail.com', 'Muse MailBot'))
                 ->to($user->getEmail())
-                ->cc('Shipping@muse.com')
+                ->cc('muse.info.bot@gmail.com')
                 ->subject('Votre commande est validée!')
                 ->htmlTemplate('email/order_validation_email.html.twig')
                 ->context([

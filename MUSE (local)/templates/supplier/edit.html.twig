@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le fournisseur{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center mb-3 mt-3">Modifier le fournisseur</h1>
+
+    {{ include('supplier/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <button class="btn btn-warning border-light mb-1"><a class="text-decoration-none text-dark" href="{{ path('app_supplier_index') }}">Retour à la liste</a></button>
+
+    {{ include('supplier/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

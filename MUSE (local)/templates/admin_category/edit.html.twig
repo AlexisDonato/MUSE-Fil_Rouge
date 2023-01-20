@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier la catégorie{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center mt-3 mb-3">Modifier la catégorie</h1>
+
+    {{ include('admin_category/_form.html.twig', {'button_label': 'Mise à jour'}) }}
+
+    <button class="btn btn-warning text-warning mb-1"><a class="text-decoration-none" <a href="{{ path('app_admin_category_index') }}">Retour à la liste</a></button>
+
+    {{ include('admin_category/_delete_form.html.twig') }}
+</div>
+{% endblock %}

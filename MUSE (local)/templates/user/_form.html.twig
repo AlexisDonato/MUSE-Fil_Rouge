@@ -1,0 +1,64 @@
+{{ form_start(form) }}
+<div class="row">
+	<div class="col-md-6">
+		{{ form_row(form.id) }}
+	</div>
+	<div class="col-md-6">
+		{{ form_row(form.email) }}<span id="wrongEmail"></span>
+	</div>
+	<div class="col-md-6">
+		{{ form_row(form.userName) }}<span id="wrongFirstName"></span>
+	</div>
+	<div class="col-md-6">
+		{{ form_row(form.userLastname) }}<span id="wrongName"></span>
+	</div>
+	<div class="col-md-6">
+		{{ form_row(form.birthdate) }}
+	</div>
+	<div
+		class="col-md-6">
+		{# {{ form_row(form.adress) }} #}
+
+		{{ form_row(form.phoneNumber) }}<span id="wrongPhone"></span>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		{{ form_row(form.roles) }}
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		{{ form_row(form.verified) }}
+	</div>
+</div>
+{{ form_widget(form) }}
+
+<button class="btn btn-danger border-light mb-1" id="submit">{{ button_label|default('Save') }}</button>
+
+{% if (user.address)|length != 0 %}
+<table class="navbar mt-3 mb-3" border="3">
+	<tbody>
+		<th class="h2 ml-2 mr-2">Adresse(s)</th>
+		<td>
+			{% for address in addresses %}-<b>
+					{{ address.name }}
+					{% if address.billingAddress %}
+						<b class="text-warning">
+							(Facturation)
+						{% elseif address.deliveryAddress %}
+							<b class="text-warning">
+								(Livraison)
+							{% endif %}
+						</b>
+						:</b>
+					<i>{{ address.pathNumber }},
+						{{ address.pathType }}
+						{{ address.zipcode }}
+						{{ address.city }},
+						{{ address.country }}</i><br>
+				{% endfor %}
+			</td>
+		</td>
+</tbody></table>
+{% endif %}{{ form_end(form) }}

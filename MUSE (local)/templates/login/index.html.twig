@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion
+{% endblock %}
+
+{% block body %}
+	<style>
+		body {
+			background: url('/img/BG4.jpg') no-repeat center center fixed;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+		}
+	</style>
+
+	{% if error %}
+		<div class="row d-flex justify-content-center">
+				<div class="col-6 alert alert-danger text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			</div>
+	{% endif %}
+
+	<h1 class="d-flex justify-content-center text-info mt-3">
+		<b>Connexion</b>
+	</h1>
+
+	<form action="{{ path('login') }}" method="post">
+		<div class="d-flex justify-content-center">
+			<div class="form-group">
+				<label for="username" class=" mt-5">Email:</label>
+				<input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}">
+			</div>
+		</div>
+		<div class="d-flex justify-content-center">
+			<div class="form-group">
+				<label for="password">Mot de passe:</label>
+				<input type="password" class="form-control" id="password" name="_password">
+			</div>
+		</div>
+		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+		<input type="hidden" name="{{ path('app_home') }}" value="/account">
+
+		<div class="d-flex justify-content-center mb-4">
+			<button class="btn btn-info btn-sm border-light mr-3" type="submit">Se connecter</button>
+
+			<a href="{{ path('app_forgot_password_request') }}" class="btn btn-outline-info btn-sm ml-3 mr-3">Mot de passe oublié?</a>
+
+			<a href="{{ path('app_register') }}" class="btn btn-info btn-sm border-light ml-3">S'inscrire</a>
+		</div>
+	</form>
+
+	<form class="form-signin" method="post">
+		<div class="checkbox text-center text-warning mb-3">
+			<label>
+				<input type="checkbox" name="_remember_me">
+				Se rappeler de moi
+			</label>
+		</div>
+	</form>
+{% endblock %}

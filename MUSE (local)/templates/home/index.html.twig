@@ -1,0 +1,217 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Accueil
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+	<div class="text-center">
+		<img id="homeLogo" src="/img/Muse_rect_trans.png" style="width: 250px; height: 100px;" class="cartoon mb-1">
+	</div>
+	<hr>
+
+	<div class="row d-flex justify-content-around align-items-center rounded">
+		<div class="col-md-12">
+			<h1 class="text-light text-center pb-5">Meilleures ventes</h1>
+			<div id="carouselExampleIndicators-1" class="carousel slide mb-3 text-center" data-ride="carousel" data-interval="8000">
+				<ol class="carousel-indicators">
+					<li data-target="#carouselExampleIndicators-1" data-slide-to="0" class="active"></li>
+					{% set i = 0 %}
+					{% for sbp in salesByProduct|slice(0,5) %}
+					{% set i = i + 1 %}
+					<li data-target="#carouselExampleIndicators-1" data-slide-to="{{i}}"></li>
+					{% endfor %}
+				</ol>
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<img class="img-thumbnail border border-danger" style="height: 20rem; width:auto;" src="/img/Tile3.jpeg" alt="...">
+						<div class="carousel-caption d-none d-md-block">
+							<h1 class="text-light roboto">Ventes ++</h1>
+						</div>
+					</div>
+					{% if salesByProduct|length > 0 %}
+						{% for sbp in salesByProduct|slice(0,5) %}
+							<div class="carousel-item">
+								<a href="{{ path('app_product_show', {'id': sbp.id}) }}"><img class="img-thumbnail border border-secondary" style="height: 20rem; width:auto;" src="/img/{{sbp.image}}" alt="Slide n°{{sbp.id}}"></a>
+								<div class="carousel-caption d-none d-md-block">
+									<a class="text-decoration-none" href="{{ path('app_product_show', {'id': sbp.id}) }}">
+										<h2 class="text-light surround mb-3 Hl">{{ sbp.name }}</h2>
+									</a>
+									<h3 class="surround text-white">
+										<i>{{ sbp.price }}
+											€<sup> HT</sup></i>
+									</h3>
+									<p>
+										<i class="text-primary">{{ sbp.description|u.truncate(75, '...') }}</i>
+									</p>
+								</div>
+							</div>
+						{% endfor %}
+					{% endif %}
+				</div>
+
+				<a class="carousel-control-prev" href="#carouselExampleIndicators-1" role="button" data-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="carousel-control-next" href="#carouselExampleIndicators-1" role="button" data-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<hr>
+
+	<div class="row mt-5">
+		<div class="col-md-12">
+			<h1 class="text-light text-center pb-5">Produits les plus commandés</h1>
+			<div id="carouselExampleIndicators-2" class="carousel slide mb-3 text-center" data-ride="carousel" data-interval="8000">
+				<ol class="carousel-indicators">
+					<li data-target="#carouselExampleIndicators-2" data-slide-to="0" class="active"></li>
+					{% set i = 0 %}
+					{% for op in orderedProducts|slice(0,5) %}
+					{% set i = i + 1 %}
+					<li data-target="#carouselExampleIndicators-2" data-slide-to="{{i}}"></li>
+					{% endfor %}
+				</ol>
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<img class="img-thumbnail border border-danger" style="height: 20rem; width:auto;" src="/img/Tile1.jpeg" alt="...">
+						<div class="carousel-caption d-none d-md-block">
+							<h1 class="text-light roboto">Commandes ++</h1>
+						</div>
+					</div>
+					{% if orderedProducts|length > 0 %}
+						{% for op in orderedProducts|slice(0,5) %}
+							<div class="carousel-item">
+								<a href="{{ path('app_product_show', {'id': op.id}) }}"><img class="img-thumbnail border border-secondary" style="height: 20rem; width:auto;" src="/img/{{op.image}}" alt="Slide n°{{op.id}}"></a>
+								<div class="carousel-caption d-none d-md-block">
+									<a class="text-decoration-none" href="{{ path('app_product_show', {'id': op.id}) }}">
+										<h2 class="text-light mb-3 Hl">{{ op.name }}</h2>
+									</a>
+									<h3 class="text-white">
+										<i>{{ op.price }}
+											€<sup> HT</sup></i>
+									</h3>
+									<p>
+										<i class="text-primary">{{ op.description|u.truncate(75, '...') }}</i>
+									</p>
+								</div>
+							</div>
+						{% endfor %}
+					{% endif %}
+				</div>
+
+				<a class="carousel-control-prev" href="#carouselExampleIndicators-2" role="button" data-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="carousel-control-next" href="#carouselExampleIndicators-2" role="button" data-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+			</div>
+
+		</div>
+	</div>
+	<hr>
+	<hr>
+
+	<h1 class="text-light mb-5 mt-5 text-center">Catégories :</h1>
+		<div class="row row-flex justify-content-center">
+			{% for category in categories %}
+			{% if (category.product)|length != 0 %}
+				<div class="col-lg-4">
+				{% if category.parentCategory %}
+
+						<div id="category" class="btn darker border border-secondary d-flex justify-content-between align-items-center mt-1 mb-1">
+							<a href="{{ path('app_catalogue', {'category': category.id}) }}"><img src="/img/{{category.image}}" class="rounded-pill border border-3 border-light" style="width: 100px; height: auto;"></a>
+							<div class="d-flex justify-content-center align-items-center">
+							<h2>
+								<a class="text-decoration-none d-flex justify-content-center h3 text-light ml-auto mr-auto" href="{{ path('app_catalogue', {'category': category.id}) }}">
+									{{ category.name }}
+								</a>
+							</div>
+								{% if (category.product|length) != 0 %}<h2 class="badge rounded-pill border border-light bg-dark text-white position-absolute mt-2">{{ category.product|length }}</h2>{% endif %}
+						</div>
+					{% else %}
+						<div id="category" class="btn darker border border-secondary d-flex justify-content-between align-items-center mt-1 mb-1">
+								<a href="{% if (category.product)|length != 0 %}{{ path('app_catalogue', {'category': category.id}) }}{% else %}{{ path('app_category', {'parent': category.id}) }}{% endif %}"><img src="/img/{{category.image}}" class="rounded-pill border border-3 border-light" style="width: 100px; height: auto;"></a>
+							<div class="d-flex justify-content-center align-items-center">
+							<h2>
+								<a class="text-decoration-none d-flex justify-content-center h3 text-light ml-auto mr-auto" href="{% if (category.product)|length != 0 %}{{ path('app_catalogue', {'category': category.id}) }}{% else %}{{ path('app_category', {'parent': category.id}) }}{% endif %}">
+									{{ category.name }}
+								</a>
+							</div>	
+							</h2>
+							{% if (category.product|length) != 0 %}<h2 class="badge rounded-pill border border-light bg-dark text-white position-absolute mt-2">{{ category.product|length }}</h2>{% endif %}
+						</div>
+					{% endif %}
+				</div>
+			{% endif %}	
+			{% endfor %}
+		</div>
+		<hr>
+		<hr>
+
+	<div class="row mt-5">
+		<div class="col-md-12">
+			<a class="text-decoration-none" href="{{ path('app_discount') }}">
+				{% if productsDiscount|length > 0 %}
+				<h1 class="text-warning text-center pb-5 Hl">Promotions exclusives !</h1>
+			</a>
+				<div id="carouselExampleIndicators-3" class="carousel slide mb-3 text-center" data-ride="carousel" data-interval="8000">
+					<ol class="carousel-indicators">
+						<li data-target="#carouselExampleIndicators-3" data-slide-to="0" class="active"></li>
+						{% set i = 0 %}
+						{% for pd in productsDiscount|slice(0,10) %}
+						{% set i = i + 1 %}
+						<li data-target="#carouselExampleIndicators-3" data-slide-to="{{i}}"></li>
+						{% endfor %}
+					</ol>
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<a class="text-decoration-none" href="{{ path('app_discount') }}"><img class="img-thumbnail border border-danger" style="height: 20rem; width:auto;" src="/img/tile2.webp" alt="..."></a>
+							<div class="carousel-caption d-none d-md-block">
+								<a class="text-decoration-none" href="{{ path('app_discount') }}">
+									<h1 class="text-warning roboto Hl">Promotions</h1>
+								</a>
+							</div>
+						</div>
+						{% for pd in productsDiscount|slice(0,10) %}
+							<div class="carousel-item">
+								<a href="{{ path('app_product_show', {'id': pd.id}) }}"><img class="img-thumbnail border border-secondary" style="height: 20rem; width:auto;" src="/img/{{pd.image}}" alt="Slide n°{{pd.id}}"></a>
+								<div class="carousel-caption d-none d-md-block">
+									<a class="text-decoration-none" href="{{ path('app_product_show', {'id': pd.id}) }}">
+										<h2 class="text-warning mb-3 Hl">{{ pd.name }}</h2>
+									</a>
+									<h3 class="text-white">
+										<i class="text-warning">{{ pd.price }}
+											€<sup> HT</sup></i>
+									</h3>
+									<p>
+										<i class="text-warning">{{ pd.description|u.truncate(75, '...') }}</i>
+									</p>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+
+					<a class="carousel-control-prev" href="#carouselExampleIndicators-3" role="button" data-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+					</a>
+					<a class="carousel-control-next" href="#carouselExampleIndicators-3" role="button" data-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+					</a>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+	<hr>
+</div>
+{% endblock %}

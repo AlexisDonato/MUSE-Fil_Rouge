@@ -138,9 +138,9 @@ class ValidatedOrdersController extends AbstractController
 
         // Sends an email to both the user and the company
         $email = (new TemplatedEmail())
-        ->from(new E_address('info_noreply@muse.com', 'Muse MailBot'))
+        ->from(new E_address('muse.info.bot@gmail.com', 'Muse MailBot'))
         ->to($cart->getUser()->getEmail())
-        ->cc('Shipping@muse.com')
+        ->cc('muse.info.bot@gmail.com')
         ->subject('Votre commande a bien été expédiée!')
         ->htmlTemplate('email/order_shipment_email.html.twig')
         ->context([

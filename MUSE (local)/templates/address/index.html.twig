@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Index des adresses
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="mt-3 mb-3 text-center">Index des addresses</h1>
+
+		<table class="table table-dark darker">
+			<thead>
+				<tr>
+					{% if is_granted('ROLE_ADMIN') %}
+						<th id="audioFont" class="surround">Email</th>
+					{% endif %}
+					<th id="audioFont" class="surround">Titre</th>
+					<th id="audioFont" class="surround">Pays</th>
+					<th id="audioFont" class="surround">Code postal</th>
+					<th id="audioFont" class="surround">Ville</th>
+					<th id="audioFont" class="surround">Voie</th>
+					<th id="audioFont" class="surround">N° de voie</th>
+					<th id="audioFont" class="surround">Adresse dédiée à</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for address in addresses %}
+					<tr class="text-break">
+						{% if is_granted('ROLE_ADMIN') %}
+							<td>{{ address.user }}</td>
+						{% endif %}
+						<td>
+							<b>{{ address.name }}<b></td>
+								<td>{{ address.country }}</td>
+								<td>{{ address.zipcode }}</td>
+								<td>{{ address.city }}</td>
+								<td>{{ address.pathType }}</td>
+								<td>{{ address.pathNumber }}</td>
+								<td>
+									{% if address.billingAddress %}Facturation{% elseif address.deliveryAddress %}Livraison{% else %}-
+									{% endif %}
+								</td>
+								<td>
+									<a class="text-decoration-none text-white" href="{{ path('app_address_show', {'id': address.id}) }}"><i class="fa-solid fa-eye btn btn-warning border border-light Hl mb-1" title="Détails"></i></a>
+									<a class="text-decoration-none text-white" href="{{ path('app_address_edit', {'id': address.id}) }}"><i class="fa-solid fa-pencil btn btn-primary border border-light Hl" title="Modifier"></i></a>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="8">no records found</td>
+							</tr>
+						{% endfor %}
+					</tr>
+				</tbody>
+			</tbody>
+		</table>
+
+		<button class="btn btn-outline-warning ml-5 mb-3">
+			<a class="text-decoration-none text-white" href="{{ path('app_address_new') }}">Nouvelle adresse</a>
+		</button>
+	</div>
+{% endblock %}

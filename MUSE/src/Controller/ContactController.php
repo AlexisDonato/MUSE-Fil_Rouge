@@ -57,9 +57,9 @@ class ContactController extends AbstractController
 
             // Sends an email both to the user and to the company
             $email = (new TemplatedEmail())
-            ->from(new Address('info_noreply@muse.com', 'Muse MailBot'))
+            ->from(new Address('muse.info.bot@gmail.com', 'Muse MailBot'))
             ->to($contact->getEmail())
-            ->cc('info@muse.com')
+            ->cc('muse.info.bot@gmail.com')
             ->subject('Votre demande a bien été envoyée')
             ->htmlTemplate('contact/contact_confirmation_email.html.twig')
             ->context([
