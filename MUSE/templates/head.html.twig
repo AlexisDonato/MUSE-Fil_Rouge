@@ -9,11 +9,11 @@
 		{% endblock %}
 	</title>
 
-	{# Bootstrap Bootswatch & CSS #}
+	{# Bootstrap, Bootswatch & CSS #}
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 	{% if (app.request.attributes.get('_route') != 'app_home' and app.request.attributes.get('_route') != 'app_product_show') %}
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/cerulean/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/cerulean/_variable.scss">
+	{# <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/cerulean/_variable.scss"> #}
 	{% endif %}
 	<link
 	rel="stylesheet" href="/css/style.css">
