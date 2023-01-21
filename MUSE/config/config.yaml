@@ -9,3 +9,4 @@ easy_admin:
         - AppBundle\Entity\Cart
         - AppBundle\Entity\OrderDetails
         - AppBundle\Entity\Contact
+        - AppBundle\Entity\Coupon
