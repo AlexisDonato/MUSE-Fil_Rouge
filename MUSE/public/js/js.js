@@ -3,11 +3,11 @@
 // Here we define : 1-The input; 2-The span element for wrong entries; 3-The regular expression for the input
 const name = document.querySelector(".LastNameField");
 const wrongName = document.getElementById('wrongName');
-const nameRE = new RegExp(/^[A-Z][a-zàéèêëîïôöûüùç.]+([ -][A-Z][a-zàéèêëîïôöûüùç.])*/);
+const nameRE = new RegExp(/^[A-Z][a-zàéèêëîïôöûüùç.']+([ -][A-Z][a-zàéèêëîïôöûüùç.']+)*/);
 
 const firstName = document.querySelector(".FirstNameField");
 const wrongFirstName = document.getElementById("wrongFirstName");
-const firstNameRE = new RegExp(/^[A-Z][a-zàéèêëîïôöûüùç.]+([ -][A-Z][a-zàéèêëîïôöûüùç.])*/);
+const firstNameRE = new RegExp(/^[A-Z][a-zàéèêëîïôöûüùç.']+([ -][A-Z][a-zàéèêëîïôöûüùç.']+)*/);
 
 const email = document.querySelector(".EmailField");
 const wrongEmail = document.getElementById("wrongEmail");

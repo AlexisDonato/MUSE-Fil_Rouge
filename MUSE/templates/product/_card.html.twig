@@ -21,15 +21,21 @@
 				<small>
 					<s class="text-warning roboto">
 						{% if app.user %}
-							{{ (product.price)|format_currency('EUR', locale='fr') }}
+							{{ (product.price)
+							|format_currency('EUR', locale='fr') 
+							}}
 						{% else %}
-							<b class="roboto">{{ (product.price)|format_currency('EUR', locale='fr') }}</b>
+							<b class="roboto">{{ (product.price)
+							|format_currency('EUR', locale='fr') 
+							}}</b>
 						{% endif %}
 					</s>
 				</small>
 			{% else %}
 				<div class="d-flex justify-content-end align-items-center">
-					<b class="roboto text-primary">{{ (product.price)|format_currency('EUR', locale='fr') }}</b>
+					<b class="roboto text-primary">{{ (product.price)
+					|format_currency('EUR', locale='fr') 
+					}}</b>
 					<p style="font-size: 0.8rem;">
 						HT</p>
 				</div>
@@ -43,7 +49,9 @@
 			{% if app.user %}
 				<div class="d-flex justify-content-end align-items-center">
 					<p class="h4 text-warning">
-						<i class="fa-solid fa-angles-right"></i> <b class="text-warning roboto h2">{{ (product.price * (1 - product.discountRate))|format_currency('EUR', locale='fr') }}</b>
+						<i class="fa-solid fa-angles-right"></i> <b class="text-warning roboto h2">{{ (product.price * (1 - product.discountRate))
+						|format_currency('EUR', locale='fr') 
+						}}</b>
 					</p>
 					<p style="font-size: 0.8rem;" class=" text-warning">
 						HT</p>
@@ -51,7 +59,9 @@
 			{% else %}
 				<div class="d-flex justify-content-end align-items-center">
 					<p class="h4 text-warning roboto">
-						<i class="fa-solid fa-angles-right"></i> <b>{{ (product.price * (1 - product.discountRate))|format_currency('EUR', locale='fr') }}</b>
+						<i class="fa-solid fa-angles-right"></i> <b>{{ (product.price * (1 - product.discountRate))
+						|format_currency('EUR', locale='fr') 
+						}}</b>
 					</p>
 					<p style="font-size: 0.8rem;" class=" text-warning">
 						HT</p>

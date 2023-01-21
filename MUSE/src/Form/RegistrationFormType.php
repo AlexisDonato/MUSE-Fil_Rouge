@@ -75,7 +75,7 @@ class RegistrationFormType extends AbstractType
                             'message' => 'Merci de renseigner votre Prénom',
                         ]),
                         new Regex([
-                            'pattern' => "/^[A-Z][a-zàéèêëîïôöûüùç.]+([ -][A-Z][a-zàéèêëîïôöûüùç.])*/",
+                            'pattern' => "/^[A-Z][a-zàéèêëîïôöûüùç.']+([ -][A-Z][a-zàéèêëîïôöûüùç.']+)*/",
                             'message' => "Prénom invalide (numéros non autorisés, n'oubliez pas les majuscules)"
                         ]),
                     ]
@@ -89,7 +89,7 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Merci de renseigner votre nom de famille',
                     ]),
                     new Regex([
-                        'pattern' => "/^[A-Z][a-zàéèêëîïôöûüùç.]+([ -][A-Z][a-zàéèêëîïôöûüùç.])*/",
+                        'pattern' => "/^[A-Z][a-zàéèêëîïôöûüùç.']+([ -][A-Z][a-zàéèêëîïôöûüùç.']+)*/",
                         'message' => "Nom invalide (numéros non autorisés, n'oubliez pas les majuscules)"
                     ]),
                 ]
