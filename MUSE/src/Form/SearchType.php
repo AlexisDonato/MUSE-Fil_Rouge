@@ -42,7 +42,7 @@ class SearchType extends AbstractType
                 'choice_label' => 'name',
                 'expanded' => false,
                 'mapped' => true,
-                'multiple' => true
+                'multiple' => true,
             ])
 
             ->add('supplier', EntityType::class, [

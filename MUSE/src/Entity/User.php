@@ -73,7 +73,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $vat = "0.2";
 
     #[ORM\Column]
-    #[Groups(["read:user"])]
+    #[Groups(["read:user", "read:cart"])]
     private ?bool $pro = false;
 
     #[ORM\Column(length: 100, nullable: true)]

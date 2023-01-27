@@ -118,7 +118,7 @@
 
 
 <div class="text-center">
-	<a href="{{ path("app_order") }}" class="btn btn-info btn-lg border-light mb-3 Hl" title="Finalisez votre commande">Finalisez votre commande</a>
+	<a href="{{ path("app_order") }}" class="btn btn-info btn-lg border-light mb-3 Hl" title="Finalisez votre commande" onclick="return(confirm('Finaliser la commande ?'));">Finalisez votre commande</a>
 </div>
 
 {% else %}

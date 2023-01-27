@@ -6,3 +6,6 @@
 #     resource: "@EasyAdminBundle/Controller/DashboardController.php"
 #     type:     annotation
 #     prefix:   /admin
+
+api_login_check:
+    path: /api/login_check

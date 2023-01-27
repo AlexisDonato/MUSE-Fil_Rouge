@@ -89,7 +89,6 @@
 					<b class="roboto">Total TTC:</b>
 				</td>
 				<td class="roboto h3">{{ total|format_currency('EUR', locale='fr') }}
-					€
 				</td>
 				<td colspan="5">
 					<a href="{{ path("app_cart_deleteAll") }}" class="btn btn-danger border border-secondary Hl" title="Supprimer le panier">
@@ -209,7 +208,10 @@
 
 	{# *** PAYMENT CARD FORM *** #}
 	<div class="text-center">
-		<button class="btn btn-info border-light btn-lg text-center Hl mt-5" id="payCardButton" onclick="payCard()">Paiement par carte</button>
+
+    <button class="btn btn-info border-light btn-lg text-center Hl mt-5" id="payCardButton" onclick="payCard()">Paiement par carte</button>
+
+
 	</div>
 	<div id="payCardForm">
 		<div class="container">

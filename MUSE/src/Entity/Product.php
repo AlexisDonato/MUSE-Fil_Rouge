@@ -38,7 +38,7 @@ class Product
     #[Groups(["read:product"])]
     private $content;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: 'boolean', nullable: true)]
     #[Groups(["read:product"])]
     private $discount;
 

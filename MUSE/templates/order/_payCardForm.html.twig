@@ -55,7 +55,7 @@
 			</li>
 			<li class="list-group-item  darker border-primary">
 				<div class="row">
-					<button type="submit" class="btn btn-lg btn-outline-primary ml-auto mr-auto"><a class="text-decoration-none text-secondary">
+					<button type="submit" class="btn btn-lg btn-outline-primary ml-auto mr-auto" onclick="return(confirm('Procéder au paiement ?'));"><a class="text-decoration-none text-secondary">
 						Payer {{ total|format_currency('EUR', locale='fr') }}</a>
 					</button>
 				</div>

@@ -19,7 +19,7 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer', unique: true)]
-    #[Groups(["read:category"])]
+    #[Groups(["read:category", "read:product"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 100)]

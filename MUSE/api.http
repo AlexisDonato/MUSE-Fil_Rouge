@@ -1,0 +1,17 @@
+GET https://127.0.0.1:8000/api/products
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NzQ3NDk3MzgsImV4cCI6MTY3NDc1MzMzOCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfU0FMRVMiLCJST0xFX1NISVAiLCJST0xFX1BSTyIsIlJPTEVfQ0xJRU5UIiwiUk9MRV9VU0VSIl0sImVtYWlsIjoiYWRtaW5AbXVzZS5jb20ifQ.eWusuSZyUv4Jv28-Xp0boqB_jm-qvllU7OGvffJkAYw0ne6XxazjR5s71kjFyaRr1vJKnLPw1PumTymtsrK0sMt3SkN9yBR9s9aUpoaRIeokDcjdM9F0lemEI3OrcXlKG3O4vbfqPgRG6svYf0A7V3nGXNTo1ammSCkorSDy1iYN5FxQql_AAmoxhSev3ceQ4meTAaqG4VmG07Ovsh2DYWryOg9K1RO4egyyTd4-Xn7ICqctH55gksqmL23_4t7bjXYiKZJLEtXi6NnDiqanZAmWz09JUqXjTEH_Zt3GBwyzWc0sHhKgUg0FwZJsMxU2gBPV4QekB9n8xF1MSB1Fqw
+Accept: application/json
+
+
+###
+
+
+POST https://127.0.0.1:8000/api/login_check
+Content-Type: application/json
+
+{
+    "username": "client@muse.com",
+    "password": "Client12"
+}
+
+

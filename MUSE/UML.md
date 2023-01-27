@@ -54,15 +54,6 @@ subject
 enquiryDate
 }
 
-class OrderDetails{
-PK - id
-productId
-quantity
-cart
-product
-subTotal
-}
-
 class Coupon{
 PK - id
 code
@@ -72,6 +63,15 @@ cart
 }
 
 Coupon -- Cart
+class OrderDetails{
+PK - id
+productId
+quantity
+cart
+product
+subTotal
+}
+
 class Product{
 PK - id
 name
