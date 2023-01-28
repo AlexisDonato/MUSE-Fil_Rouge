@@ -105,8 +105,12 @@
 							</th>
 							{% if product.discountRate != 0 %}
 								<td class="text-warning roboto">
-									<s>{{ product.price }}
-										€</s>
+									<s>{% if app.user %}
+										{{ product.price * app.user.vat}} €
+										{% else %}
+										{{ product.price * 1.2}} €
+										{% endif %}
+									</s>
 									<i class="fa-solid fa-angles-right"></i>
 									<b>
 									{% else %}
