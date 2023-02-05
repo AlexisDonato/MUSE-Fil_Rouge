@@ -20,7 +20,7 @@ class Supplier
     private ?int $id = null;
 
     #[ORM\Column(length: 100, nullable: true)]
-    #[Groups(["read:supplier", "read:product"])]
+    #[Groups(["read:supplier", "read:product", "read:category"])]
     private ?string $name = null;
 
     public function getId(): ?int
