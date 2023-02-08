@@ -74,6 +74,7 @@ subTotal
 
 class Product{
 PK - id
+id
 name
 price
 description

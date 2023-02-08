@@ -16,7 +16,7 @@ class Supplier
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(unique: true)]
-    #[Groups(["read:supplier", "read:product"])]
+    #[Groups(["read:supplier", "read:product", "read:category"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 100, nullable: true)]

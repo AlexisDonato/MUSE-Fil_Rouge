@@ -40,7 +40,6 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(CartService $cartService, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, CategoryRepository $categoryRepository, ProductRepository $productRepository, OrderDetailsRepository $orderDetails, ?UserInterface $user): Response
     {
-        dump("test1");
         // The registration form
         $user = new User();
         $address = new Address();
@@ -51,7 +50,6 @@ class RegistrationController extends AbstractController
 
         // Saves the user information if the form is valid
         if ($form->isSubmitted() && $form->isValid()) {
-            dump("test2");
 
             // userName
             $user->setUserName($form->get('userName')->getData())

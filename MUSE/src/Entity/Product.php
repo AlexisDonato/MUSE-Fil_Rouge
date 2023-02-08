@@ -19,11 +19,19 @@ class Product
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer', unique: true)]
+<<<<<<< HEAD
     #[Groups(["read:product", "read:category"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 150)]
     #[Groups(["read:product", "read:orderDetail", "read:category"])]
+=======
+    #[Groups(["read:product", "read:cart", "read:category"])]
+    private $id;
+
+    #[ORM\Column(type: 'string', length: 150)]
+    #[Groups(["read:product", "read:orderDetail", "read:cart", "read:category"])]
+>>>>>>> ce06226 (:fire:)
     private $name;
 
     #[ORM\Column(type: 'integer')]

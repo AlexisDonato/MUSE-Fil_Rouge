@@ -1,8 +1,0 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-
-# easy_admin_bundle:
-#     resource: "@EasyAdminBundle/Controller/DashboardController.php"
-#     type:     annotation
-#     prefix:   /admin

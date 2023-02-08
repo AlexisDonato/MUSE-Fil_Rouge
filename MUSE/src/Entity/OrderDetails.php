@@ -23,11 +23,11 @@ class OrderDetails
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Groups(["read:orderDetail"])]
+    #[Groups(["read:orderDetail", "read:cart"])]
     private ?int $productId = null;
 
     #[ORM\Column]
-    #[Groups(["read:orderDetail"])]
+    #[Groups(["read:orderDetail", "read:cart"])]
     private ?int $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'orderDetails', fetch: "EAGER")]
@@ -37,11 +37,11 @@ class OrderDetails
 
     #[ORM\ManyToOne(fetch: "EAGER")]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["read:orderDetail"])]
+    #[Groups(["read:orderDetail", "read:cart"])]
     private ?Product $product = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(["read:orderDetail"])]
+    #[Groups(["read:orderDetail", "read:cart"])]
     private ?float $subTotal = null;
 
     public function __construct()
