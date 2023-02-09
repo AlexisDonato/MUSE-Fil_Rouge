@@ -1,6 +1,19 @@
 ```mermaid
 classDiagram
 
+class Address{
+PK - id
+name
+country
+zipcode
+city
+pathType
+pathNumber
+user
+billingAddress
+deliveryAddress
+}
+
 class Cart{
 PK - id
 clientOrderId
@@ -21,17 +34,42 @@ coupon
 }
 
 Cart -- OrderDetails
-class Address{
+class Category{
 PK - id
 name
-country
-zipcode
-city
-pathType
-pathNumber
+parentCategory
+product
+image
+}
+
+Category -- self
+Category -- Product
+class Coupon{
+PK - id
+code
+discountRate
+validated
+cart
+}
+
+Coupon -- Cart
+class Contact{
+PK - id
+name
+email
+message
 user
-billingAddress
-deliveryAddress
+subject
+enquiryDate
+}
+
+class OrderDetails{
+PK - id
+productId
+quantity
+cart
+product
+subTotal
 }
 
 class Product{
@@ -50,49 +88,17 @@ supplier
 category
 }
 
-class Contact{
+class ResetPasswordRequest{
 PK - id
-name
-email
-message
 user
-subject
-enquiryDate
 }
 
-class Coupon{
-PK - id
-code
-discountRate
-validated
-cart
-}
-
-Coupon -- Cart
+ResetPasswordRequest -- User
 class Supplier{
 PK - id
 name
 }
 
-class OrderDetails{
-PK - id
-productId
-quantity
-cart
-product
-subTotal
-}
-
-class Category{
-PK - id
-name
-parentCategory
-product
-image
-}
-
-Category -- self
-Category -- Product
 class User{
 PK - id
 email
@@ -116,11 +122,5 @@ agreeTerms
 
 User -- Cart
 User -- Address
-class ResetPasswordRequest{
-PK - id
-user
-}
-
-ResetPasswordRequest -- User
 
 ```
