@@ -1,2 +1,2 @@
-# http://alek6.amorce.org
+# https://alek6.amorce.org
 
