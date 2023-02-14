@@ -1,4 +1,8 @@
-# Muse Admin Dashboard
+# Muse Admin Dashboard (React)
 
-Using React
+<img src="Dashboard.png">
+
+<img src="Dashboard.png">
+
+<img src="Dashboard.png">
 
