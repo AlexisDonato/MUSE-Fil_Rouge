@@ -31,7 +31,7 @@ class Category
     private ?self $parentCategory = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
-    #[Groups(["read:category"])]
+    #[Groups(["read:category", "read:product"])]
     private Collection $product;
 
     #[ORM\Column(length: 255, nullable: true)]

@@ -118,7 +118,14 @@
             "php bin/console d:d:d --force",
             "php bin/console d:d:c",
             "php bin/console d:s:u --force --complete"
-            ]
+            ],
+        "tests" : [
+            "symfony console doctrine:database:drop --force --if-exists --env=test || true",
+	        "symfony console doctrine:database:create --env=test",
+            "symfony console d:s:u --force --complete --env=test",
+            "mysql --user=admin --password=1234 MUSE_test < public/SQL/MUSE_insert.sql",
+            "symfony php bin/phpunit $@"
+        ]
     },
     "conflict": {
         "symfony/symfony": "*"
