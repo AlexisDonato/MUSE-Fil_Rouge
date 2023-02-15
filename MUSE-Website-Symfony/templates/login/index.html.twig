@@ -16,8 +16,8 @@
 
 	{% if error %}
 		<div class="row d-flex justify-content-center">
-				<div class="col-6 alert alert-danger text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-			</div>
+			<div class="col-6 alert alert-danger text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		</div>
 	{% endif %}
 
 	<h1 class="d-flex justify-content-center text-info mt-3">

@@ -32,6 +32,7 @@ security:
                 login_path: login
                 check_path: login
                 enable_csrf: true
+                # success_handler: App\Controller\LoginController
             # configure the maximum login attempts
             login_throttling:
                 max_attempts: 3          # per minute ...

@@ -42,6 +42,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
             $form = $this->createForm(SearchType::class, $data);
             $form->handleRequest($request);
             
+            
             return $this->render('login/index.html.twig', getData($cartService, $orderDetails) + [
                 'last_username' => $lastUsername,
                 'error'         => $error,

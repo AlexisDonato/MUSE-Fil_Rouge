@@ -122,9 +122,10 @@
         "tests" : [
             "symfony console doctrine:database:drop --force --if-exists --env=test || true",
 	        "symfony console doctrine:database:create --env=test",
-            "symfony console d:s:u --force --complete --env=test",
+            "symfony console d:s:u --no-interaction --force --complete --env=test",
             "mysql --user=admin --password=1234 MUSE_test < public/SQL/MUSE_insert.sql",
-            "symfony php bin/phpunit $@"
+            "php bin/phpunit --testdox tests/units/",
+            "php bin/phpunit --testdox tests/functional/"
         ]
     },
     "conflict": {
