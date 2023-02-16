@@ -27,15 +27,15 @@
 				{% for address in addresses %}
 					<tr>
 						{% if is_granted('ROLE_ADMIN') %}
-							<td>{{ address.user }}</td>
+							<td>{{ address.user|escape }}</td>
 						{% endif %}
 						<td>
-							<b>{{ address.name }}<b></td>
-								<td>{{ address.country }}</td>
-								<td>{{ address.zipcode }}</td>
-								<td>{{ address.city }}</td>
-								<td>{{ address.pathType }}</td>
-								<td>{{ address.pathNumber }}</td>
+							<b>{{ address.name|escape }}<b></td>
+								<td>{{ address.country|escape }}</td>
+								<td>{{ address.zipcode|escape }}</td>
+								<td>{{ address.city|escape }}</td>
+								<td>{{ address.pathType|escape }}</td>
+								<td>{{ address.pathNumber|escape }}</td>
 								<td>
 									{% if address.billingAddress %}Facturation{% elseif address.deliveryAddress %}Livraison{% else %}-
 									{% endif %}

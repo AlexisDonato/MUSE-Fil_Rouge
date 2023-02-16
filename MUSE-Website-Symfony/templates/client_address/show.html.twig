@@ -10,31 +10,31 @@
         <tbody>
             {% if is_granted('ROLE_ADMIN') %}<tr>
                 <th id="audioFont" class="surround h5">Id</th>
-                <td>{{ address.id }}</td>
+                <td>{{ address.id|escape }}</td> {# |escape to avoid XSS injections #}
             </tr>{% endif %}
             <tr>
                 <th id="audioFont" class="surround h5">Titre</th>
-                <td>{{ address.name }}</td>
+                <td>{{ address.name|escape }}</td>
             </tr>
             <tr>
                 <th id="audioFont" class="surround h5">Pays</th>
-                <td>{{ address.country }}</td>
+                <td>{{ address.country|escape }}</td>
             </tr>
             <tr>
                 <th id="audioFont" class="surround h5">Code postal</th>
-                <td>{{ address.zipcode }}</td>
+                <td>{{ address.zipcode|escape }}</td>
             </tr>
             <tr>
                 <th id="audioFont" class="surround h5">Ville</th>
-                <td>{{ address.city }}</td>
+                <td>{{ address.city|escape }}</td>
             </tr>
             <tr>
                 <th id="audioFont" class="surround h5">Voie</th>
-                <td>{{ address.pathType }}</td>
+                <td>{{ address.pathType|escape }}</td>
             </tr>
             <tr>
                 <th id="audioFont" class="surround h5">N° de voie</th>
-                <td>{{ address.pathNumber }}</td>
+                <td>{{ address.pathNumber|escape }}</td>
             </tr>
             <tr>
                 <th id="audioFont" class="surround h5">Adresse dédiée à :</th>

@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 
-class MuseTest extends WebTestCase
+class LoginTest extends WebTestCase
 {
     public function testHomePage()
     {
@@ -48,6 +48,5 @@ class MuseTest extends WebTestCase
         $client->followRedirect();
 
         $this->assertRouteSame('app_home'); // Checks if the response redirects to the home page
-        // $this->assertNotEmpty($client->getCookieJar()->get('PHPSESSID')); // Checks if the user session is open
     }
 }

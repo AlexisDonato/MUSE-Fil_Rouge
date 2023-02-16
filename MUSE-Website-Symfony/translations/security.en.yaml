@@ -1,3 +1,4 @@
 "Invalid credentials.": "Identifiants invalides!"
+"Invalid CSRF token.": "Jeton CSRF invalide!"
 "Username could not be found.": "Email non trouvé!"
 "Too many failed login attempts, please try again in %minutes%.": "Trop de tentatives de connexion, veuillez réessayer dans 10 minutes."
