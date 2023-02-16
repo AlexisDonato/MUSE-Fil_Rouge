@@ -10,7 +10,7 @@
 
 		{% if app.user %}
 			<div class="row d-flex justify-content-center">
-				<div class="col-6 alert alert-success text-center">Bienvenue
+				<div class="col-6 alert alert-info text-center">Bienvenue
 					{{app.user.username|escape}}
 					{# |escape to avoid XSS injections #}
 					{{app.user.userLastName|escape}}
