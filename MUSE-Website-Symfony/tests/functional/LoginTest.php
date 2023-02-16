@@ -43,8 +43,7 @@ class LoginTest extends WebTestCase
 
         $crawler = $client->submit($form); // Submits the form
 
-        // follow redirect
-
+        // Teh client follows the redirection
         $client->followRedirect();
 
         $this->assertRouteSame('app_home'); // Checks if the response redirects to the home page
