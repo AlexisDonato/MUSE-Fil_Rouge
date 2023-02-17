@@ -37,6 +37,8 @@
 				<input type="password" class="form-control" id="password" name="_password">
 			</div>
 		</div>
+
+		{# Only form where we need to pass a CSRF token. Symfony does the same naturally with all others #}
 		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 		<input type="hidden" name="{{ path('app_home') }}" value="/account">
