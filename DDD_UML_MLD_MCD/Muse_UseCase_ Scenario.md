@@ -14,7 +14,7 @@
 
 >Résultat
 >>Une commande est validée.
-
+---
 
 |Flot Nominal| 
 |-----------|
