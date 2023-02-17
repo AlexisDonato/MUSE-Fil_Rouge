@@ -2,20 +2,18 @@
 ## Commande Point de vue Client
 
 
-### <strong>Description</strong>
-Ce cas d’utilisation a pour but de décrire le parcours effectué par l’utilisateur, afin de saisir des produits dans son panier puis de valider une commande.
+>Description
+>>Ce cas d’utilisation a pour but de décrire le parcours effectué par l’utilisateur, afin de saisir des produits dans son panier puis de valider une commande.
 ---
 
 
-
-### <strong>Conditions</strong>
-Le client est sur la page d’accueil, accède aux catégories, sélectionne 1 ou plusieurs produits, les met dans son panier et paie.
+>Conditions
+>>Le client est sur la page d’accueil, accède aux catégories, sélectionne 1 ou plusieurs produits, les met dans son panier et paie.
 ---
 
 
-|Résultat|
-|-----------|
-Une commande est validée.
+>Résultat
+>>Une commande est validée.
 
 
 |Flot Nominal| 
